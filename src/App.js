@@ -3,9 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  useRouteMatch,
-  useParams
+  Link
 } from "react-router-dom";
 
 import './App.css'
@@ -21,22 +19,23 @@ export default function App() {
           </li>
           <li>
             <Link to="/about">Authors
-            
             </Link>
           </li>
         </ul>
 
         <Switch>
           <Route path="/about">
-          <ul>
-            <li><Link to="/">Vishal</Link></li>
-            <li><Link to="/">Janvi</Link></li>
-            <li><Link to="/">Deep</Link></li> 
-            <li><Link to="/">Bansi</Link></li> 
-            <li><Link to="/">Tejaswi</Link></li> 
-            <li><Link to="/">Sanket</Link></li> 
-          </ul>
-            <About />
+            <ul>
+              <li><Link to="/">Vishal</Link></li>
+              <li><Link to="/">Janvi</Link></li>
+              <li><Link to="/">Deep</Link></li> 
+              <li><Link to="/bansi">Bansi</Link></li> 
+              <li><Link to="/">Tejaswi</Link></li> 
+              <li><Link to="/">Sanket</Link></li> 
+            </ul>
+          </Route>
+          <Route path="/bansi">
+            <h2>Hello!! This is Bansi!!</h2>
           </Route>
           <Route path="/">
             <Home />
@@ -50,8 +49,4 @@ export default function App() {
 
 function Home() {
   return <h2>Home</h2>;
-}
-
-function About() {
-  return <h2>About</h2>;
 }
