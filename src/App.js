@@ -20,7 +20,9 @@ export default function App() {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/about">About</Link>
+            <Link to="/about">Authors
+            
+            </Link>
           </li>
           <li>
             <Link to="/Tejaswi">Tejaswi</Link>
@@ -29,6 +31,14 @@ export default function App() {
 
         <Switch>
           <Route path="/about">
+          <ul>
+            <li><Link to="/">Vishal</Link></li>
+            <li><Link to="/">Janvi</Link></li>
+            <li><Link to="/">Deep</Link></li> 
+            <li><Link to="/">Bansi</Link></li> 
+            <li><Link to="/">Tejaswi</Link></li> 
+            <li><Link to="/">Sanket</Link></li> 
+          </ul>
             <About />
           </Route>
           <Route path="/Tejaswi">
