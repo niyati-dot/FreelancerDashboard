@@ -24,9 +24,6 @@ export default function App() {
             
             </Link>
           </li>
-          <li>
-            <Link to="/Tejaswi">Tejaswi</Link>
-          </li>
         </ul>
 
         <Switch>
@@ -36,13 +33,13 @@ export default function App() {
             <li><Link to="/">Janvi</Link></li>
             <li><Link to="/">Deep</Link></li> 
             <li><Link to="/">Bansi</Link></li> 
-            <li><Link to="/">Tejaswi</Link></li> 
+            <li><Link to="/Tejaswi">Tejaswi</Link></li>
             <li><Link to="/">Sanket</Link></li> 
           </ul>
             <About />
           </Route>
           <Route path="/Tejaswi">
-            <About />
+                <Tejaswi />
           </Route>
           <Route path="/">
             <Home />
@@ -54,6 +51,10 @@ export default function App() {
   );
 }
 
+function Tejaswi() {
+  return <h2>Hello. I am Tejaswi Chaudhary.</h2>;
+}
+
 function Home() {
   return <h2>Home</h2>;
 }
@@ -62,6 +63,3 @@ function About() {
   return <h2>About</h2>;
 }
 
-function Tejaswi() {
-  return <h2>Hello. I am Tejaswi Chaudhary.</h2>;
-}
