@@ -32,11 +32,11 @@ export default function App() {
             <About />
           </Route>
           <Route path="/Tejaswi">
-            <Tejaswi />
+            <About />
           </Route>
           <Route path="/">
             <Home />
-          </Route>       
+          </Route>
         </Switch>
       </div>
     </Router>
