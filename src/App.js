@@ -22,15 +22,21 @@ export default function App() {
           <li>
             <Link to="/about">About</Link>
           </li>
+          <li>
+            <Link to="/Tejaswi">Tejaswi</Link>
+          </li>
         </ul>
 
         <Switch>
           <Route path="/about">
             <About />
           </Route>
+          <Route path="/Tejaswi">
+            <Tejaswi />
+          </Route>
           <Route path="/">
             <Home />
-          </Route>
+          </Route>       
         </Switch>
       </div>
     </Router>
@@ -44,4 +50,8 @@ function Home() {
 
 function About() {
   return <h2>About</h2>;
+}
+
+function Tejaswi() {
+  return <h2>Hello. I am Tejaswi Chaudhary.</h2>;
 }
