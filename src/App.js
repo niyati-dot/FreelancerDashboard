@@ -47,6 +47,10 @@ export default function App() {
               <Vishal />
             </Route>
 
+            <Route path="/sanket">
+              <Sanket />
+            </Route>
+
             <Route exact path="/">
               <Home />
             </Route>
@@ -72,7 +76,7 @@ function About() {
     <li><Link to="/bansi">Bansi</Link></li> 
       <li><Link to="/deep">Deep</Link></li> 
       <li><Link to="/janvi">Janvi</Link></li>
-      <li><Link to="/">Sanket</Link></li> 
+      <li><Link to="/sanket">Sanket</Link></li> 
       <li><Link to="/Tejaswi">Tejaswi</Link></li> 
       <li><Link to="/vishal">Vishal</Link></li> 
     </ul>
@@ -104,5 +108,11 @@ function Janvi(){
 function Vishal(){
   return <div>
           <h2>Hello 👋 Greetings Vishal Sancheti!</h2>
+         </div>
+}
+
+function Sanket(){
+  return <div>
+          <h2>Hi, Sanket here! Hope you doing well! :)</h2>
          </div>
 }
