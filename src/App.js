@@ -28,7 +28,7 @@ export default function App() {
             </Route>
             
             <Route path="/bansi">
-              <h2>Hello!! This is Bansi!!</h2>
+              <Bansi />
             </Route>
             
             <Route path="/janvi">
@@ -71,9 +71,15 @@ function About() {
   return 
 }
 
+function Bansi() {
+  return <div>
+      <h2>Hello!! This is Bansi!!</h2>
+  </div>
+}
 function Deep(){
   return <div>
           <h2>Hey! This is me!</h2>
           <p>Look up my name on the URL!!</p>
          </div>
 }
+
