@@ -30,7 +30,7 @@ export default function App() {
           <Route path="/about">
           <ul>
             <li><Link to="/">Vishal</Link></li>
-            <li><Link to="/">Janvi</Link></li>
+            <li><Link to="/janvi">Janvi</Link></li>
             <li><Link to="/">Deep</Link></li> 
             <li><Link to="/">Bansi</Link></li> 
             <li><Link to="/">Tejaswi</Link></li> 
@@ -38,8 +38,14 @@ export default function App() {
           </ul>
             <About />
           </Route>
+          <Route path="/janvi">
+            <h1> Hello This is janvi </h1>
+          </Route>
           <Route path="/">
             <Home />
+          </Route>
+          <Route path="/Janvi">
+
           </Route>
         </Switch>
       </div>
