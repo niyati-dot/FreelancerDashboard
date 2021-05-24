@@ -69,6 +69,6 @@ function About() {
 function Deep(){
   return <div>
           <h2>Hey! This is me!</h2>
-          <p>Look my name on the URL!!</p>
+          <p>Look up my name on the URL!!</p>
          </div>
 }
