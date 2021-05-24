@@ -32,7 +32,7 @@ export default function App() {
             </Route>
             
             <Route path="/janvi">
-              <h1> Hello This is janvi </h1>
+              <Janvi />
             </Route>
             
             <Route path="/deep">
@@ -75,5 +75,11 @@ function Deep(){
   return <div>
           <h2>Hey! This is me!</h2>
           <p>Look up my name on the URL!!</p>
+         </div>
+}
+
+function Janvi(){
+  return <div>
+          <h2>Hi! This is Janvi!</h2>
          </div>
 }
