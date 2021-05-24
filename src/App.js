@@ -43,6 +43,10 @@ export default function App() {
               <Deep />
             </Route>
 
+            <Route path="/vishal">
+              <Vishal />
+            </Route>
+
             <Route exact path="/">
               <Home />
             </Route>
@@ -70,7 +74,7 @@ function About() {
       <li><Link to="/janvi">Janvi</Link></li>
       <li><Link to="/">Sanket</Link></li> 
       <li><Link to="/Tejaswi">Tejaswi</Link></li> 
-      <li><Link to="/">Vishal</Link></li> 
+      <li><Link to="/vishal">Vishal</Link></li> 
     </ul>
   </div>
   return 
@@ -94,5 +98,11 @@ function Tejaswi() {
 function Janvi(){
   return <div>
           <h2>Hi! This is Janvi!</h2>
+         </div>
+}
+
+function Vishal(){
+  return <div>
+          <h2>Hello 👋 Greetings Vishal Sancheti!</h2>
          </div>
 }
