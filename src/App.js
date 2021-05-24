@@ -36,7 +36,7 @@ export default function App() {
             </Route>
             
             <Route path="/janvi">
-              <h1> Hello This is janvi </h1>
+              <Janvi />
             </Route>
             
             <Route path="/deep">
@@ -91,3 +91,8 @@ function Tejaswi() {
   return <h2>Hello. I am Tejaswi Chaudhary.</h2>;
 }
 
+function Janvi(){
+  return <div>
+          <h2>Hi! This is Janvi!</h2>
+         </div>
+}
