@@ -11,6 +11,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import Projects from "./pages/Projects";
+import AddProject from "./pages/AddProject";
 
 export default function App() {
     return (
@@ -34,6 +36,21 @@ export default function App() {
                 <Route path="/dashboard">
                     <DashboardLayout>
                         <Dashboard />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/projects">
+                    <DashboardLayout>
+                        <Projects />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/projects/add">
+                    <DashboardLayout>
+                        <AddProject />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/projects/edit">
+                    <DashboardLayout>
+                        <AddProject />
                     </DashboardLayout>
                 </Route>
 
