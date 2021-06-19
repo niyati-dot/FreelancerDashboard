@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import Timelogs from "./pages/Timelogs";
 
 export default function App() {
     return (
@@ -34,6 +35,11 @@ export default function App() {
                 <Route path="/dashboard">
                     <DashboardLayout>
                         <Dashboard />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/timelogs">
+                    <DashboardLayout>
+                        <Timelogs />
                     </DashboardLayout>
                 </Route>
 
