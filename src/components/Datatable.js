@@ -1,6 +1,6 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {useGlobalFilter, usePagination, useSortBy, useTable} from "react-table";
-import {Button, Col, Form, Row, Table} from "react-bootstrap";
+import {Col, Form, Row, Table} from "react-bootstrap";
 import Pagination from "react-bootstrap/Pagination";
 import {CSVLink} from "react-csv";
 
@@ -19,7 +19,6 @@ const Datatable = (props) => {
         rows,
         prepareRow,
         setGlobalFilter,
-        state,
         page,
         canPreviousPage,
         canNextPage,
@@ -28,7 +27,7 @@ const Datatable = (props) => {
         nextPage,
         previousPage,
         setPageSize,
-        state: { pageIndex, pageSize, globalFilter}
+        state: { pageSize, globalFilter}
     } = tableInstance;
 
     return (

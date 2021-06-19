@@ -1,12 +1,7 @@
 import './DashboardSidebar.css';
-import React, { useState } from 'react';
-import {
-    Col,
-    Collapse,
-    Container,
-    Row,
-} from 'react-bootstrap';
-import { Drawer, } from 'react-bootstrap-drawer';
+import React, {useState} from 'react';
+import {Collapse,} from 'react-bootstrap';
+import {Drawer,} from 'react-bootstrap-drawer';
 
 export default function Sidebar(props) {
     const [open, setOpen] = useState(false);
