@@ -181,21 +181,21 @@ export default function Timelogs(){
         });
 
         if(!task.project.length > 0){
-            let newTaskError = taskError;
+            let newTaskError = {...taskError};
             newTaskError.project = "Project is required";
             setTaskError(newTaskError);
             valid = false;
         }
 
         if(!task.client.length > 0){
-            let newTaskError = taskError;
+            let newTaskError = {...taskError};
             newTaskError.client = "Client is required";
             setTaskError(newTaskError);
             valid = false;
         }
 
         if(!task.task.length > 0){
-            let newTaskError = taskError;
+            let newTaskError = {...taskError};
             newTaskError.task = "Task is required";
             setTaskError(newTaskError);
             valid = false;
@@ -215,9 +215,9 @@ export default function Timelogs(){
     };
     const stopTask = () => {
         stopTimer();
-        let newArr = [...data];
-        newArr[0].endAt = moment(timerEnd).format("DD-MM-YYYY HH:mm:ss");
-        setData(newArr);
+        let newData = [...data];
+        newData[0].endAt = moment(timerEnd).format("DD-MM-YYYY HH:mm:ss");
+        setData(newData);
         setTask({
             project: "",
             client: "",
@@ -267,7 +267,9 @@ export default function Timelogs(){
                                 <Col>
                                     <Form.Group className="mb-3">
                                         <Form.Label>Client</Form.Label>
-                                        <Form.Control as="select" name="client" onChange={(e) => handleChange(e)}>
+                                        <Form.Control as="select" name="client"
+                                                      onChange={(e) => handleChange(e)}
+                                                      className={taskError.client.length > 0 ? "is-invalid" : ""}>
                                             <option value="">Select Client</option>
                                             <option value="Mark">Mark</option>
                                             <option value="Jacob">Jacob</option>
@@ -279,7 +281,9 @@ export default function Timelogs(){
                                 <Col>
                                     <Form.Group className="mb-3">
                                         <Form.Label>Project</Form.Label>
-                                        <Form.Control as="select" name="project" onChange={(e) => handleChange(e)}>
+                                        <Form.Control as="select" name="project"
+                                                      onChange={(e) => handleChange(e)}
+                                                      className={taskError.project.length > 0 ? "is-invalid" : ""}>
                                             <option value="">Select Project</option>
                                             <option value="ProjectA">ProjectA</option>
                                             <option value="ProjectB">ProjectB</option>
@@ -293,7 +297,9 @@ export default function Timelogs(){
                                 <Col>
                                     <Form.Group className="mb-3">
                                         <Form.Label>Task</Form.Label>
-                                        <Form.Control type="text" name="task" placeholder="Task Description..." onChange={(e) => handleChange(e)}/>
+                                        <Form.Control type="text" name="task" placeholder="Task Description..."
+                                                      onChange={(e) => handleChange(e)}
+                                                      className={taskError.task.length > 0 ? "is-invalid" : ""}/>
                                         <Form.Text className="text-danger">{taskError.task}</Form.Text>
                                     </Form.Group>
                                 </Col>
