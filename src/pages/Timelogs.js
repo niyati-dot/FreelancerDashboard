@@ -5,13 +5,17 @@ import Datatable from "../components/Datatable";
 import {Button, Card, Col, Container, Form, Modal, Row} from "react-bootstrap";
 
 export default function Timelogs(){
-    const columns = useMemo( () => ([
+    const columns = [
         { Header: 'Project', accessor: 'project'},
         { Header: 'Client', accessor: 'client'},
         { Header: 'Task', accessor: 'task'},
         { Header: 'Start At', accessor: 'startAt'},
-        { Header: 'End At', accessor: 'endAt'}
-    ]),[]);
+        { Header: 'End At', accessor: 'endAt'},
+        { Header: 'Action', accessor: 'row',
+            Cell: ({row}) => (<Button variant="danger" onClick={() => {deleteTask(row)}}>Delete</Button>)
+        }
+    ];
+
     const [data,setData] = useState([]);
     useEffect(() => {
         setData([
@@ -142,7 +146,6 @@ export default function Timelogs(){
         let hours = ("0" + Math.floor(timer / 3600000)).slice(-2);
         setTimerString(hours + " : " + minutes+ " : " + seconds+ " : " + centiseconds);
     },[timer]);
-
     const startTimer = () => {
         if(timerState === 0){
             setTimerStart(Date.now() - timer);
@@ -160,6 +163,9 @@ export default function Timelogs(){
         setTimer(0);
     };
 
+    const handleModalClose = () => setShowModal(false);
+    const handleModalShow = () => setShowModal(true);
+
     const [task, setTask] = useState({
         project: "",
         client: "",
@@ -172,6 +178,11 @@ export default function Timelogs(){
         client: "",
         task: ""
     });
+    const [showModal, setShowModal] = useState(false);
+    const handleChange = (e) => {
+        let newTask = {...task, [e.target.name]: e.target.value};
+        setTask(newTask);
+    };
     const isTaskValid = () => {
         let valid = true;
         setTaskError({
@@ -202,13 +213,12 @@ export default function Timelogs(){
         }
         return valid;
     };
+
     const startTask = (e) => {
         e.preventDefault();
         if(isTaskValid()){
             startTimer();
-            let newTask = task;
-            newTask.startAt = moment(timerStart).format("DD-MM-YYYY HH:mm:ss");
-            setTask(newTask);
+            task.startAt = moment(timerStart).format("DD-MM-YYYY HH:mm:ss");
             setData(data => [task, ...data]);
             handleModalClose();
         }
@@ -227,12 +237,13 @@ export default function Timelogs(){
         });
     };
 
-    const [showModal, setShowModal] = useState(false);
-    const handleModalClose = () => setShowModal(false);
-    const handleModalShow = () => setShowModal(true);
-    const handleChange = (e) => {
-        let newTask = {...task, [e.target.name]: e.target.value};
-        setTask(newTask);
+    const deleteTask = (task) => {
+        if(window.confirm("Are you sure?")){
+            let newData = [...data];
+            newData.splice(task.index, 1);
+            console.log(newData);
+            setData(newData);
+        }
     };
 
     return (
