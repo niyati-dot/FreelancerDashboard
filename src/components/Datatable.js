@@ -34,23 +34,18 @@ const Datatable = (props) => {
         <div>
             <Row>
                 <Col md={{span:2}}>
-                    <CSVLink data={data} filename={"export.csv"} className="btn btn-primary" target="_blank">Export CSV</CSVLink>
+                    <CSVLink data={data} filename={"export.csv"} className="btn btn-primary" target="_blank">
+                        Export CSV
+                    </CSVLink>
                 </Col>
                 <Col md={{span:2,offset:8}}>
                     <Form.Group>
                         <Form.Control type="search" placeholder="Search"
-                                      value={globalFilter || ""} onChange={e => setGlobalFilter(e.target.value)}/>
+                                      value={globalFilter || ""}
+                                      onChange={e => setGlobalFilter(e.target.value)}/>
                     </Form.Group>
                 </Col>
             </Row>
-            <div className="row">
-
-                <div className="col-sm-12 col-md-6">
-                </div>
-                <div className="col-sm-12 col-md-6 text-right">
-
-                </div>
-            </div>
             <Table bordered striped {...getTableProps()}>
                 <thead>
                 {headerGroups.map(headerGroup => (
