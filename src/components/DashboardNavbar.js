@@ -10,10 +10,10 @@ export default function DashboardNavbar(){
                     <Nav.Link title="Notification" className="nav-bar-link" href="#notification">
                         <i class="fas fa-bell"></i>
                     </Nav.Link>
-                    <Nav.Link className="nav-bar-link" href="#profile">
+                    <Nav.Link title="Profile" className="nav-bar-link" href="#profile">
                         <i class="fas fa-user"></i>
                     </Nav.Link>
-                    <Nav.Link className="nav-bar-link" href="#logout">
+                    <Nav.Link title="Log Out" className="nav-bar-link" href="#logout">
                         <i class="fas fa-sign-out-alt"></i>
                     </Nav.Link>
                 </Nav>

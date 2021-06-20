@@ -7,7 +7,9 @@ export default function Dashboard(){
             <div className="page-header-container">
                 <PageHeader title="Dashboard" subtitle="Welcome to Dashboard!"/>
             </div>
-            <div className="page-content-container"></div>
+            <div className="page-content-container">
+                {/* page content goes here */}
+            </div>
         </div>
     )
 }

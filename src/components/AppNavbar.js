@@ -3,12 +3,12 @@ import "./AppNavbar.scss"
 
 export default function AppNavbar(){
     return (
-        <Navbar className="nav-bar-container">
+        <Navbar className="app-nav-bar-container">
             <Container>
-                <Navbar.Brand href="/">Freelance Dashboard</Navbar.Brand>
+                <Navbar.Brand className="app-nav-bar-text" href="/">Freelance Dashboard</Navbar.Brand>
                 <Nav className="ml-auto">
-                    <Nav.Link href="login">Login</Nav.Link>
-                    <Nav.Link href="register">Register</Nav.Link>
+                    <Nav.Link className="app-nav-bar-link" href="login">Login</Nav.Link>
+                    <Nav.Link className="app-nav-bar-link" href="register">Register</Nav.Link>
                 </Nav>
             </Container>
         </Navbar>
