@@ -27,7 +27,7 @@ export default function Sidebar(props) {
                             <Drawer.Item href="#">Projects</Drawer.Item>
                             <Drawer.Item href="#">Time Logs</Drawer.Item>
                             <Drawer.Item href="#">Invoices</Drawer.Item>
-                            <Drawer.Item href="#">Testimonials</Drawer.Item>
+                            <Drawer.Item href="/testimonials">Testimonials</Drawer.Item>
                             <hr/>
                             <Drawer.Item href="#">ToDo</Drawer.Item>
                             <Drawer.Item href="#">Calendar</Drawer.Item>

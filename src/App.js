@@ -11,6 +11,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import Testimonials from "./pages/Testimonials";
+
 
 export default function App() {
     return (
@@ -34,6 +36,11 @@ export default function App() {
                 <Route path="/dashboard">
                     <DashboardLayout>
                         <Dashboard />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/testimonials">
+                    <DashboardLayout>
+                        <Testimonials />
                     </DashboardLayout>
                 </Route>
 
