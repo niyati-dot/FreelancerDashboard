@@ -1,82 +1,148 @@
 import React from 'react';
-import { useState} from 'react';
+import { useState, useEffect} from 'react';
 import PageHeader from "../components/PageHeader";
 import AddProject from './AddProject';
+import Datatable from "../components/Datatable";
 import '../style.css';
+import {Button, Card, Col, Container, Form, Modal, Row} from "react-bootstrap";
+import { Redirect, useHistory } from 'react-router-dom';
 
 export default function Projects(){
 
+    const columns = [
+        { Header: 'Project Title', accessor: 'title'},
+        { Header: 'Description', accessor: 'description'},
+        { Header: 'Client Name', accessor: 'client'},
+        { Header: 'Status', accessor: 'status'},
+        { Header: 'Actions', accessor: 'row',
+            Cell: ({row}) => (<div><a title="Edit Project" onClick={()=> editProject(row.id)} className="btn btn-secondary">Edit</a>     |     <a title="Delete Project" onClick={() => {deleteTask(row)}} className="btn btn-danger">Delete</a></div>)}
+    ];
+
+    const [data,setData] = useState([]);
+    useEffect(() => {
+        setData([
+            {
+                title: "Email Download",
+                description: "Providing this functionality will enable the access of email in PDF format.",
+                client: "Christ Fernandiz",
+                status: "In Progress"
+            },
+            {
+                title: "Navigation",
+                description: "Providing this functionality will navigate the project through navigation bar.",
+                client: "Shaun Bishop",
+                status: "Pending"
+            },
+            {
+                title: "Upgrade Database",
+                description: "Providing this service will migrate data to AWS.",
+                client: "Joseph Robinson",
+                status: "Completed"
+            },
+            {
+                title: "Email Download",
+                description: "Providing this functionality will enable the access of email in PDF format.",
+                client: "Christ Fernandiz",
+                status: "In Progress"
+            },
+            {
+                title: "Navigation",
+                description: "Providing this functionality will navigate the project through navigation bar.",
+                client: "Shaun Bishop",
+                status: "Pending"
+            },
+            {
+                title: "Upgrade Database",
+                description: "Providing this service will migrate data to AWS.",
+                client: "Joseph Robinson",
+                status: "Completed"
+            },
+            {
+                title: "Email Download",
+                description: "Providing this functionality will enable the access of email in PDF format.",
+                client: "Christ Fernandiz",
+                status: "In Progress"
+            },
+            {
+                title: "Navigation",
+                description: "Providing this functionality will navigate the project through navigation bar.",
+                client: "Shaun Bishop",
+                status: "Pending"
+            },
+            {
+                title: "Upgrade Database",
+                description: "Providing this service will migrate data to AWS.",
+                client: "Joseph Robinson",
+                status: "Completed"
+            },
+            {
+                title: "Email Download",
+                description: "Providing this functionality will enable the access of email in PDF format.",
+                client: "Christ Fernandiz",
+                status: "In Progress"
+            },
+            {
+                title: "Navigation",
+                description: "Providing this functionality will navigate the project through navigation bar.",
+                client: "Shaun Bishop",
+                status: "Pending"
+            },
+            {
+                title: "Upgrade Database",
+                description: "Providing this service will migrate data to AWS.",
+                client: "Joseph Robinson",
+                status: "Completed"
+            },
+        ])
+    },[]);
+
+    const [project, setProject] = useState({
+        title: "",
+        description: "",
+        client: "",
+        status: ""
+    });
+
+
+    const deleteTask = (project) => {
+        if(window.confirm("Are you sure?")){
+            let newData = [...data];
+            newData.splice(project.index, 1);
+            console.log(newData);
+            setData(newData);
+        }
+    };
+
     const [checkForm, setCheckForm] = useState(true);
 
-    const validate = (event) => {
+    const validate = () => {
         setCheckForm(false);
+    }
+
+    const history = useHistory();
+
+    async function editProject(id){
+        let url = "/projects/edit/"+id;
+        history.push(url);
     }
 
     return (
         <div>
-            
-            {
-                checkForm ? 
-
+            <div>
+                <PageHeader title="Projects"/>
                 <div>
-                    <PageHeader title="Projects" subtitle="Welcome to Projects!"/>
-                    <div class="col-md-2">
-                    </div>
-                    <div class="col-md-10">
-                        <div class="topnav alignLeft">
-                        <input class="searchWidth" type="text" placeholder="Search Project"/>
+                    <div className="row">
+                        <div className="col-md-10">
                         </div>
-                        <div class="topMargin inlineEle">
-                        <div class="col-md-8 alignLeft">
-                            <h3>Projects List</h3>
-                        </div>
-                        <div class="col-md-4 btnRightMargin">
-                            <button type="button" onClick={validate} class="btn btn-info">Add Project</button>
-                        </div>
-                        </div>
-                        <div>
-                        <table id="mytable">
-                            <tbody>
-                            <tr>
-                                <th class="width-20">Project Title</th>
-                                <th class="width-20">Description</th>
-                                <th class="width-20">Client Name</th>
-                                <th class="width-20">Status</th>
-                                <th class="width-20">Actions</th>
-                            </tr>
-                            <tr>
-                                <td>Email Download</td>
-                                <td>Providing this functionality will enable the access of email in PDF format.</td>
-                                <td>Christ Fernandiz</td>
-                                <td>In Progress</td>
-                                <td><a href="#">Edit</a>     |    <a href="#">Delete</a></td>
-                            </tr>
-                            <tr>
-                                <td>Navigation</td>
-                                <td>Providing this functionality will navigate the project through navigation bar.</td>
-                                <td>Shaun Bishop</td>
-                                <td>Pending</td>
-                                <td><a href="#">Edit</a>     |    <a href="#">Delete</a></td>
-                            </tr>
-                            <tr>
-                                <td>Upgrade Database</td>
-                                <td>Providing this service will migrate data to AWS.</td>
-                                <td>Joseph Robinson</td>
-                                <td>Completed</td>
-                                <td><a href="#">Edit</a>     |    <a href="#">Delete</a></td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <div className="col-md-2 add-project-btn">
+                            <a href="/projects/add" title="Add Project" className="btn btn-primary">Add Project</a>
                         </div>
                     </div>
                 </div>
-                
-                :
-
-                (<div> <AddProject/> </div>)
-
-            }
-
+                <div>   
+                    <Datatable columns={columns} data={data} />
+                </div>
+            </div>
         </div>
     )
 }

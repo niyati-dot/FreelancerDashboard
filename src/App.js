@@ -13,6 +13,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Projects from "./pages/Projects";
 import AddProject from "./pages/AddProject";
+import EditProject from "./pages/EditProject";
 
 export default function App() {
     return (
@@ -38,7 +39,7 @@ export default function App() {
                         <Dashboard />
                     </DashboardLayout>
                 </Route>
-                <Route path="/projects">
+                <Route exact path="/projects">
                     <DashboardLayout>
                         <Projects />
                     </DashboardLayout>
@@ -48,9 +49,9 @@ export default function App() {
                         <AddProject />
                     </DashboardLayout>
                 </Route>
-                <Route path="/projects/edit">
+                <Route path="/projects/edit/:id">
                     <DashboardLayout>
-                        <AddProject />
+                        <EditProject />
                     </DashboardLayout>
                 </Route>
 

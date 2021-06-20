@@ -1,8 +1,11 @@
 import React from 'react';
 import PageHeader from "../components/PageHeader";
+import { useParams } from 'react-router-dom';
 import { Redirect, useHistory } from 'react-router-dom';
 
-export default function AddProjects(){
+const EditProjects = (prop) => {
+
+    const param = useParams();
 
     const history = useHistory();
 
@@ -11,15 +14,14 @@ export default function AddProjects(){
         history.push(url);
     }
 
-    return (
-        <div>
-            <PageHeader title="New Project"/>
+    return <div>
+            <PageHeader title="Edit Project"/>
             
             <div className="col-md-2">
             </div>
             <div className="col-md-10">
 
-              <form action="/projects"><center>
+            <form action="/projects"><center>
 
                 <div class="form-group row">
                     <label class="col-md-2 col-form-label">Project Title: </label>
@@ -86,8 +88,9 @@ export default function AddProjects(){
                     </div>
                     <div class="col-md-3"></div>
                 </div>
-              </center></form>
+            </center></form>
             </div>
-        </div>
-    )
+        </div>;
 }
+
+export default EditProjects;
