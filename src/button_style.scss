@@ -8,6 +8,29 @@
     font-weight: bold;
     border-radius: 0.5rem;
     margin-right: 0.5rem;
+    text-decoration: none;
+
+    &:hover {
+        background-color: $white !important;
+        color: $primaryGrey !important;
+        border: 2px solid $primaryGrey !important;
+        border-radius: 0.5rem;
+        text-decoration: none;
+    }
+
+    &:focus, &:active {
+        padding: $buttonPadding;
+        border: 2px solid $primaryGrey !important;
+        color: $white !important; 
+        background: $primaryGrey !important;
+        font-weight: bold;
+        border-radius: 0.5rem;
+        margin-right: 0.5rem;
+        text-decoration: none;
+        outline: none !important;
+        box-shadow: none !important; 
+    }
+    
 }
 
 .secondary-button {
@@ -17,6 +40,28 @@
     font-weight: bold;
     border-radius: 0.5rem;
     margin-right: 0.5rem;
+    text-decoration: none;
+
+    &:hover {
+        background-color: $secondaryBlue !important;
+        color: $white !important;
+        border: 2px solid $secondaryBlue !important;
+        border-radius: 0.5rem;
+        text-decoration: none;
+    }
+
+    &:focus, &:active {
+        padding: $buttonPadding;
+        border: 2px solid $secondaryBlue !important;
+        color: $white !important; 
+        background: $secondaryBlue !important;
+        font-weight: bold;
+        border-radius: 0.5rem;
+        margin-right: 0.5rem;
+        text-decoration: none;
+        outline: none !important;
+        box-shadow: none !important; 
+    }
 }
 
 .delete-button {
@@ -26,4 +71,26 @@
     font-weight: bold;
     border-radius: 0.5rem;
     margin-right: 0.5rem;
+    text-decoration: none;
+
+    &:hover {
+        background-color: $primaryRed !important;
+        color: $white !important;
+        border: 2px solid $primaryRed !important;
+        border-radius: 0.5rem;
+        text-decoration: none;
+    }
+
+    &:focus, &:active {
+        padding: $buttonPadding;
+        border: 2px solid $primaryRed !important;
+        color: $white !important; 
+        background: $primaryRed !important;
+        font-weight: bold;
+        border-radius: 0.5rem;
+        margin-right: 0.5rem;
+        text-decoration: none;
+        outline: none !important;
+        box-shadow: none !important; 
+    }
 }
