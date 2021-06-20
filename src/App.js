@@ -1,9 +1,5 @@
 import React from "react";
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route
-} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 import AppLayout from "./layouts/AppLayout";
 import DashboardLayout from "./layouts/DashboardLayout";
@@ -12,6 +8,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import InvoiceGeneration from "./pages/InvoiceGeneration";
+import Timelogs from "./pages/Timelogs";
 
 export default function App() {
     return (
@@ -35,6 +32,11 @@ export default function App() {
                 <Route path="/dashboard">
                     <DashboardLayout>
                         <Dashboard />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/timelogs">
+                    <DashboardLayout>
+                        <Timelogs />
                     </DashboardLayout>
                 </Route>
 
