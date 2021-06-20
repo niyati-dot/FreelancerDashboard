@@ -1,8 +1,9 @@
 import {Container, Nav, Navbar} from "react-bootstrap";
+import "./AppNavbar.scss"
 
 export default function AppNavbar(){
     return (
-        <Navbar bg="dark" variant="dark">
+        <Navbar className="nav-bar-container">
             <Container>
                 <Navbar.Brand href="/">Freelance Dashboard</Navbar.Brand>
                 <Nav className="ml-auto">
