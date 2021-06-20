@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import TodoList from "./pages/TodoList";
 
 export default function App() {
     return (
@@ -35,6 +36,9 @@ export default function App() {
                     <DashboardLayout>
                         <Dashboard />
                     </DashboardLayout>
+                </Route>
+                <Route path="/todolist">
+                    <TodoList />
                 </Route>
 
                 <Route path="/">
