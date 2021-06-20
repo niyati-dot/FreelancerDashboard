@@ -7,5 +7,6 @@ export default function Dashboard(){
             <PageHeader title="Dashboard" subtitle="Welcome to Dashboard!"/>
             Dashboard Page
         </div>
+        
     )
 }
