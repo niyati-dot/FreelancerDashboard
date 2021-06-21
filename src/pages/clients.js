@@ -36,22 +36,22 @@ export class Clients extends Component {
 
   setData = () => {
     this.data = [{
-      ClientName: "2 minutes ago",
-      organization: "Jill Dupre",
-      ContactNo: "Created new account",
+      ClientName: "Jill Dupre",
+      organization: "Elegant Microweb",
+      ContactNo: "(+1)902-412-7654",
       Emailid: "JillDupre@gmail.com"
     },
     {
-      ClientName: "2 minutes ago",
-      organization: "Jill Dupre",
-      ContactNo: "Created new account",
-      Emailid: "JillDupre@gmail.com"
+      ClientName: "Herry Chopra",
+      organization: "Meditab",
+      ContactNo: "(+1) 777-987-2345",
+      Emailid: "hhs12@yahoo.co.in"
     },
     {
-      ClientName: "2 minutes ago",
-      organization: "Jill Dupre",
-      ContactNo: "Created new account",
-      Emailid: "JillDupre@gmail.com"
+      ClientName: "Nayan Patel",
+      organization: "IBM",
+      ContactNo: "(+91) 9601739976",
+      Emailid: "nayan007@gmail.com"
     }];
   }
   handleNewClient = (e) => {

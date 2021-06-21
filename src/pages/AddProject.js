@@ -12,24 +12,24 @@ export default function AddProjects(){
     }
 
     return (
-        <div>
-            <PageHeader title="New Project"/>
-            
-            <div className="col-md-2">
+       
+            <div className="page-container projects-container">
+            <div className="page-header-container">
+                <PageHeader title="New Project" />
             </div>
-            <div className="col-md-10">
+            <div className="page-content-container">
 
               <form action="/projects"><center>
 
                 <div class="form-group row">
-                    <label class="col-md-2 col-form-label">Project Title: </label>
+                    <label class="col-md-2 col-form-label">Project Title*: </label>
                     <div class="col-md-10">
                         <input title="Project Title" placeholder="Enter Project Title" className="form-control" type="text" name="first name" id="title"/>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-md-2 col-form-label">Client Name:</label>
+                    <label class="col-md-2 col-form-label">Client Name*:</label>
                     <div class="col-md-10">
                         <select title="Cleint Name" name="clients" class="form-control">
                             <option name="client1" value="client1">Client1</option>
@@ -48,7 +48,7 @@ export default function AddProjects(){
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-md-2 col-form-label">Hourly Rates:</label>
+                    <label class="col-md-2 col-form-label">Hourly Rates*:</label>
                     <div class="col-md-10">
                         <input title="Hourly Rates" placeholder="Enter Decided Hourly Rates" className="form-control" type="text" name="rate" id="rate"/>
                     </div>
