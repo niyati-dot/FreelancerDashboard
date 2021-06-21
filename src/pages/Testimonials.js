@@ -16,7 +16,7 @@ const Testimonials = () => {
             Cell: ({row}) => (
                 <div className="row">
                     <div className="col-md-3">
-                        <button className="btn btn-primary" onClick={() => setLgShow(true)}>Re-Request</button>
+                        <button className="primary-button" onClick={() => setLgShow(true)}>Re-Request</button>
                         {/* <a href="#">Re-Request</a> */}
                     </div>
                     
@@ -185,7 +185,7 @@ const Testimonials = () => {
                     <div className="row">
                         <div className="col-md-5"></div>
                         <div className="col-md-7">
-                            <button className="btn btn-primary" onClick={() => setLgShow(true)}> Request New</button>
+                            <button className="primary-button" onClick={() => setLgShow(true)}> Request New</button>
                             
                             <Modal 
                                 size="lg"

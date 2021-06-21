@@ -172,100 +172,111 @@ export class InvoiceGeneration extends Component {
 
     render() {
         return (
-            <div className="page-container">
+            <div className="page-container invoice-generation-container">
                 <div className="page-header-container">
-                    <PageHeader title="Invoice Geneation" subtitle="" />
+                    <PageHeader title="Invoice Generation" subtitle="" />
                 </div>
                 <div className="page-content-container">
                     <div className="page-content">
-                        <Row>
+                        <Row className="invoice-generation-content">
                             <Col>
                                 <Form>
-                                    <Row>
-                                        <Col>
-                                            <Form.Group>
-                                                <Form.Label className="required">Client</Form.Label>
-                                                <Form.Control as="select" name="client" value={this.state.client} onChange={this.onValueChange}
-                                                    onBlur={this.validateClient}
-                                                    isInvalid={this.state.clientError}>
-                                                    <option>Select Client</option>
-                                                    <option value="1">Freelancer dashboard</option>
-                                                    <option value="2">SIS</option>
-                                                    <option value="3">VM</option>
-                                                </Form.Control>
-                                                <Form.Control.Feedback type="invalid">
-                                                    {this.state.clientError}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        </Col>
-                                        <Col>
-                                            <Form.Group>
-                                                <Form.Label className="required">Project</Form.Label>
-                                                <Form.Control as="select" name="project" value={this.state.project} onChange={this.onValueChange}
-                                                    onBlur={this.validateProject}
-                                                    isInvalid={this.state.projectError}>
-                                                    <option>Select Project</option>
-                                                    <option value="1">Freelancer dashboard</option>
-                                                    <option value="2">SIS</option>
-                                                    <option value="3">VM</option>
-                                                </Form.Control>
-                                                <Form.Control.Feedback type="invalid">
-                                                    {this.state.projectError}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col>
-                                            <Form.Group>
-                                                <div>
-                                                    <Form.Label className="required">Invoice Duration</Form.Label>
-                                                </div>
-                                                <div className="inline-date-control">
-                                                    <Form.Control type="date" className="start-date" name="startDate" placeholder="Start Date" value={this.state.startDate} onChange={this.onValueChange}
-                                                        onBlur={this.validateDate}
-                                                        isInvalid={this.state.startDateError} />
-
-
-                                                    <Form.Control type="date" name="endDate" placeholder="End Date" value={this.state.endDate} onChange={this.onValueChange}
-                                                        onBlur={this.validateDate}
-                                                        isInvalid={this.state.endDateError} />
-
-                                                </div>
-                                                <div>
+                                    <div className="generate-forms">
+                                        <Row>
+                                            <Col>
+                                                <Form.Group>
+                                                    <Form.Label className="required">Client</Form.Label>
+                                                    <Form.Control as="select" name="client" value={this.state.client} onChange={this.onValueChange}
+                                                        onBlur={this.validateClient}
+                                                        isInvalid={this.state.clientError}>
+                                                        <option>Select Client</option>
+                                                        <option value="1">Freelancer dashboard</option>
+                                                        <option value="2">SIS</option>
+                                                        <option value="3">VM</option>
+                                                    </Form.Control>
                                                     <Form.Control.Feedback type="invalid">
-                                                        {this.state.startDateError}
+                                                        {this.state.clientError}
                                                     </Form.Control.Feedback>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col>
+                                                <Form.Group>
+                                                    <Form.Label className="required">Project</Form.Label>
+                                                    <Form.Control as="select" name="project" value={this.state.project} onChange={this.onValueChange}
+                                                        onBlur={this.validateProject}
+                                                        isInvalid={this.state.projectError}>
+                                                        <option>Select Project</option>
+                                                        <option value="1">Freelancer dashboard</option>
+                                                        <option value="2">SIS</option>
+                                                        <option value="3">VM</option>
+                                                    </Form.Control>
                                                     <Form.Control.Feedback type="invalid">
-                                                        {this.state.endDateError}
+                                                        {this.state.projectError}
                                                     </Form.Control.Feedback>
-                                                </div>
-
-                                            </Form.Group>
-                                        </Col>
-                                        <Col>
-                                            <Form.Group>
-                                                <Form.Label className="required">Hourly Rate</Form.Label>
-                                                <Form.Control type="number" name="hourlyRate" placeholder="Hourly Rate" value={this.state.hourlyRate} onChange={this.onValueChange}
-                                                    onBlur={this.validateHourlyRate}
-                                                    isInvalid={this.state.hourlyRateError} />
-                                                <Form.Control.Feedback type="invalid">
-                                                    {this.state.hourlyRateError}
-                                                </Form.Control.Feedback>
-                                            </Form.Group>
-                                        </Col>
-                                    </Row>
-                                    <Row className="generate-button-container">
-                                        <Button className="primary-button" onClick={this.generateInvoice}>
-                                            Generate Invoice
-                                        </Button>
-                                    </Row>
+                                                </Form.Group>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col>
+                                                <Form.Group>
+                                                    <div>
+                                                        <Form.Label className="required">Invoice Duration</Form.Label>
+                                                    </div>
+                                                    <div className="inline-date-control">
+                                                        <div className="start-date-control">
+                                                            <Form.Control type="date" className="start-date" name="startDate" placeholder="Start Date" value={this.state.startDate} onChange={this.onValueChange}
+                                                                onBlur={this.validateDate}
+                                                                isInvalid={this.state.startDateError} />
+                                                            <Form.Control.Feedback type="invalid">
+                                                                {this.state.startDateError}
+                                                            </Form.Control.Feedback>
+                                                        </div>
+                                                        <div className="end-date-control">
+                                                            <Form.Control type="date" name="endDate" placeholder="End Date" value={this.state.endDate} onChange={this.onValueChange}
+                                                                onBlur={this.validateDate}
+                                                                isInvalid={this.state.endDateError} />
+                                                            <Form.Control.Feedback type="invalid">
+                                                                {this.state.endDateError}
+                                                            </Form.Control.Feedback>
+                                                        </div>
+                                                    </div>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col>
+                                                <Form.Group>
+                                                    <Form.Label className="required">Hourly Rate</Form.Label>
+                                                    <Form.Control type="number" name="hourlyRate" placeholder="Hourly Rate" value={this.state.hourlyRate} onChange={this.onValueChange}
+                                                        onBlur={this.validateHourlyRate}
+                                                        isInvalid={this.state.hourlyRateError} />
+                                                    <Form.Control.Feedback type="invalid">
+                                                        {this.state.hourlyRateError}
+                                                    </Form.Control.Feedback>
+                                                </Form.Group>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                    <div className="generate-buttons">
+                                        <Row className="generate-button-container">
+                                            <Button className="primary-button" onClick={this.generateInvoice}>
+                                                Generate Invoice
+                                            </Button>
+                                            <Button className="secondary-button">
+                                                Save
+                                            </Button>
+                                            <Button className="secondary-button">
+                                                Download
+                                            </Button>
+                                            <Button className="secondary-button">
+                                                Send
+                                            </Button>
+                                        </Row>
+                                    </div>
                                 </Form>
                             </Col>
                         </Row>
                         <Row className="data-table-container">
                             <Col>
-                                <Datatable columns={this.columns} data={this.dummyData} allowCSV="false" allowSearch="false"/>
+                                <Datatable columns={this.columns} data={this.dummyData} allowCSV="false" allowSearch="false" />
                             </Col>
                         </Row>
                     </div>

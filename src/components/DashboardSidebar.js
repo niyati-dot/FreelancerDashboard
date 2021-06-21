@@ -23,7 +23,7 @@ export default function Sidebar(props) {
             <Collapse in={ open }>
                 <Drawer.Overflow>
                     <Drawer.ToC>
-                        <Drawer.Header href="/">Dashboard</Drawer.Header>
+                        <Drawer.Header href="/dashboard">Dashboard</Drawer.Header>
 
                         <Drawer.Nav>
                             <Drawer.Item className={`${index === 0 ? 'nav-item-active' : ''}`} href="/clients" onClick={() => setActiveItem(0)}>Clients</Drawer.Item>

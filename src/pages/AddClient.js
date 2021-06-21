@@ -202,13 +202,13 @@ export class AddClient extends Component {
 
     render() {
         return (
-            <div className="page-container">
+            <div className="page-container add-client-container">
                 <div className="page-header-container">
                    <PageHeader title="New Client" subtitle="" />
                 </div>
                 <div className="page-content-container">
                     <div className="page-content">
-                        <Row>
+                        <Row className="add-client-content">
                             <Col>
                                 <Form>
                                     <Row>

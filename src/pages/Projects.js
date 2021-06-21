@@ -6,6 +6,7 @@ import Datatable from "../components/Datatable";
 import '../style.scss';
 import { Button, Card, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import { Redirect, useHistory } from 'react-router-dom';
+import "./Projects.scss";
 
 export default function Projects() {
 
@@ -16,7 +17,7 @@ export default function Projects() {
         { Header: 'Status', accessor: 'status' },
         {
             Header: 'Actions', accessor: 'row',
-            Cell: ({ row }) => (<div><a title="Edit Project" onClick={() => editProject(row.id)} className="btn btn-secondary">Edit</a>     |     <a title="Delete Project" onClick={() => { deleteTask(row) }} className="btn btn-danger">Delete</a></div>)
+            Cell: ({ row }) => (<div className="data-table-button"><a title="Edit Project" onClick={() => editProject(row.id)} className="secondary-button">Edit</a><a title="Delete Project" onClick={() => { deleteTask(row) }} className="delete-button">Delete</a></div>)
         }
     ];
 
@@ -129,25 +130,21 @@ export default function Projects() {
     }
 
     return (
-        <div className="page-container">
+        <div className="page-container projects-container">
             <div className="page-header-container">
                 <PageHeader title="Projects" />
             </div>
             <div className="page-content-container">
-                <div className="page-content">
-                    <div>
-                        <div className="row">
-                            <div className="col-md-10">
-                            </div>
-                            <div className="col-md-2 add-project-btn">
-                                <a href="/projects/add" title="Add Project" className="btn btn-primary">Add Project</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
+                <Row className="button-container">
+                    <Col>
+                        <a href="/projects/add" title="Add Project" className="primary-button">Add Project</a>
+                    </Col>
+                </Row>
+                <Row className="data-table-container">
+                    <Col>
                         <Datatable columns={columns} data={data} />
-                    </div>
-                </div>
+                    </Col>
+                </Row>
             </div>
         </div>
     )

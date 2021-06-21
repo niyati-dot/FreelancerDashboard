@@ -14,24 +14,23 @@
 }
 
 .page-container {
-    height: 100%;
     width: 100%;
     display: inline-block;
+    padding: 0.5rem;
+    height: calc(100vh - 56.22px);
 }
 
 .page-header-container {
     margin: 0rem 0.5rem;
+    height: 3.5rem;
 }
 
 .page-content-container {
     background: $white;
     border-radius: 0.5rem;
-    margin: 0.5rem;
     height: calc(100% - 3.5rem);
     box-shadow: $contentBoxShadow;
     padding: 1rem;
-    overflow-x: hidden;
-    overflow-y: auto;
     position: relative;
     width: 100%;
     display: inline-block;
@@ -39,7 +38,7 @@
 
 .page-content {
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: hidden;
     height: 100%;
     width: 100%;
     display: inline-block;

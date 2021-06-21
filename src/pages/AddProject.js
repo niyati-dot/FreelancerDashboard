@@ -79,7 +79,7 @@ export default function AddProjects(){
                 <div class="form-group row">
                     <div class="col-md-5"></div>
                     <div class="col-md-2">
-                        <button type="submit" title="Submit" className="btn btn-primary">Submit</button>
+                        <button type="submit" title="Submit" className="primary-button">Submit</button>
                     </div>
                     <div class="col-md-2">
                         <button type="button" title="Cancel" onClick={cancel} className="btn btn-danger">Cancel</button>
