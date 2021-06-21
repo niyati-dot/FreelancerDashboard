@@ -14,6 +14,8 @@ import AddProject from "./pages/AddProject";
 import EditProject from "./pages/EditProject";
 import Clients from "./pages/Clients";
 import AddClient from "./pages/AddClient";
+import Testimonials from "./pages/Testimonials";
+
 
 export default function App() {
     return (
@@ -77,7 +79,11 @@ export default function App() {
                         <AddClient />
                     </DashboardLayout>
                 </Route>
-
+                <Route path="/testimonials">
+                    <DashboardLayout>
+                        <Testimonials />
+                    </DashboardLayout>
+                </Route>
                 <Route path="/">
                     <div>404 Page not found.</div>
                 </Route>
