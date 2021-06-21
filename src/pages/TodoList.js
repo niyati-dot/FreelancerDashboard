@@ -54,11 +54,10 @@ export default function TodoList(){
                                     <Col>
                                     </Col>
                                     <Col className="newtask-col">
-                                        <Button color="primary" className="alignment" onClick={toggle}>
-                                            <span>
-                                                <i class="fas fa-plus-square"></i>
-                                            </span>
-                                        </Button>
+                                        <div className="alignment">
+                                            <Button   onClick={toggle} className="primary-button">Add</Button>
+                                        </div>
+                                       
                                     </Col>
                                 </Row>
                                 <Row className="card-row">
@@ -76,11 +75,7 @@ export default function TodoList(){
                                                         </CardBody>
                                                     </div>
                                                     <div className="button-col">
-                                                        <Button className="delete-button ">
-                                                            <span>
-                                                                <i class="fas fa-trash"></i>
-                                                            </span>
-                                                        </Button>
+                                                        <Button  className="delete-button">Delete</Button>
                                                     </div>
                                                 </div>
                                             </Card>
