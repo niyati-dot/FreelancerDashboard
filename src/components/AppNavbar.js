@@ -3,7 +3,7 @@ import "./AppNavbar.scss"
 
 export default function AppNavbar(){
     return (
-        <Navbar className="nav-bar-container">
+        <Navbar className="nav-bar-container" bg="dark" variant="dark">
             <Container>
                 <Navbar.Brand href="/">Freelance Dashboard</Navbar.Brand>
                 <Nav className="ml-auto">

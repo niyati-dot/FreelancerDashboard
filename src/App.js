@@ -36,6 +36,11 @@ export default function App() {
                         <Dashboard />
                     </DashboardLayout>
                 </Route>
+                <Route path="/dashboard/:id">
+                    <DashboardLayout>
+                        <Dashboard />
+                    </DashboardLayout>
+                </Route>
 
                 <Route path="/">
                     <div>404 Page not found.</div>
