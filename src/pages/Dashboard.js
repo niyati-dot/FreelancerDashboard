@@ -3,9 +3,11 @@ import PageHeader from "../components/PageHeader";
 
 export default function Dashboard(){
     return (
-        <div>
-            <PageHeader title="Dashboard" subtitle="Welcome to Dashboard!"/>
-            Dashboard Page
+        <div className="page-container">
+            <div className="page-header-container">
+                <PageHeader title="Dashboard" subtitle="Welcome to Dashboard!"/>
+            </div>
+            <div className="page-content-container"></div>
         </div>
         
     )

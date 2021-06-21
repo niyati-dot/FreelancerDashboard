@@ -11,7 +11,10 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import Clients from "./pages/clients";
+import Clients from "./pages/Clients";
+import AddClient from "./pages/AddClient";
+
+
 export default function App() {
     return (
         <Router>
@@ -39,6 +42,11 @@ export default function App() {
                 <Route path="/clients">
                     <DashboardLayout>
                         <Clients />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/AddClient">
+                    <DashboardLayout>
+                        <AddClient />
                     </DashboardLayout>
                 </Route>
                 <Route path="/">

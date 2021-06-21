@@ -1,11 +1,10 @@
 import React from 'react';
-
+import "./PageHeader.scss"
 const PageHeader =(props) =>{
     return(
         <>
-            <h2>{props.title}</h2>
-            <strong>{props.subtitle}</strong>
-            <hr/>
+            <div className="page-header-title">{props.title}</div>
+            <div className="page-header-subtitle">{props.subtitle}</div>
         </>
     )
 }

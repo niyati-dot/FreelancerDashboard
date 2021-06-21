@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './bootstrap_custom.scss';
-import './style.css';
+import '@fortawesome/fontawesome-free/css/all.css';
+import './style.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
