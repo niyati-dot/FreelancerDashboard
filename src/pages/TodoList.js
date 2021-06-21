@@ -88,7 +88,7 @@ export default function TodoList(){
                                         {completetask.map(completetaskRows => (
                                         <Card className="cards">
                                             <CardBody>
-                                                <CardTitle className="text-style">{completetaskRows.title}</CardTitle>
+                                                <CardTitle className = "text-todo">{completetaskRows.title}</CardTitle>
                                             </CardBody>
                                         </Card>
                                         ))}                              

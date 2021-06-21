@@ -15,6 +15,7 @@ import Clients from "./pages/Clients";
 import AddClient from "./pages/AddClient";
 import Testimonials from "./pages/Testimonials";
 import InvoiceManagement from "./pages/InvoiceManagement"
+import TodoList from "./pages/TodoList"
 import Calendar from "./pages/Calendar";
 
 export default function App() {
@@ -87,6 +88,11 @@ export default function App() {
                 <Route path="/invoicemanagement">
                     <DashboardLayout>
                         <InvoiceManagement />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/todolist">
+                    <DashboardLayout>
+                        <TodoList />
                     </DashboardLayout>
                 </Route>
                 <Route path="/calendar">
