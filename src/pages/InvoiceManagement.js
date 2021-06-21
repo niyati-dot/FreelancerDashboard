@@ -1,98 +1,84 @@
-import React, { Component } from 'react';
+import React,{Component} from 'react';
 import PageHeader from "../components/PageHeader";
-import { Button, Col, Row } from "react-bootstrap";
+import {Button,Col,Row} from "react-bootstrap";
 import Datatable from "../components/Datatable";
 import { withRouter } from 'react-router-dom';
 import "../components/DashboardNavbar.scss";
-
-export class InvoiceManagement extends Component {
-
+import "./InvoiceManagement.scss"
+export class InvoiceManagement extends Component{
+    
     constructor(props) {
         super(props)
-        this.state = {
-            checkbox: 'false',
-            columns: [
-                { Header: 'Invoice Number', accessor: 'invoicename' },
-                { Header: 'Generated Date', accessor: 'generateddate' },
-                { Header: 'Due Date', accessor: 'duedate' },
-                { Header: 'Client Name', accessor: 'clientname' },
-                { Header: 'Project Name', accessor: 'projectname' },
-                { Header: 'Payment Status', accessor: 'paymentstatus' },
-                {
-                    Header: ' ', accessor: 'button1',
-                    Cell: ({ button1 }) => (<Button><span><i class="fas fa-edit"></i></span></Button>)
-                },
-                {
-                    Header: ' ', accessor: 'button2',
-                    Cell: ({ button2 }) => (<Button><span><i class="fas fa-trash"></i></span></Button>)
-                }
-            ],
+        this.state={
+        checkbox : 'false',
+        columns : [
+            { Header: 'Invoice Number', accessor: 'invoicename'},
+            { Header: 'Generated Date', accessor: 'generateddate'},
+            { Header: 'Due Date', accessor: 'duedate'},
+            { Header: 'Client Name', accessor: 'clientname'},
+            { Header: 'Project Name', accessor: 'projectname'},
+            { Header: 'Payment Status', accessor: 'paymentstatus'},
+            { Header: 'Action', accessor: 'button1',
+                Cell: ({button1}) => (<div><Button  className="secondary-button">Edit</Button><Button  className="delete-button">Delete</Button></div>)},
+        ],
 
-            data: [{
-                invoicename: "1",
-                generateddate: "03-02-2021",
-                duedate: "03-03-2021",
-                clientname: "DadADD Bob",
-                projectname: "Invoice generator",
-                paymentstatus: "Unpaid"
-            },
-            {
-                invoicename: "2",
-                generateddate: "03-02-2021",
-                duedate: "03-03-2021",
-                clientname: "DadADD Bob",
-                projectname: "Invoice generator",
-                paymentstatus: "Paid"
-            },
-            {
-                invoicename: "3",
-                generateddate: "03-02-2021",
-                duedate: "03-03-2021",
-                clientname: "DadADD Bob",
-                projectname: "Invoice generator",
-                paymentstatus: "Unpaid"
-            },
-            {
-                invoicename: "4",
-                generateddate: "03-02-2021",
-                duedate: "03-03-2021",
-                clientname: "DadADD Bob",
-                projectname: "Invoice generator",
-                paymentstatus: "Unpaid"
-            }]
+       data:[{    
+        invoicename: "1EDJJHE",
+        generateddate: "03-02-2021",
+        duedate: "03-03-2021",
+        clientname:"Bob Marker",
+        projectname:"Project Management",
+        paymentstatus:"Unpaid"
+      },
+      {
+        invoicename: "2XFDSFW",
+        generateddate: "03-02-2021",
+        duedate: "03-03-2021",
+        clientname:"Mark Velly",
+        projectname:"Tic-Toe",
+        paymentstatus:"Paid"
+      },
+      {
+        invoicename: "3ECERCC",
+        generateddate: "03-02-2021",
+        duedate: "03-03-2021",
+        clientname:"Lelly Vince",
+        projectname:"Invoice Generator",
+        paymentstatus:"Unpaid"
+      },
+      {
+        invoicename: "4ERDFTH",
+        generateddate: "03-02-2021",
+        duedate: "03-03-2021",
+        clientname:"Chrissy MAcdonalds",
+        projectname:"Client Management",
+        paymentstatus:"Unpaid"
+      }]
         }
     }
-    handleClick = (e) => {
-        this.setState({ checkbox: 'true' })
+    handleClick=(e)=>{
+        this.setState({checkbox:'true'})
     }
 
-    render() {
-        return (
+render() {
+    return (
 
-            <div className="page-container">
-                <div className="page-header-container">
-                    <PageHeader title="Invoice Management" subtitle="" />
-                </div>
-                <div className="page-content-container">
-                    <div className="page-content">
-                        <Button onclick={this.handleClick} className="filter__button">
-                            <span><i class="fas fa-filter">
-                            </i></span></Button>
-                        <Row>
-                            {this.state.checkbox ? (<Col md={{ span: 2 }}>
-                                <select id="dropdown-basic">
-                                    <option value="clientname">Cleint Name</option>
-                                    <option value="paymentstatus">Payment Status</option>
-                                    <option value="Project Name">Project Name</option>
-                                </select>
-                            </Col>) : (<div></div>)
-                            }</Row>
-                        <Datatable columns={this.state.columns} data={this.state.data} allowCSV="false" allowSearch="false" />
-                    </div>
-
-                </div>
-            </div>
-        )
-    }
+    <div className="page-container-container">
+        <div className="page-header-container">
+           <PageHeader title="Invoice Management" subtitle="" />
+        </div>
+        <div className="page-content-container">
+            <div className="page-content"></div>
+            <Row>
+                <Col>
+                <input  type="text" placeholder="Filter" name="textforfiletr" />
+                </Col>
+                
+            </Row>
+            <Datatable columns={this.state.columns} data={this.state.data} allowCSV="false" allowSearch="false"/>
+        </div>
+    </div>
+)
+        }
 }
 export default withRouter(InvoiceManagement)

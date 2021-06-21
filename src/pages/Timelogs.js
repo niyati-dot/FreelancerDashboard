@@ -13,7 +13,7 @@ export default function Timelogs() {
         { Header: 'End At', accessor: 'endAt' },
         {
             Header: 'Action', accessor: 'row',
-            Cell: ({ row }) => (<Button variant="danger" onClick={() => { deleteTask(row) }}>Delete</Button>)
+            Cell: ({ row }) => (<Button className="delete-button" onClick={() => { deleteTask(row) }}>Delete</Button>)
         }
     ];
 
@@ -260,12 +260,12 @@ export default function Timelogs() {
                                 <Card.Body className="text-center">
                                     <Card.Title style={{ fontSize: "2.5rem" }}>{timerString}</Card.Title>
                                     {timer <= 0 &&
-                                        <Button variant="primary" onClick={handleModalShow}>Start</Button>
+                                        <Button className="secondary-button" onClick={handleModalShow}>Start</Button>
                                     }
                                     {timer > 0 &&
                                         <>
                                             <Card.Subtitle className="mb-2 text-muted">Task: {task.task}</Card.Subtitle>
-                                            <Button variant="danger" onClick={stopTask}>Stop</Button>
+                                            <Button className="delete-button" onClick={stopTask}>Stop</Button>
                                         </>
                                     }
                                 </Card.Body>
@@ -323,10 +323,10 @@ export default function Timelogs() {
                                 </Container>
                             </Modal.Body>
                             <Modal.Footer>
-                                <Button variant="secondary" type="reset" onClick={handleModalClose}>
+                                <Button className="secondary-button" type="reset" onClick={handleModalClose}>
                                     Close
                                 </Button>
-                                <Button variant="primary" type="submit">
+                                <Button className="primary-button" type="submit">
                                     Start
                                 </Button>
                             </Modal.Footer>

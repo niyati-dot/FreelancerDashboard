@@ -82,7 +82,7 @@ const EditProjects = (prop) => {
                         <button type="submit" title="Submit" className="primary-button">Submit</button>
                     </div>
                     <div class="col-md-2">
-                        <button type="button" title="Cancel" onClick={cancel} className="btn btn-danger">Cancel</button>
+                        <button type="button" title="Cancel" onClick={cancel} className="delete-button">Cancel</button>
                     </div>
                     <div class="col-md-3"></div>
                 </div>
