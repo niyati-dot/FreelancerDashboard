@@ -12,7 +12,7 @@ import {CURLINFO_HTTP_CODE} from 'react';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 
 export class AddClient extends Component {
-
+ 
     constructor(props) {
         super(props)
 
@@ -45,12 +45,12 @@ export class AddClient extends Component {
         });
     }
 
-    selectCountry (val) {
-      this.setState({ country: val });
+    selectCountry (name, val) {
+      this.setState({  name: val });
     }
   
     selectRegion (val) {
-      this.setState({ region: val });
+      this.setState({ name: val });
     }
 
     validateClient = (event) => {
@@ -77,6 +77,14 @@ export class AddClient extends Component {
           this.setState({ contactNoError: "Contact No is required" })
           isValid = false;
       }
+      var pattern = new RegExp(/^[0-9\b]+$/);
+      const result = pattern.test(this.state.contactNo);
+      if(result===false){
+        this.setState({
+          isValid:false,
+          contactNoError: "Contact No is invalid: can contain Number and contry code only"
+        })
+      }
       return isValid;
     }
 
@@ -87,7 +95,7 @@ export class AddClient extends Component {
       if(result===false){
         this.setState({
           isValid:false,
-          websiteNameError: "Provided website is invalid"
+          websiteNameError: "Provided website is invalid: should contain domain name"
         })
       }
       return isValid;
@@ -104,7 +112,7 @@ export class AddClient extends Component {
       if(result===false){
         this.setState({
           isValid:false,
-          emailIdError: "Provided email Id is invalid"    
+          emailIdError: "Provided email Id is invalid: should contain '@' and domain name"    
         })
       } 
       return isValid;
@@ -112,8 +120,17 @@ export class AddClient extends Component {
 
     validateLinkedInProfile = (event) => 
     {
+
       let isValid = true;
-      const profileurl = this.state.linkedInProfile;
+      const pattern = /(ftp|http|https):\/\/?(?:www\.)?linkedin.com(\w+:{0,1}\w*@)?(\S+)(:([0-9])+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g;
+      const result = pattern.test(this.state.linkedInProfile);
+      if(result===false){
+        this.setState({
+          isValid:false,
+          linkedInProfileError: "LinkedIn Profile is not valid"
+        })
+      }
+      /*const profileurl = this.state.linkedInProfile;
       const fp = curl_init(profileurl);
       const response_code = curl_getinfo(fp, CURLINFO_HTTP_CODE);
 
@@ -122,7 +139,8 @@ export class AddClient extends Component {
           isValid:false,
           linkedInProfileError: "Provided Linkedin profile is invalid"    
         })
-      } 
+      }*/
+
       return isValid;
     }
 
@@ -351,7 +369,7 @@ export class AddClient extends Component {
                                             <Form.Group>
                                                 <Form.Label className="required">Country </Form.Label>
                                                 <CountryDropdown as="select" name="country" defaultOptionLabel="Select country" value={this.state.country} 
-                                                                 onChange={this.onValueChange}
+                                                                 onChange={(name, value) => this.selectCountry(name, value)}
                                                 />
                                             </Form.Group>
                                         
@@ -359,7 +377,7 @@ export class AddClient extends Component {
                                                 <Form.Label>Region </Form.Label>
                                                 <RegionDropdown
                                                        country={this.state.country} blankOptionLabel="No Country Selected" defaultOptionLabel="Select region"
-                                                       as="select" name="region" value={this.state.region} onChange={this.onValueChange}>
+                                                       as="select" name="region" value={this.state.region} onChange={(name, value) => this.selectRegion(name,value)}>
                                                 </RegionDropdown>                            
                                                 </Form.Group>
                                             </Col>

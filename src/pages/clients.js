@@ -33,7 +33,7 @@ export class clients extends Component
           )}];
           this.setData();
       }
-
+ 
       setData = () => {
         this.data = [{ ClientName: "2 minutes ago",
                           organization: "Jill Dupre",
