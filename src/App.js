@@ -15,7 +15,7 @@ import EditProject from "./pages/EditProject";
 import Clients from "./pages/Clients";
 import AddClient from "./pages/AddClient";
 import Testimonials from "./pages/Testimonials";
-
+import InvoiceManagement from "./pages/InvoiceManagement"
 
 export default function App() {
     return (
@@ -82,6 +82,11 @@ export default function App() {
                 <Route path="/testimonials">
                     <DashboardLayout>
                         <Testimonials />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/invoicemanagement">
+                    <DashboardLayout>
+                        <InvoiceManagement />
                     </DashboardLayout>
                 </Route>
                 <Route path="/">
