@@ -14,13 +14,11 @@ const EditProjects = (prop) => {
         history.push(url);
     }
 
-    return <div>
-            <PageHeader title="Edit Project"/>
-            
-            <div className="col-md-2">
+    return  <div className="page-container projects-container">
+            <div className="page-header-container">
+                <PageHeader title="Edit Project" />
             </div>
-            <div className="col-md-10">
-
+            <div className="page-content-container">
             <form action="/projects"><center>
 
                 <div class="form-group row">

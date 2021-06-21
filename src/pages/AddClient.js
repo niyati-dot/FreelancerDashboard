@@ -72,12 +72,20 @@ export class AddClient extends Component {
     }
 
     validateContactNo = (event) => {
-      let isValid = true;
-      if (!this.state.contactNo) {
-          this.setState({ contactNoError: "Contact No is required" })
-          isValid = false;
-      }
-      return isValid;
+        let isValid = true;
+        if (!this.state.contactNo) {
+            this.setState({ contactNoError: "Contact No is required" })
+            isValid = false;
+        }
+        var pattern = new RegExp(/^[0-9\b]+$/);
+        const result = pattern.test(this.state.contactNo);
+        if(result===false){
+          this.setState({
+            isValid:false,
+            contactNoError: "Contact No is invalid: can contain Number and contry code only"
+          })
+        }
+        return isValid;
     }
 
     validateWebsiteName = (event) => {
@@ -112,18 +120,25 @@ export class AddClient extends Component {
 
     validateLinkedInProfile = (event) => 
     {
-      let isValid = true;
-      const profileurl = this.state.linkedInProfile;
-      const fp = curl_init(profileurl);
-      const response_code = curl_getinfo(fp, CURLINFO_HTTP_CODE);
-
-      if(response_code===200){
-        this.setState({
-          isValid:false,
-          linkedInProfileError: "Provided Linkedin profile is invalid"    
-        })
-      } 
-      return isValid;
+        let isValid = true;
+        const pattern = /(ftp|http|https):\/\/?(?:www\.)?linkedin.com(\w+:{0,1}\w*@)?(\S+)(:([0-9])+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g;
+        const result = pattern.test(this.state.linkedInProfile);
+        if(result===false){
+          this.setState({
+            isValid:false,
+            linkedInProfileError: "LinkedIn Profile is not valid"
+          })
+        }
+        /*const profileurl = this.state.linkedInProfile;
+        const fp = curl_init(profileurl);
+        const response_code = curl_getinfo(fp, CURLINFO_HTTP_CODE);
+  
+        if(response_code===200){
+          this.setState({
+            isValid:false,
+            linkedInProfileError: "Provided Linkedin profile is invalid"    
+          })
+        }*/
     }
 
     validateStreet = (event) => {
@@ -291,7 +306,7 @@ export class AddClient extends Component {
                                     <Row>
                                         <Col>
                                             <Form.Group>
-                                                <Form.Label className="required">Street</Form.Label>
+                                                <Form.Label>Street</Form.Label>
                                                 <Form.Control type="name" name="street" placeholder="Enter Street Name" value={this.state.street} onChange={this.onValueChange}
                                                     onBlur={this.validateStreet}
                                                     isInvalid={this.state.streetError} />
@@ -303,7 +318,7 @@ export class AddClient extends Component {
 
                                         <Col>
                                             <Form.Group>
-                                                <Form.Label className="required">Business Description</Form.Label>
+                                                <Form.Label>Business Description</Form.Label>
                                                 <Form.Control type="name" name="businessDescription" placeholder="Enter Business Description" value={this.state.businessDescription} onChange={this.onValueChange}
                                                     onBlur={this.validatebusinessDescription}
                                                      />
@@ -316,7 +331,7 @@ export class AddClient extends Component {
                                     <Row>
                                         <Col>
                                             <Form.Group>
-                                                <Form.Label className="required">Postal Code</Form.Label>
+                                                <Form.Label>Postal Code</Form.Label>
                                                 <Form.Control type="name" name="postalCode" placeholder="Enter Postal code" value={this.state.postalCode} onChange={this.onValueChange}
                                                     onBlur={this.validatePostalcode}
                                                     isInvalid={this.state.PostalCodeError} />
@@ -356,7 +371,7 @@ export class AddClient extends Component {
                                             </Form.Group>
                                         
                                             <Form.Group>
-                                                <Form.Label>Region </Form.Label>
+                                                <Form.Label>Region  </Form.Label>
                                                 <RegionDropdown
                                                        country={this.state.country} blankOptionLabel="No Country Selected" defaultOptionLabel="Select region"
                                                        as="select" name="region" value={this.state.region} onChange={this.onValueChange}>
