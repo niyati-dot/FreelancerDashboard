@@ -11,7 +11,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import TodoList from "./pages/TodoList";
+import InvoiceManagement from "./pages/InvoiceManagement"
 
 export default function App() {
     return (
@@ -37,10 +37,11 @@ export default function App() {
                         <Dashboard />
                     </DashboardLayout>
                 </Route>
-                <Route path="/todolist">
-                    <TodoList />
+                <Route path="/invoicemanagement">
+                    <DashboardLayout>
+                        <InvoiceManagement />
+                    </DashboardLayout>
                 </Route>
-
                 <Route path="/">
                     <div>404 Page not found.</div>
                 </Route>
