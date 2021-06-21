@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import AppLayout from "./layouts/AppLayout";
 import DashboardLayout from "./layouts/DashboardLayout";
@@ -12,6 +12,8 @@ import Timelogs from "./pages/Timelogs";
 import Projects from "./pages/Projects";
 import AddProject from "./pages/AddProject";
 import EditProject from "./pages/EditProject";
+import Clients from "./pages/Clients";
+import AddClient from "./pages/AddClient";
 
 export default function App() {
     return (
@@ -64,7 +66,18 @@ export default function App() {
                         <InvoiceGeneration />
                     </DashboardLayout>
                 </Route>
-                    
+
+                <Route path="/clients">
+                    <DashboardLayout>
+                        <Clients />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/AddClient">
+                    <DashboardLayout>
+                        <AddClient />
+                    </DashboardLayout>
+                </Route>
+
                 <Route path="/">
                     <div>404 Page not found.</div>
                 </Route>

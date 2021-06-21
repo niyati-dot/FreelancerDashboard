@@ -11,5 +11,6 @@ export default function Dashboard(){
                 {/* page content goes here */}
             </div>
         </div>
+        
     )
 }
