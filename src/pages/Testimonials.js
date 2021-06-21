@@ -4,10 +4,6 @@ import PageHeader from "../components/PageHeader";
 import { Modal, Form, Button } from 'react-bootstrap';
 import Datatable from '../components/Datatable';
 import emailjs from 'emailjs-com';
-import{ init } from 'emailjs-com';
-
-
-
 
 const Testimonials = () => {
 
@@ -20,31 +16,41 @@ const Testimonials = () => {
             Cell: ({row}) => (
                 <div className="row">
                     <div className="col-md-3">
-                        <a href="#">Re-Request</a>
+                        <button className="btn btn-primary" onClick={() => setLgShow(true)}>Re-Request</button>
+                        {/* <a href="#">Re-Request</a> */}
                     </div>
                     
                     <div className="col-md-3">
-                        <a href="#">Delete</a>
+                        <button className="btn btn-danger" onClick= {deleteTask} >Delete</button>
+                        {/* <a href="#">Delete</a> */}
                     </div>
                 </div>
             )}
     ];
-
-    var mailParams = {
-        freelancerName: 'Freelancer Deep',
-        clientMail: 'deepatel1607@gmail.com',
-        clientName: 'Client Deep',
-        freelancerMail: 'dee16798p@gmail.com',
-        message: 'Accepted !!'
-    };
+    
 
     function sendEmail(e) {
         e.preventDefault();
+        
+        // console.log(e.target.data);
+        var mailParams = {
+            //Mail Sender Details
+            freelancerName: 'Freelancer_Deep',
+            freelancerMail: 'deepatel1607@gmail.com',
+
+            //Mail Reciver Details
+            clientName: 'Client_Deep',
+            clientMail: 'dee16798ppatel@gmail.com',
+
+            //Attachment Messages
+            message: 'Success!!'
+        };
 
         emailjs.send('testimonial_request', 'template_fmwc5oo', mailParams, 'user_INB1ILGAt4GVje2eeyj2V')
         .then(function(response) {
             alert("Email Sent");
             console.log('SUCCESS!', response.status, response.text);
+
         }, function(error) {
             alert("Error: "+error);
             console.log('FAILED...', error);
@@ -152,9 +158,9 @@ const Testimonials = () => {
         no: "",
         project: "",
         client: "",
+        requestedOn: "",
         status: ""
     });
-
 
     const deleteTask = (task) => {
         if(window.confirm("Are you sure?")){
@@ -164,7 +170,6 @@ const Testimonials = () => {
             setData(newData);
         }
     };
-
 
     const [lgShow, setLgShow] = useState(false);
 
@@ -194,7 +199,14 @@ const Testimonials = () => {
                                 </Modal.Title>
                                 </Modal.Header>
                                 <Modal.Body>
-                                    <Form >
+                                    <Form id="contact-form">
+
+                                        <input type="hidden" name="freelancerName" id="freelancerName" value="Freelancer_Deep"/>
+                                        <input type="hidden" name="freelancerMail" id="freelancerMail" value="deepatel1607@gmail.com" />
+                                        <input type="hidden" name="clientName" id="clientName" value="Client_Deep"/>
+                                        <input type="hidden" name="clientMail" id="clientMail" value="dee16798ppatel@gmail.com"/>
+                                        <input type="hidden" name="message" id="message" value="From hidden"/>
+
                                         <Form.Group>
                                             <Form.Label>Project</Form.Label>
                                             <Form.Control as="select">
@@ -219,16 +231,15 @@ const Testimonials = () => {
 
                                         <Form.Group>
                                             <Form.Label>Request Message</Form.Label>
-                                            <Form.Control as="textarea" name="message" rows={3} />
+                                            <Form.Control as="textarea" name="message" rows={3} id="message" />
                                         </Form.Group>
 
-                                        <Button variant="primary" type="submit" onSubmit={sendEmail}>
+                                        <Button variant="primary" type="submit" id="button" value="Send" onClick={sendEmail}>
                                             Send
                                         </Button>                                
                                     </Form>
                                 </Modal.Body>
                             </Modal>
-
                         </div>
                     </div>
                 </div>
