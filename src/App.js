@@ -38,7 +38,9 @@ export default function App() {
                     </DashboardLayout>
                 </Route>
                 <Route path="/todolist">
+                <DashboardLayout>
                     <TodoList />
+                    </DashboardLayout>
                 </Route>
 
                 <Route path="/">
