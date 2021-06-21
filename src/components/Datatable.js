@@ -1,8 +1,8 @@
 import React from 'react';
-import { useGlobalFilter, usePagination, useSortBy, useTable } from "react-table";
-import { Col, Form, Row, Table } from "react-bootstrap";
+import {useGlobalFilter, usePagination, useSortBy, useTable} from "react-table";
+import {Col, Form, Row, Table} from "react-bootstrap";
 import Pagination from "react-bootstrap/Pagination";
-import { CSVLink } from "react-csv";
+import {CSVLink} from "react-csv";
 
 const Datatable = (props) => {
     const columns = props.columns;
@@ -35,7 +35,7 @@ const Datatable = (props) => {
     return (
         <div>
             <Row>
-                {allowCSV ? (<Col md={{ span: 2 }}>
+            {allowCSV ? (<Col md={{ span: 2 }}>
                     <CSVLink data={data} filename={"export.csv"} className="secondary-button" target="_blank">
                         Export CSV
                     </CSVLink>
@@ -51,33 +51,33 @@ const Datatable = (props) => {
             </Row>
             <Table bordered striped {...getTableProps()}>
                 <thead>
-                    {headerGroups.map(headerGroup => (
-                        <tr {...headerGroup.getHeaderGroupProps()}>
-                            {headerGroup.headers.map(column => (
-                                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                                    {column.render('Header')}
-                                    <span>{column.isSorted ?
-                                        column.isSortedDesc ?
-                                            ' 🔽' : ' 🔼'
-                                        : ''}</span>
-                                </th>
-                            ))}
-                        </tr>
-                    ))}
+                {headerGroups.map(headerGroup => (
+                    <tr {...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map(column => (
+                            <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                                {column.render('Header')}
+                                <span>{column.isSorted ?
+                                    column.isSortedDesc ?
+                                        ' 🔽': ' 🔼'
+                                    : ''}</span>
+                            </th>
+                        ))}
+                    </tr>
+                ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
-                    {page.map((row, i) => {
-                        prepareRow(row);
-                        return (
-                            <tr {...row.getRowProps()}>
-                                {row.cells.map((cell) => {
-                                    return (
-                                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                                    );
-                                })}
-                            </tr>
-                        );
-                    })}
+                {page.map((row, i) => {
+                    prepareRow(row);
+                    return (
+                        <tr {...row.getRowProps()}>
+                            {row.cells.map((cell) => {
+                                return (
+                                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                                );
+                            })}
+                        </tr>
+                    );
+                })}
                 </tbody>
             </Table>
             <Row>
@@ -99,13 +99,13 @@ const Datatable = (props) => {
                 </Col>
                 <Col>
                     <Pagination className="justify-content-end">
-                        <Pagination.First onClick={() => gotoPage(0)} disabled={!canPreviousPage} />
-                        <Pagination.Prev onClick={() => previousPage()} disabled={!canPreviousPage} />
-                        {Array(pageCount).fill().map((v, i) => (
-                            <Pagination.Item onClick={() => gotoPage(i)}>{i + 1}</Pagination.Item>
+                        <Pagination.First onClick={() => gotoPage(0)} disabled={!canPreviousPage}/>
+                        <Pagination.Prev onClick={() => previousPage()} disabled={!canPreviousPage}/>
+                        {Array(pageCount).fill().map((v,i) => (
+                            <Pagination.Item onClick={() => gotoPage(i)}>{i+1}</Pagination.Item>
                         ))}
-                        <Pagination.Next onClick={() => nextPage()} disabled={!canNextPage} />
-                        <Pagination.Last onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} />
+                        <Pagination.Next onClick={() => nextPage()} disabled={!canNextPage}/>
+                        <Pagination.Last onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}/>
                     </Pagination>
                 </Col>
             </Row>

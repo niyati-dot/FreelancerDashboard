@@ -9,6 +9,9 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import InvoiceGeneration from "./pages/InvoiceGeneration";
 import Timelogs from "./pages/Timelogs";
+import Projects from "./pages/Projects";
+import AddProject from "./pages/AddProject";
+import EditProject from "./pages/EditProject";
 
 export default function App() {
     return (
@@ -34,6 +37,22 @@ export default function App() {
                         <Dashboard />
                     </DashboardLayout>
                 </Route>
+                <Route exact path="/projects">
+                    <DashboardLayout>
+                        <Projects />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/projects/add">
+                    <DashboardLayout>
+                        <AddProject />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/projects/edit/:id">
+                    <DashboardLayout>
+                        <EditProject />
+                    </DashboardLayout>
+                </Route>
+
                 <Route path="/timelogs">
                     <DashboardLayout>
                         <Timelogs />
@@ -45,7 +64,7 @@ export default function App() {
                         <InvoiceGeneration />
                     </DashboardLayout>
                 </Route>
-
+                    
                 <Route path="/">
                     <div>404 Page not found.</div>
                 </Route>
