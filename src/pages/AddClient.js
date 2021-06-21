@@ -366,18 +366,18 @@ export class AddClient extends Component {
                                             <Form.Group>
                                                 <Form.Label className="required">Country </Form.Label>
                                                 <CountryDropdown as="select" name="country" defaultOptionLabel="Select country" value={this.state.country} 
-                                                                 onChange={this.onValueChange}
+                                                                 onChange={(name, value) => this.selectCountry(name, value)}
                                                 />
                                             </Form.Group>
                                         
                                             <Form.Group>
-                                                <Form.Label>Region  </Form.Label>
+                                                <Form.Label>Region </Form.Label>
                                                 <RegionDropdown
                                                        country={this.state.country} blankOptionLabel="No Country Selected" defaultOptionLabel="Select region"
-                                                       as="select" name="region" value={this.state.region} onChange={this.onValueChange}>
+                                                       as="select" name="region" value={this.state.region} onChange={(name, value) => this.selectRegion(name,value)}>
                                                 </RegionDropdown>                            
-                                                </Form.Group>
-                                            </Col>
+                                            </Form.Group>
+                                        </Col>
                                     </Row>
                                     
                                     <Row className="generate-button-container">
