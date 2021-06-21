@@ -34,7 +34,7 @@ export default function Sidebar(props) {
                             <Drawer.Item className={`${index === 5 ? 'nav-item-active' : ''}`} href="/testimonials" onClick={() => setActiveItem(5)}>Testimonials</Drawer.Item>
                             <span className="horizontal-break"></span>
                             <Drawer.Item className={`${index === 6 ? 'nav-item-active' : ''}`} href="#" onClick={() => setActiveItem(6)}>ToDo</Drawer.Item>
-                            <Drawer.Item className={`${index === 7 ? 'nav-item-active' : ''}`} href="#" onClick={() => setActiveItem(7)}>Calendar</Drawer.Item>
+                            <Drawer.Item className={`${index === 7 ? 'nav-item-active' : ''}`} href="/calendar" onClick={() => setActiveItem(7)}>Calendar</Drawer.Item>
                             <Drawer.Item className={`${index === 8 ? 'nav-item-active' : ''}`} href="#" onClick={() => setActiveItem(8)}>Notes</Drawer.Item>
                         </Drawer.Nav>
                     </Drawer.ToC>
