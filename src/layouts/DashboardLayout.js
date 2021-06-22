@@ -13,7 +13,7 @@ const DashboardLayout =({children}) =>{
                 <Container fluid>
                     <Row>
                         <Col md={2} as={DashboardSidebar} />
-                        <Col md={10} className="pt-2">
+                        <Col md={10}>
                             {children}
                         </Col>
                     </Row>

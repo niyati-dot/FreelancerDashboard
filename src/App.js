@@ -1,16 +1,22 @@
 import React from "react";
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route
-} from "react-router-dom";
-
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AppLayout from "./layouts/AppLayout";
 import DashboardLayout from "./layouts/DashboardLayout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import InvoiceGeneration from "./pages/InvoiceGeneration";
+import Timelogs from "./pages/Timelogs";
+import Projects from "./pages/Projects";
+import AddProject from "./pages/AddProject";
+import EditProject from "./pages/EditProject";
+import Clients from "./pages/Clients";
+import AddClient from "./pages/AddClient";
+import Testimonials from "./pages/Testimonials";
+import InvoiceManagement from "./pages/InvoiceManagement"
+import TodoList from "./pages/TodoList"
+import Calendar from "./pages/Calendar";
 
 export default function App() {
     return (
@@ -36,12 +42,64 @@ export default function App() {
                         <Dashboard />
                     </DashboardLayout>
                 </Route>
-                <Route path="/dashboard/:id">
+                <Route exact path="/projects">
                     <DashboardLayout>
-                        <Dashboard />
+                        <Projects />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/projects/add">
+                    <DashboardLayout>
+                        <AddProject />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/projects/edit/:id">
+                    <DashboardLayout>
+                        <EditProject />
                     </DashboardLayout>
                 </Route>
 
+                <Route path="/timelogs">
+                    <DashboardLayout>
+                        <Timelogs />
+                    </DashboardLayout>
+                </Route>
+
+                <Route path="/invoice-generation">
+                    <DashboardLayout>
+                        <InvoiceGeneration />
+                    </DashboardLayout>
+                </Route>
+
+                <Route path="/clients">
+                    <DashboardLayout>
+                        <Clients />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/AddClient">
+                    <DashboardLayout>
+                        <AddClient />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/testimonials">
+                    <DashboardLayout>
+                        <Testimonials />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/invoicemanagement">
+                    <DashboardLayout>
+                        <InvoiceManagement />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/todolist">
+                    <DashboardLayout>
+                        <TodoList />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/calendar">
+                    <DashboardLayout>
+                        <Calendar />
+                    </DashboardLayout>
+                </Route>
                 <Route path="/">
                     <div>404 Page not found.</div>
                 </Route>

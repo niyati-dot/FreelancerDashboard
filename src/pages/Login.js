@@ -36,7 +36,7 @@ export default function Login(){
                             <input 
                                 type="email" 
                                 className="form-control" 
-                                placeholder="Enter email"
+                                placeholder="Enter email. Eg:'admin@gmail.com' "
                                 id = "email"
                                 name = "email"
                                 value={email}
@@ -49,7 +49,7 @@ export default function Login(){
                             <input 
                                 type="password" 
                                 className="form-control" 
-                                placeholder="Enter password"
+                                placeholder="Enter password Eg:'admin@123"
                                 id = "password"
                                 name = "password"
                                 value={password}
@@ -58,9 +58,9 @@ export default function Login(){
                         </div>
 
                         <div className="form-group">
-                            <div className="custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                                <label className="custom-control-label">Remember me</label>
+                            <div>
+                                <input type="checkbox" id="customCheck1" />
+                                <label>Remember me</label>
                             </div>
                         </div>
 

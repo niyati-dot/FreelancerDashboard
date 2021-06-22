@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './bootstrap_custom.scss';
 import '@fortawesome/fontawesome-free/css/all.css';
 import './style.scss';
+import './button_style.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 

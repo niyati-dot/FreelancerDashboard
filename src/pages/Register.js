@@ -1,14 +1,14 @@
 import React from 'react';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 
 export default function Register(){
 
     let history = useHistory();
 
     const checkEmail = /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const checkPassword = /(?=.\d)(?=.[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+    const checkPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 
     const [registrationInfo, setRegistrationInfo] = useState({
         name: '',
@@ -76,7 +76,7 @@ export default function Register(){
             valid = false;
         }
         else{
-            if(checkPassword.test(registrationInfo.password)){
+            if(!checkPassword.test(registrationInfo.password)){
                 newRegError.passwordError = "Password Invalid!!";
                 setRegistrationErrors(newRegError);
                 valid = false;
@@ -123,20 +123,21 @@ export default function Register(){
                         <h3>Register</h3>
 
                         <div className="form-group">
-                            <label>Name</label>
+                            <Form.Label className="required">Name</Form.Label>
                             <input 
                                 type="text" 
                                 className="form-control" 
                                 placeholder="Enter Name"
                                 id = "name"
                                 name = "name"
+                                required="required"
                                 onChange={(e) => handleChange(e)} 
                             />
-                            <p className="error-tag">{registrationErrors.nameError}</p>
+                            <p className="text-danger">{registrationErrors.nameError}</p>
                         </div>
 
                         <div className="form-group">
-                            <label>Email</label>
+                        <Form.Label className="required">Email</Form.Label>
                             <input 
                                 type="text" 
                                 className="form-control" 
@@ -145,11 +146,11 @@ export default function Register(){
                                 name = "email"
                                 onChange={(e) => handleChange(e)}
                             />
-                            <p className="error-tag">{registrationErrors.emailError}</p>
+                            <p className="text-danger">{registrationErrors.emailError}</p>
                         </div>
 
                         <div className="form-group">
-                            <label>Password</label>
+                        <Form.Label className="required">Password</Form.Label>
                             <input 
                                 type="password" 
                                 className="form-control" 
@@ -158,11 +159,11 @@ export default function Register(){
                                 name = "password"
                                 onChange={(e) => handleChange(e)}
                             />
-                            <p className="error-tag">{registrationErrors.passwordError}</p>
+                            <p className="text-danger">{registrationErrors.passwordError}</p>
                         </div>
 
                         <div className="form-group">
-                            <label>Confirm Password</label>
+                        <Form.Label className="required">Confirm Password</Form.Label>
                             <input 
                                 type="password" 
                                 className="form-control"
@@ -171,7 +172,7 @@ export default function Register(){
                                 placeholder="Confirm your password"
                                 onChange={(e) => handleChange(e)}
                             />
-                            <p className="error-tag">{registrationErrors.confirmPasswordError}</p>
+                            <p className="text-danger">{registrationErrors.confirmPasswordError}</p>
 
                         </div>
 
