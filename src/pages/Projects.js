@@ -135,6 +135,8 @@ export default function Projects() {
                 <PageHeader title="Projects" />
             </div>
             <div className="page-content-container">
+            <div className="page-content">
+
                 <Row className="button-container">
                     <Col>
                         <a href="/projects/add" title="Add Project" className="primary-button">Add Project</a>
@@ -145,6 +147,7 @@ export default function Projects() {
                         <Datatable columns={columns} data={data} />
                     </Col>
                 </Row>
+                </div>
             </div>
         </div>
     )

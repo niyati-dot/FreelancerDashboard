@@ -187,10 +187,10 @@ const Testimonials = () => {
                     <Row>
                         <Col xs={12}>
                             <div className="col-md-2 button-container">
-                                <div className="row">
+                                <div className="row my-add-btn">
                                     <div className="col-md-5"></div>
                                     <div className="col-md-7">
-                                        <div className="add-testimonial-container ">
+                                        <div className="add-testimonial-container">
                                             <div className="generate-button-container">
                                                 <button className="primary-button" type="button" align="right" onClick={() => setLgShow(true)}> Request</button>
                                             </div>

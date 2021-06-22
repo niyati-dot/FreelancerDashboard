@@ -30,7 +30,6 @@
     border-radius: 0.5rem;
     height: calc(100% - 3.5rem);
     box-shadow: $contentBoxShadow;
-    padding: 1rem;
     position: relative;
     width: 100%;
     display: inline-block;
@@ -38,9 +37,9 @@
 
 .page-content {
     overflow-x: hidden;
-    overflow-y: hidden;
     height: 100%;
     width: 100%;
+    padding: 1rem ;
     display: inline-block;
 }
 
@@ -154,4 +153,12 @@ label{
 .add-project-btn{
     text-align: end;
     margin-bottom: 10px;
+}
+
+select.form-control{
+    padding: 0;
+}
+
+.my-add-btn{
+    margin-bottom: 15px;
 }
