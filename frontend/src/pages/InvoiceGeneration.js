@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-
+import axios from 'axios'
 
 export class InvoiceGeneration extends Component {
 
@@ -34,6 +34,17 @@ export class InvoiceGeneration extends Component {
         ];
 
         this.dummyData = [];
+    }
+    
+    componentDidMount() {
+        axios.get('http://localhost:3000/getProject/getproject').then((response) => {
+            if (response.status == 200) {
+                console.log("Enter")
+                console.log(response)
+            }
+        }).catch((error) => {
+            console.log("Eroor")
+        })
     }
 
     setDummyData() {
