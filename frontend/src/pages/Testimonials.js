@@ -6,7 +6,7 @@ import Datatable from '../components/Datatable';
 import emailjs from 'emailjs-com';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import "./Testimonials.scss"
+import "../styles/Testimonials.scss"
 const Testimonials = () => {
 
     const columns = [

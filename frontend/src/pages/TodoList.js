@@ -5,7 +5,7 @@ import { Card,CardBody,CardTitle} from 'reactstrap';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import PageHeader from "../components/PageHeader";
-import "./TodoList.scss";
+import "../styles/TodoList.scss";
 
 export default function TodoList(){
     

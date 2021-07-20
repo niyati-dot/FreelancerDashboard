@@ -1,5 +1,5 @@
 import {Container, Nav, Navbar} from "react-bootstrap";
-import "./DashboardNavbar.scss";
+import "../styles/DashboardNavbar.scss";
 
 export default function DashboardNavbar(){
     return (
