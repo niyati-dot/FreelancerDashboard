@@ -1,6 +1,7 @@
+/* Author: Vishal Sancheti */
+
 const Mongoose = require("mongoose");
 const Schema = Mongoose.Schema;
-
 
 const timelogSchema = new Mongoose.Schema({
     project: {

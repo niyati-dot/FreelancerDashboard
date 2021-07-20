@@ -1,49 +1,9 @@
+/* Author: Vishal Sancheti */
+
 const timelogModel = require('../models/timelogModel');
 const projectModel = require('../models/projectModel');
 
-const seed = async (req, res) => {
-    let project = await projectModel.findOne().exec();
-
-    let timelogs = [
-        {
-            "project": project._id,
-            "task": "Task 1",
-        },
-        {
-            "project": project._id,
-            "task": "Task 2",
-        },
-        {
-            "project": project._id,
-            "task": "Task 3",
-        },
-        {
-            "project": project._id,
-            "task": "Task 4",
-        },
-        {
-            "project": project._id,
-            "task": "Task 5",
-        },
-        {
-            "project": project._id,
-            "task": "Task 6",
-        },
-    ];
-
-    timelogModel.insertMany(timelogs).then(function(){
-        return res.status(200).json({
-            success: true,
-            message: 'Timelogs seeded'
-        });
-    }).catch(function(error){
-        return res.status(500).json({
-            success: true,
-            message: error
-        });
-    });
-};
-
+//List all documents
 const list = (req, res) => {
     timelogModel.find({}, function (err, docs) {
         if (err){
@@ -61,6 +21,7 @@ const list = (req, res) => {
     });
 };
 
+//Get document by ID
 const get = (req, res) => {
     timelogModel.findById(req.params.id, function (err, doc) {
         if (err){
@@ -79,6 +40,7 @@ const get = (req, res) => {
     });
 };
 
+//Update document by ID
 const update = (req, res) => {
     timelogModel.findById(req.params.id, function (err, doc) {
         if (err){
@@ -103,6 +65,7 @@ const update = (req, res) => {
     });
 };
 
+//Add document
 const add = async (req, res) => {
     let project = null;
 
@@ -148,7 +111,7 @@ const add = async (req, res) => {
     }
 };
 
-
+//Remove document by ID
 const remove = (req, res) => {
     timelogModel.findOneAndRemove({_id: req.params.id},function (err, docs) {
         if (err){

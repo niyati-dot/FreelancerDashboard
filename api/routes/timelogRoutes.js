@@ -1,3 +1,5 @@
+/* Author: Vishal Sancheti */
+
 const express = require('express');
 const timelogController = require('../controllers/timelogController');
 
@@ -8,6 +10,5 @@ timelogRouter.get('/:id', timelogController.get);
 timelogRouter.put('/update/:id', timelogController.update);
 timelogRouter.post('/add', timelogController.add);
 timelogRouter.delete('/remove/:id', timelogController.remove);
-
 
 module.exports = timelogRouter;

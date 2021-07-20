@@ -1,24 +1,33 @@
+/* Author: Vishal Sancheti */
+
 const projectModel = require('../models/projectModel');
 
+//Seed dummy documents
 const seed = (req, res) => {
     let projects = [
         {
-            "name": "Project 1",
+            "name": "Project A",
+            "client": "Marco Botton"
         },
         {
-            "name": "Project 2",
+            "name": "Project B",
+            "client": "Giacomo Guilizzoni"
         },
         {
-            "name": "Project 3",
+            "name": "Project C",
+            "client": "Giacomo Guilizzoni"
         },
         {
-            "name": "Project 4",
+            "name": "Project D",
+            "client": "Mariah Guilizzoni"
         },
         {
-            "name": "Project 5",
+            "name": "Project E",
+            "client": "Mariah Guilizzoni"
         },
         {
-            "name": "Project 6",
+            "name": "Project F",
+            "client": "Marco Botton"
         },
     ];
 
@@ -35,6 +44,25 @@ const seed = (req, res) => {
     });
 };
 
+//List all documents
+const list = (req, res) => {
+    projectModel.find({}, function (err, docs) {
+        if (err){
+            return res.status(404).json({
+                success: false,
+                message: 'Projects not found!',
+                data: null
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: 'Projects found!',
+            data: docs
+        })
+    });
+};
+
 module.exports = {
-    seed
+    seed,
+    list
 };
