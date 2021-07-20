@@ -5,7 +5,7 @@ const projectModel = require('../models/projectModel');
 
 //List all documents
 const list = (req, res) => {
-    timelogModel.find({}, function (err, docs) {
+    timelogModel.find({}).populate("project").exec(function (err, timelogs) {
         if (err){
             return res.status(404).json({
                 success: false,
@@ -16,14 +16,14 @@ const list = (req, res) => {
         return res.status(200).json({
             success: true,
             message: 'Timelogs found!',
-            data: docs
+            data: timelogs
         })
     });
 };
 
 //Get document by ID
 const get = (req, res) => {
-    timelogModel.findById(req.params.id, function (err, doc) {
+    timelogModel.findById(req.params.id).populate("project").exec(function (err, timelog) {
         if (err){
             return res.status(404).json({
                 success: false,
@@ -35,14 +35,14 @@ const get = (req, res) => {
         return res.status(200).json({
             success: true,
             message: 'Timelog found!',
-            data: doc
+            data: timelog
         })
     });
 };
 
 //Update document by ID
 const update = (req, res) => {
-    timelogModel.findById(req.params.id, function (err, doc) {
+    timelogModel.findById(req.params.id).populate("project").exec( function (err, timelog) {
         if (err){
             return res.status(404).json({
                 success: false,
@@ -51,16 +51,18 @@ const update = (req, res) => {
         }
 
         if(req.body && req.body.task){
-            doc.task = req.body.task;
+            timelog.task = req.body.task;
         }
 
         if(req.body && req.body.endAt){
-            doc.endAt = req.body.endAt;
+            timelog.endAt = req.body.endAt;
         }
-        doc.save();
+        timelog.save();
+
         return res.status(200).json({
             success: true,
             message: 'Timelog updated!',
+            data: timelog
         })
     });
 };
@@ -101,12 +103,13 @@ const add = async (req, res) => {
         if(req.body && req.body.endAt){
             timelog.endAt = req.body.endAt;
         }
-        timelog.save();
+
+        await timelog.save();
 
         return res.status(200).json({
             success: true,
             message: 'Timelog added!',
-            data: timelogModel
+            data: timelog
         })
     }
 };
@@ -116,7 +119,7 @@ const remove = (req, res) => {
     timelogModel.findOneAndRemove({_id: req.params.id},function (err, docs) {
         if (err){
             return res.status(404).json({
-                success: true,
+                success: false,
                 message: err,
                 data: null
             });
@@ -124,15 +127,13 @@ const remove = (req, res) => {
         else{
             return res.status(200).json({
                 success: true,
-                message: 'Timelog removed!',
-                data: timelogModel
+                message: 'Timelog removed!'
             })
         }
     });
 };
 
 module.exports = {
-    seed,
     list,
     get,
     update,
