@@ -1,5 +1,5 @@
 import {Container, Nav, Navbar} from "react-bootstrap";
-import "./AppNavbar.scss"
+import "../styles/AppNavbar.scss"
 
 export default function AppNavbar(){
     return (

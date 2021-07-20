@@ -1,10 +1,10 @@
-import '../style.scss';
+import '../styles/style.scss';
 import React, { useState } from 'react';
 import {
     Collapse
 } from 'react-bootstrap';
 import { Drawer, } from 'react-bootstrap-drawer';
-import './DashboardSidebar.scss';
+import '../styles/DashboardSidebar.scss';
 
 export default function Sidebar(props) {
     let index = 0;
