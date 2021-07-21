@@ -1,3 +1,5 @@
+/* Author: Team */
+
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AppLayout from "./layouts/AppLayout";
