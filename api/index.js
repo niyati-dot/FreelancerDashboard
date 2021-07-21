@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const projectRouter = require('./routes/projectRoutes');
 const timelogRouter = require('./routes/timelogRoutes');
+const todoListRouter = require('./routes/TodoListRoutes')
 
 //Main API Endpoint
 router.get('/', (req,res) => {
@@ -16,6 +17,7 @@ router.get('/', (req,res) => {
 //Models API Endpoint
 router.use('/projects',projectRouter);
 router.use('/timelogs',timelogRouter);
+router.use('/todoLists', todoListRouter)
 
 //404 Error Handling
 router.use(function(req, res, next) {

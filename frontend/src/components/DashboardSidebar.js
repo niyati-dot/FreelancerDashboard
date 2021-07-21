@@ -7,15 +7,18 @@ import { Drawer } from 'react-bootstrap-drawer';
 import '../styles/DashboardSidebar.scss';
 
 export default function Sidebar(props) {
-    let index = 0;
+    const [index, setIndex] = useState(false);
+
+    // let index = 0;
     const [open, setOpen] = useState(false);
 
     const handleToggle = () => setOpen(!open);
 
     const setActiveItem = (index) => {
         console.log(index)
-        this.index = index;
+        setIndex(index)
     }
+
     return (
         <Drawer { ...props }>
             <Drawer.Toggle onClick={ handleToggle } />
@@ -26,8 +29,8 @@ export default function Sidebar(props) {
                         <Drawer.Header href="/dashboard">Dashboard</Drawer.Header>
 
                         <Drawer.Nav>
-                            <Drawer.Item className={`${index === 0 ? 'nav-item-active' : ''}`} href="/clients" onClick={() => setActiveItem(0)}>Clients</Drawer.Item>
-                            <Drawer.Item className={`${index === 1 ? 'nav-item-active' : ''}`} href="/projects" onClick={() => setActiveItem(1)}>Projects</Drawer.Item>
+                            <Drawer.Item className={`${index === 0 ? 'nav-item-active' : ''}`} href="/clients" onClick={() => { setActiveItem(0)}}>Clients</Drawer.Item>
+                            <Drawer.Item className={`${index === 1 ? 'nav-item-active' : ''}`} href="/projects" onClick={() => { setActiveItem(1)}}>Projects</Drawer.Item>
                             <Drawer.Item className={`${index === 2 ? 'nav-item-active' : ''}`} href="/timelogs" onClick={() => setActiveItem(2)}>Time Logs</Drawer.Item>
                             <Drawer.Item className={`${index === 3 ? 'nav-item-active' : ''}`} href="/invoicemanagement" onClick={() => setActiveItem(3)}>Invoices</Drawer.Item>
                             <Drawer.Item className={`${index === 4 ? 'nav-item-active' : ''}`} href="/invoice-generation" onClick={() => setActiveItem(4)}>Invoice Generation</Drawer.Item>

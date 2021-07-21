@@ -1,13 +1,24 @@
-const todoListModel = require('../models/TodoListModel');
-const moment = require('moment')
+/**
+ * Author: Bansi Mehta.
+ * Created On: 2021-07-20
+ * Controller for ToDo list.
+ */
 
+const todoListModel = require('../models/TodoListModel');
+
+/**
+ * Method to fetch all the task of the to-do list based on date.
+ * Date is received in the format: "YYYY-MM-DD"
+ * @param {*} request 
+ * @param {*} response 
+ * @returns 
+ * If tasks exists for the required date, returns an array of type "TodoListModel"
+ * Else returns empty array.
+ */
 module.exports.getList = (request, response) => {
     let data = request['body']
-    // moment(data.currentDate, 'YYYY-MM-DD')
     let currentDate = new Date(data.currentDate)
-    let condition = {'date': currentDate}
-    console.log(condition)
-    return todoListModel.find(condition, function (error, result) {
+    return todoListModel.find({ 'date': currentDate }, function (error, document) {
         if (error) {
             return response.status(400).json({
                 result: [],
@@ -16,75 +27,97 @@ module.exports.getList = (request, response) => {
             })
         } else {
             return response.status(200).json({
-                result: result,
+                result: document,
+                message: "",
                 success: true
-            })    
+            })
         }
     })
 }
 
+/**
+ * Method to mark a task as done based on id.
+ * Find the task based on id, change the status to true and save it back.
+ * @param {*} request 
+ * @param {*} response 
+ */
 module.exports.markAsDone = (request, response) => {
     let data = request['body']
     if (data && data.id) {
 
-        todoListModel.find({'_id': data.id}, function(error, document) {
-            console.log(document)
-            let firstDocument = document[0]
-            firstDocument.status = true;
-            firstDocument.save(function(error, result) {
-                if (error) {
-                    return response.status(400).json({
-                        result: [],
-                        message: error,
-                        success: false
+        todoListModel.find({ '_id': data.id }, function (error, document) {
+            if (error) {
+                return response.status(400).json({
+                    result: [],
+                    message: error,
+                    success: false
+                })
+            } else {
+                if (document && document.length) {
+                    let firstDocument = document[0]
+                    firstDocument.status = true;
+                    firstDocument.save(function (error, document) {
+                        if (error) {
+                            return response.status(400).json({
+                                result: [],
+                                message: error,
+                                success: false
+                            })
+                        } else {
+                            return response.status(200).json({
+                                message: "Success",
+                                success: true
+                            })
+                        }
                     })
-                } else {
-                    return response.status(200).json({
-                        message: "Success",
-                        success: true
-                    })  
                 }
-            })
+            }
         });
     }
-
 }
 
+/**
+ * Method to delete task based on id.
+ * Find the task based on id and delete it.
+ * @param {*} request 
+ * @param {*} response 
+ */
 module.exports.deleteItem = (request, response) => {
     let data = request['params']
     if (data && data.id) {
-        todoListModel.findOneAndRemove({'_id': data.id}, function (error, result) {
-            if (error){
+        todoListModel.findOneAndRemove({ '_id': data.id }, function (error, document) {
+            if (error) {
                 return response.status(400).json({
                     result: [],
                     message: error,
                     success: false
                 })
             }
-            else{
+            else {
                 return response.status(200).json({
                     message: "Success",
                     success: true
-                })  
+                })
             }
         });
-    
+
 
     }
 }
 
+/**
+ * Method to save new task.
+ * Receives title and date in request body. Set status to false (task pending) and save it.
+ * @param {*} request 
+ * @param {*} response 
+ */
 module.exports.saveItem = (request, response) => {
     let data = request['body']
-    // todoListModel.title = data.title
-    // todoListModel.status = false
-    // todoListModel.date = data.date
-    // console.log(todoListModel)
     var model = new todoListModel()
     model.title = data.title
     model.status = false
     model.date = data.date
-    model.save(function (error, result) {
-        console.log(result)
+    model.save(function (error, document) {
         if (error) {
             return response.status(400).json({
                 result: [],
@@ -96,7 +129,7 @@ module.exports.saveItem = (request, response) => {
                 resut: [],
                 message: "Success",
                 success: true
-            })  
+            })
         }
     })
 }

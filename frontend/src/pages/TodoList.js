@@ -1,11 +1,17 @@
+/**
+ * Author: Bansi Mehta.
+ * Created On: 2021-06-07
+ * Todo list component.
+ */
 import React, { Component } from 'react';
 import { withRouter } from "react-router";
 import { Container, Col, Row, Button } from 'react-bootstrap'
 import { Card } from 'react-bootstrap';
-import PageHeader from "../components/PageHeader";
-import "./TodoList.scss";
 import moment from "moment";
 import axios from 'axios'
+import "../styles/TodoList.scss";
+import PageHeader from "../components/PageHeader";
+import todoListService from "../services/TodoListService";
 export class TodoList extends Component {
 
     constructor(props) {
@@ -30,14 +36,24 @@ export class TodoList extends Component {
         this.getAllData(this.state.date)
     }
 
+    /**
+     * On value change of a control, set it in state.
+     * @param {*} event 
+     */
     onValueChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
         });
     }
 
+    /**
+     * Get all the tasks based on date.
+     * Date format: "YYYY-MM-DD".
+     * Divide the tasks received into groups: complete and incomplete to display.
+     * @param {*} date 
+     */
     getAllData(date) {
-        axios.post('http://localhost:8080/todoLists/getList', { currentDate: date }).then(response => {
+        todoListService.getAllTasks(date).then(response => {
             if (response.status === 200) {
                 if (response.data && response.data.result && response.data.result.length) {
                     let completeTask = []
@@ -59,30 +75,44 @@ export class TodoList extends Component {
         })
     }
 
+    /**
+     * Mark the task item as complete based on id.
+     * Refresh the list if successful.
+     * @param {*} rowData 
+     */
     taskItemComplete(rowData) {
-        axios.put('http://localhost:8080/todoLists/markAsDone', { id: rowData._id }).then(response => {
+        todoListService.markTaskAsDone(rowData._id).then(response => {
             if (response.status == 200) {
                 this.getAllData(this.state.date)
             }
         })
     }
 
+    /**
+     * Delete the task based on id.
+     * Refresh the list if successful.
+     * @param {*} rowData 
+     */
     taskItemDelete(rowData) {
-        axios.delete('http://localhost:8080/todoLists/deleteItem/' + rowData._id).then(response => {
+        todoListService.deleteTask(rowData._id).then(response => {
             if (response.status == 200) {
                 this.getAllData(this.state.date)
             }
         })
     }
 
+    /**
+     * Add new task.
+     * Refresh the list if successful.
+     * @param {*} event 
+     */
     saveItem = (event) => {
-        console.log(this.state)
         event.preventDefault()
         let saveData = {
             title: this.state.newTask,
             date: this.state.date
         }
-        axios.post('http://localhost:8080/todoLists/saveItem', saveData).then(response => {
+        todoListService.saveTask(saveData).then(response => {
             if (response.status == 200) {
                 this.setState({ newTask: '' })
                 this.getAllData(this.state.date)
@@ -90,12 +120,20 @@ export class TodoList extends Component {
         })
     }
 
+    /**
+     * Date navigation: Get previous date from the date for which tasks are currently displayed.
+     * @param {*} event 
+     */
     getPreviousDate = (event) => {
         let previousDate = moment(this.state.date, 'YYYY-MM-DD').subtract(1, 'day').format("YYYY-MM-DD")
         this.setState({ date: previousDate })
         this.getAllData(previousDate)
     }
 
+    /**
+     * Date navigaiton: Get next date from the date for which tasks are currently displayed.
+     * @param {*} event 
+     */
     getNextDate = (event) => {
         let nextDate = moment(this.state.date, 'YYYY-MM-DD').add(1, 'day').format("YYYY-MM-DD")
         this.setState({ date: nextDate })
@@ -114,26 +152,26 @@ export class TodoList extends Component {
                             <Row className="date-row">
                                 <Col className="date-control">
                                     <span className="navigate-date" onClick={this.getPreviousDate}>
-                                        <i class="fas fa-chevron-left"></i>
+                                        <i className="fas fa-chevron-left"></i>
                                     </span>
                                     <span>
                                         {this.state.date}
                                     </span>
                                     <span className="navigate-date" onClick={this.getNextDate}>
-                                        <i class="fas fa-chevron-right"></i>
+                                        <i className="fas fa-chevron-right"></i>
                                     </span>
                                 </Col>
                             </Row>
                             <Row className="add-row">
                                 <div className="add-text">
-                                    <input type="text" palceholder="Add task" name="newTask" value={this.state.newTask} onChange={this.onValueChange} className="input-control"/>
+                                    <input type="text" palceholder="Add task" name="newTask" value={this.state.newTask} onChange={this.onValueChange} className="input-control" />
                                 </div>
                                 <div className="add-button">
                                     <Button className="primary-button add-button" onClick={this.saveItem}>Add</Button>
                                 </div>
                             </Row>
                             <Row className="to-do-list-items">
-                                <Col xs={12} md={6}>
+                                <Col md={12} lg={6}>
                                     <div>
                                         {this.state.incompleteTasks.map(row => (
                                             <Card className="card-content-incomplete">
@@ -154,7 +192,7 @@ export class TodoList extends Component {
                                         ))}
                                     </div>
                                 </Col>
-                                <Col xs={12} md={6}>
+                                <Col md={12} lg={6}>
                                     <div>
                                         {this.state.completeTasks.map(row => (
                                             <Card className="card-content-complete">
