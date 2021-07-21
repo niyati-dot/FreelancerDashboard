@@ -1,6 +1,7 @@
 import {useState, React} from 'react';
 import PageHeader from "../components/PageHeader";
 import { Redirect, useHistory } from 'react-router-dom';
+import { projectsServices } from '../services/projectServices';
 
 export default function AddProjects(){
 
@@ -15,8 +16,8 @@ export default function AddProjects(){
         title: "",
         client: "",
         description: "",
-        invoice: "",
         rate: "",
+        invoice: "",
         status: ""
     });
 
@@ -24,8 +25,8 @@ export default function AddProjects(){
         title: "",
         client: "",
         description: "",
-        invoice: "",
         rate: "",
+        invoice: "",
         status: ""
     });
 
@@ -41,8 +42,8 @@ export default function AddProjects(){
             title: "",
             client: "",
             description: "",
-            invoice: "",
             rate: "",
+            invoice: "",
             status: ""
         });
         let newProjectError = {...projectError};
@@ -108,6 +109,7 @@ export default function AddProjects(){
         }
 
         if(valid === true){
+            projectsServices.add(project).then(res => {project._id = res.data._id;});
             Redirect("/projects");
         }
         return valid;

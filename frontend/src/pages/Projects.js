@@ -7,6 +7,7 @@ import '../style.scss';
 import { Button, Card, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import { Redirect, useHistory } from 'react-router-dom';
 import "./Projects.scss";
+import projectsServices from '../services/projectsServices.js'
 
 export default function Projects() {
 
@@ -23,86 +24,15 @@ export default function Projects() {
 
     const [data, setData] = useState([]);
     useEffect(() => {
-        setData([
-            {
-                title: "Email Download",
-                description: "Providing this functionality will enable the access of email in PDF format.",
-                client: "Christ Fernandiz",
-                status: "In Progress"
-            },
-            {
-                title: "Navigation",
-                description: "Providing this functionality will navigate the project through navigation bar.",
-                client: "Shaun Bishop",
-                status: "Pending"
-            },
-            {
-                title: "Upgrade Database",
-                description: "Providing this service will migrate data to AWS.",
-                client: "Joseph Robinson",
-                status: "Completed"
-            },
-            {
-                title: "Email Download",
-                description: "Providing this functionality will enable the access of email in PDF format.",
-                client: "Christ Fernandiz",
-                status: "In Progress"
-            },
-            {
-                title: "Navigation",
-                description: "Providing this functionality will navigate the project through navigation bar.",
-                client: "Shaun Bishop",
-                status: "Pending"
-            },
-            {
-                title: "Upgrade Database",
-                description: "Providing this service will migrate data to AWS.",
-                client: "Joseph Robinson",
-                status: "Completed"
-            },
-            {
-                title: "Email Download",
-                description: "Providing this functionality will enable the access of email in PDF format.",
-                client: "Christ Fernandiz",
-                status: "In Progress"
-            },
-            {
-                title: "Navigation",
-                description: "Providing this functionality will navigate the project through navigation bar.",
-                client: "Shaun Bishop",
-                status: "Pending"
-            },
-            {
-                title: "Upgrade Database",
-                description: "Providing this service will migrate data to AWS.",
-                client: "Joseph Robinson",
-                status: "Completed"
-            },
-            {
-                title: "Email Download",
-                description: "Providing this functionality will enable the access of email in PDF format.",
-                client: "Christ Fernandiz",
-                status: "In Progress"
-            },
-            {
-                title: "Navigation",
-                description: "Providing this functionality will navigate the project through navigation bar.",
-                client: "Shaun Bishop",
-                status: "Pending"
-            },
-            {
-                title: "Upgrade Database",
-                description: "Providing this service will migrate data to AWS.",
-                client: "Joseph Robinson",
-                status: "Completed"
-            },
-        ])
-    }, []);
+        projectsServices.list().then(res => setData(res.data));
+    },[]);
 
     const [project, setProject] = useState({
         title: "",
-        description: "",
         client: "",
+        description: "",
+        rate: "",
+        invoice: "",
         status: ""
     });
 
