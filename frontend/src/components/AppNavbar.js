@@ -1,3 +1,5 @@
+/* Author: Vishal Sancheti */
+
 import {Container, Nav, Navbar} from "react-bootstrap";
 import "../styles/AppNavbar.scss"
 
