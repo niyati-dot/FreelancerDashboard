@@ -84,7 +84,7 @@ yarn start
 * [React Router Web Guide](https://reactrouter.com/web/guides/quick-start) - React Router Documentation
 * [Heroku DevCenter](https://devcenter.heroku.com/articles/git) - Official Heroku Documentation
 * [Dev.To](https://dev.to/abdulbasit313/how-to-develop-a-stopwatch-in-react-js-with-custom-hook-561b) - Developers Community Article
-
+* [Mongoose](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/mongoose) - MDN documentation for MongoDB ORM
 ### frontend/src/pages/Timelogs.js
 
 *Between Lines 40 - 74*
@@ -209,7 +209,7 @@ export default App;
 
 | Author  |  Feature 1 |  Status |  Feature 2 |  Status |
 |---|---|---|---|---|
-|  [Bansi Mehta(B00875640)](bn955101@dal.ca) |   |   |   |   |
+|  [Bansi Mehta(B00875640)](bn955101@dal.ca) |  ToDo List | Done  | V-Card  | Pending  |
 |  [Deep Patel(B00865413)](dp889845@dal.ca) |   |   |   |   |
 |  [Janvi Patel (B00863421)](jn410076@dal.ca) |   |   |   |   |
 | [Sanket Shah(B00862499)](sn488207@dal.ca) |   |   |   |   |
