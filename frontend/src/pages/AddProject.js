@@ -1,7 +1,7 @@
 import {useState, React} from 'react';
 import PageHeader from "../components/PageHeader";
 import { Redirect, useHistory } from 'react-router-dom';
-import { projectsServices } from '../services/projectServices';
+import projectsServices from '../services/projectsServices';
 
 export default function AddProjects(){
 
@@ -78,15 +78,15 @@ export default function AddProjects(){
             setProjectError(newProjectError);
         }
 
-        if(!project.rate.value > 0){
-            newProjectError.rate = "Rate is required";
-            setProjectError(newProjectError);
-            valid = false;
-        }
-        else{
-            newProjectError.rate = "";
-            setProjectError(newProjectError);
-        }
+        // if(!project.rate.value > 0){
+        //     newProjectError.rate = "Rate is required";
+        //     setProjectError(newProjectError);
+        //     valid = false;
+        // }
+        // else{
+        //     newProjectError.rate = "";
+        //     setProjectError(newProjectError);
+        // }
 
         if(!project.invoice.length > 0){
             newProjectError.invoice = "Invoice Duration is required";
@@ -159,7 +159,7 @@ export default function AddProjects(){
                 </div>
 
                 <div className="form-group row">
-                    <label className="col-md-2 col-form-label">Hourly Rates*:</label>
+                    <label className="col-md-2 col-form-label">Hourly ++++++++++++*:</label>
                     <div className="col-md-10">
                         <input title="Hourly Rates" min="0" placeholder="Enter Decided Hourly Rates" onChange={(e) => handleChange(e)} className={projectError.rate.length > 0 ? "is-invalid form-control" : "form-control"} type="number" name="rate" id="rate"/>
                         <p className="text-danger">{projectError.rate}</p>
