@@ -35,8 +35,8 @@ const Datatable = (props) => {
     return (
         <div>
             <Row>
-            {allowCSV ? (<Col md={{ span: 2 }}>
-                    <CSVLink data={data} filename={"export.csv"} className="secondary-button" target="_blank">
+            {allowCSV ? (<Col md={{ span: 2 }} className="my-2">
+                    <CSVLink data={data} filename={"export.csv"} className="secondary-button btn btn-secondary" target="_blank">
                         Export CSV
                     </CSVLink>
                 </Col>) : (<div></div>)
@@ -49,37 +49,40 @@ const Datatable = (props) => {
                     </Form.Group>
                 </Col>) : (<div></div>)}
             </Row>
-            <Table bordered striped {...getTableProps()}>
-                <thead>
-                {headerGroups.map(headerGroup => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map(column => (
-                            <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                                {column.render('Header')}
-                                <span>{column.isSorted ?
-                                    column.isSortedDesc ?
-                                        ' 🔽': ' 🔼'
-                                    : ''}</span>
-                            </th>
-                        ))}
-                    </tr>
-                ))}
-                </thead>
-                <tbody {...getTableBodyProps()}>
-                {page.map((row, i) => {
-                    prepareRow(row);
-                    return (
-                        <tr {...row.getRowProps()}>
-                            {row.cells.map((cell) => {
-                                return (
-                                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                                );
-                            })}
+            <div className="table-responsive">
+                <Table bordered striped {...getTableProps()}>
+                    <thead>
+                    {headerGroups.map(headerGroup => (
+                        <tr {...headerGroup.getHeaderGroupProps()}>
+                            {headerGroup.headers.map(column => (
+                                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                                    {column.render('Header')}
+                                    <span>{column.isSorted ?
+                                        column.isSortedDesc ?
+                                            ' 🔽': ' 🔼'
+                                        : ''}</span>
+                                </th>
+                            ))}
                         </tr>
-                    );
-                })}
-                </tbody>
-            </Table>
+                    ))}
+                    </thead>
+                    <tbody {...getTableBodyProps()}>
+                    {page.map((row, i) => {
+                        prepareRow(row);
+                        return (
+                            <tr {...row.getRowProps()}>
+                                {row.cells.map((cell) => {
+                                    return (
+                                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                                    );
+                                })}
+                            </tr>
+                        );
+                    })}
+                    </tbody>
+                </Table>
+            </div>
+
             <Row>
                 <Col>
                     <Form.Group>
@@ -94,7 +97,6 @@ const Datatable = (props) => {
                                 </option>
                             ))}
                         </Form.Control>
-                        <span>Showing {pageSize} results of {rows.length} rows</span>
                     </Form.Group>
                 </Col>
                 <Col>
@@ -107,6 +109,11 @@ const Datatable = (props) => {
                         <Pagination.Next onClick={() => nextPage()} disabled={!canNextPage}/>
                         <Pagination.Last onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}/>
                     </Pagination>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <span>Showing {pageSize} results of {rows.length} rows</span>
                 </Col>
             </Row>
 

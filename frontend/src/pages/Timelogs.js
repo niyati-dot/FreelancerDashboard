@@ -184,12 +184,12 @@ export default function Timelogs() {
                                 <Card.Body className="text-center">
                                     <Card.Title style={{ fontSize: "2.5rem" }}>{timerString}</Card.Title>
                                     {timer <= 0 &&
-                                        <Button className="secondary-button" onClick={handleModalShow}>Start</Button>
+                                        <Button className="primary-button btn" onClick={handleModalShow}>Start</Button>
                                     }
                                     {timer > 0 &&
                                         <>
                                             <Card.Subtitle className="mb-2 text-muted">Task: {task.task}</Card.Subtitle>
-                                            <Button className="delete-button" onClick={stopTask}>Stop</Button>
+                                            <Button className="delete-button btn" onClick={stopTask}>Stop</Button>
                                         </>
                                     }
                                 </Card.Body>
