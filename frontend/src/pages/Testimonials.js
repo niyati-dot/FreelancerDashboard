@@ -6,9 +6,10 @@ import Datatable from '../components/Datatable';
 import emailjs from 'emailjs-com';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import "./Testimonials.scss"
+import "../styles/Testimonials.scss"
 const Testimonials = () => {
 
+    const GOOGLE_FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSeW4VWOiYbxnd3qJ4wUhNnFuA5_tmiQbyBFeGtz4PreKGZnrA/viewform?usp=sf_link'
     const columns = [
         { Header: '#', accessor: 'no' },
         { Header: 'Project', accessor: 'project' },
@@ -238,7 +239,7 @@ const Testimonials = () => {
                                                     </Form.Group>
 
                                                     <Form.Group>
-                                                        <Form.Label>Request Message</Form.Label>
+                                                        <Form.Label>Testimonial Message</Form.Label>
                                                         <Form.Control as="textarea" name="message" rows={3} id="message" />
                                                     </Form.Group>
 
