@@ -76,7 +76,6 @@ module.exports.add = (req, res) => {
    
 }
 
-
 module.exports.edit = (req, res) => {
     console.log(req.body);
     
@@ -124,7 +123,7 @@ module.exports.edit = (req, res) => {
     }
 
     console.log(editclient)
-    addclient.save(function(error, document) {
+    addclient.findOneAndUpdate(function(error, document) {
         if (error) {
             return res.status(400).json({
                 result: [],
@@ -144,26 +143,25 @@ module.exports.viewOne = (req, response) => {
 
     console.log(req.body);
 
-    if (req.body && req.body.clientName) {
-
-        clientsModel.find({'ClientName': req.body.clientName}, function(error, result)
+    if (req.body && req.body.ClientName && req.body.ContactNo) 
+    {
+        clientsModel.findOne({'ClientName': req.body.ClientName, 'ContactNo': req.body.ContactNo}, function(error, result)
         {
-                res.status(result.json)
-                console.log(res)
-                if (error) {
-                    return response.status(400).json({
-                        result: [],
-                        message: error,
-                        success: false
-                    })
-                } 
-                else {
-                    return response.status(200).json({
-                        message: "Success",
-                        success: true
-                    })  
-                }
-            
+            response.send(result);
+            // console.log(res)
+            // if (error) {
+            //     return response.status(400).json({
+            //         result: [],
+            //         message: error,
+            //         success: false
+            //     })
+            // } 
+            // else {
+            //     return response.status(200).json({
+            //         message: "Success",
+            //         success: true
+            //     })  
+            // }
         });
     }
 }
@@ -171,22 +169,45 @@ module.exports.viewOne = (req, response) => {
 module.exports.getAll = (req, response) => {
     clientsModel.find({}, function(error, result)
     {
-        //res.status(result.json)
         console.log(result)
-        response.send(result)
-        // if (error) {
-        //     return response.status(400).json({
-        //         result: [],
-        //         message: error,
-        //         success: false
-        //     })
-        // } 
-        // else {
-        //     return response.status(200).json({
-        //         message: "Success",
-        //         success: true
-        //     })  
-        // }
-        
+        if (error) {
+             return response.status(400).json({
+                 result: [],
+                 message: error,
+                 success: false
+             })
+        } 
+        else {
+             response.send(result)
+             /*return response.status(200).json({
+                 message: "Success",
+                 success: true
+             })*/  
+       }
     });
+}
+
+module.exports.delete = (req, response) => {
+
+    console.log("hello");
+    console.log(req.body);
+    if(req.body && req.body.ClientName && req.body.ContactNo){
+        clientsModel.findOneAndRemove({'ClientName': req.body.ClientName, 'ContactNo': req.body.ContactNo}, function(error, result)
+        {
+            console.log(result)
+            if (error) {
+                return response.status(400).json({
+                    result: [],
+                    message: error,
+                    success: false
+                })
+            } 
+            else {
+                return response.status(200).json({
+                    message: "Success",
+                    success: true
+                })  
+        }
+        });
+    }
 }
