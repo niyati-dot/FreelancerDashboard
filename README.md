@@ -207,33 +207,14 @@ export default App;
 
 ## Contributions
 
-### Author
-[Vishal Sancheti (B00877378)](vs488310@dal.ca)
-
-### Feature
-Timelogs: To log task and make timesheet
-
-#### How to use the feature
-- Step 1: Login and Goto Dashboard
-- Step 2: Navigate to Timelogs
-- Step 3: Click Start Button and fill form for new Task
-- Step 4: Submit form and Continue with your work
-- Step 5: Navigate to Timelogs
-- Step 6: Click Stop Button once done
-
-### Files
-- api/controllers/timelogController.js
-- api/models/timelogModel.js
-- api/routes/timelogRoutes.js
-- frontend/src/components/AppNavbar.js
-- frontend/src/components/DashboardNavbar.js
-- frontend/src/components/DashboardSidebar.js
-- frontend/src/components/Datatable.js
-- frontend/src/components/PageHeader.js
-- frontend/src/layouts/AppLayout.js
-- frontend/src/layouts/DashboardLayout.js
-- frontend/src/pages/Timelogs.js
-- frontend/src/services/timelogServices.js
+| Author  |  Feature 1 |  Status |  Feature 2 |  Status |
+|---|---|---|---|---|
+|  [Bansi Mehta(B00875640)](bn955101@dal.ca) |   |   |   |   |
+|  [Deep Patel(B00865413)](dp889845@dal.ca) |   |   |   |   |
+|  [Janvi Patel (B00863421)](jn410076@dal.ca) |   |   |   |   |
+| [Sanket Shah(B00862499)](sn488207@dal.ca) |   |   |   |   |
+| [Tejaswi Chaudhary(B00858613)](tj754396@dal.ca) |   |   |   |   |
+| [Vishal Sancheti (B00877378)](vs488310@dal.ca) |  Timelogs |  Done |  Dashboard Stats | Pending  |
 
 ## Acknowledgments
 
