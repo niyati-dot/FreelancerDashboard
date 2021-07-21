@@ -8,12 +8,15 @@ import { Button, Col, Row } from "react-bootstrap";
 import "./Clients.scss";
 import './AddClient'
 import { Component } from "react";
+import axios from 'axios';
 
 export class Clients extends Component {
   //constructor for props
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      data : []
+    }
     this.handleNewClient = this.handleNewClient.bind(this);
 
     this.columns = [
@@ -25,16 +28,65 @@ export class Clients extends Component {
         Header: 'Action', accessor: 'row',
         Cell: ({ row }) => (
           <div className="generate-button-container">
-            <Button className="secondary-button" align="right">View</Button>
-            <Button className="secondary-button" align="right">Edit</Button>
-            <Button className="delete-button" align="right">Delete</Button>
+            <Button className="secondary-button" align="right" onClick={this.viewDetails} >View</Button>
+            <Button className="secondary-button" align="right"  onClick={this.handleEditClient} >Edit</Button>
+            <Button className="delete-button" align="right"  onClick={this.deleteDetails} >Delete</Button>
           </div>
         )
       }];
-    this.setData();
+      
   }
 
-  setData = () => {
+  componentDidMount() {
+
+    axios.get('http://localhost:3000/clientsRoutes/getAll').then((response) => {
+        if (response.status == 200) {
+            console.log(response.data)
+            this.setData(response.data);
+            let invoiceDetails = [];
+            response.data.forEach(element => {
+              let row = {}
+              row.ClientName = element.ClientName;
+              row.Organization = element.Organization;
+              row.ContactNo = element.ContactNo;
+              row.Emailid = element.Emailid;
+              invoiceDetails.push(row)
+            });
+            this.setState({
+              data: invoiceDetails
+            })
+        }
+    }).catch((error) => {
+        console.log("Eroor")
+    })
+  }
+
+
+  viewDetails = (event) => {
+    event.preventDefault();
+    axios.post('http://localhost:3000/clientsRoutes/viewOne', this.state).then((response) => {
+        alert("Details Successfully Saved!!");
+    }).catch((error) => {
+        console.log("Eroor")
+    })
+  }
+
+  handleEditClient = (e) => {
+    e.preventDefault();
+    this.props.history.push({ pathname: '/Editclient' });
+  };
+
+  deleteDetails = (event) => {
+    event.preventDefault();
+    axios.post('http://localhost:3000/clientsRoutes/delete', this.state).then((response) => {
+        alert("Details Successfully Saved!!");
+    }).catch((error) => {
+        console.log("Eroor")
+    })
+  }
+
+  setData = (response) => {
+    console.log(response);
     this.data = [{
       ClientName: "Jill Dupre",
       organization: "Elegant Microweb",
@@ -75,7 +127,7 @@ export class Clients extends Component {
               </Row>
               <Row className="data-table-container">
                 <Col>
-                  <Datatable columns={this.columns} data={this.data} />
+                  <Datatable columns={this.columns} data={this.state.data} />
                 </Col>
               </Row>
             </div>

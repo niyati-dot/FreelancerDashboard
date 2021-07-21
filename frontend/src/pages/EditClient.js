@@ -12,7 +12,7 @@ import {curl_getinfo} from 'react';
 import {CURLINFO_HTTP_CODE} from 'react';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 
-export class AddClient extends Component {
+export class EditClient extends Component {
  
     constructor(props) {
         super(props)
@@ -437,4 +437,4 @@ export class AddClient extends Component {
     }
 }
 
-export default withRouter(AddClient);
+export default withRouter(EditClient);
