@@ -5,7 +5,7 @@ const projectModel = require('../models/projectModel');
 
 //List all documents
 const list = (req, res) => {
-    timelogModel.find({}).populate("project").exec(function (err, timelogs) {
+    timelogModel.find({}).sort({'_id': -1}).populate("project").exec(function (err, timelogs) {
         if (err){
             return res.status(404).json({
                 success: false,

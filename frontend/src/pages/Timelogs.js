@@ -10,21 +10,32 @@ import timelogServices from '../services/timelogServices.js'
 import projectServices from '../services/projectServices.js'
 
 export default function Timelogs() {
-    // Populate Datatable
+    //Init
     const columns = [
         { Header: 'Project', accessor: 'project.name' },
         { Header: 'Client', accessor: 'project.client' },
         { Header: 'Task', accessor: 'task' },
         { Header: 'Start At', accessor: row => moment(row.startAt).format("DD-MM-YYYY hh:mm:ss")},
-        { Header: 'End At', accessor: row => moment(row.endAt).format("DD-MM-YYYY hh:mm:ss")},
+        { Header: 'End At', accessor: row => row.endAt ? moment(row.endAt).format("DD-MM-YYYY hh:mm:ss"):"-"},
         { Header: 'Action', id: 'action', accessor: 'row',
             Cell: ({ row }) => (<Button className="delete-button" onClick={() => { deleteTask(row) }}>Delete</Button>)
         }
     ];
     const [data, setData] = useState([]);
+
     useEffect(() => {
         timelogServices.list().then(res => setData(res.data));
     },[]);
+
+    useEffect(() => {
+        if(data.length){
+            let lastTask = data[0];
+            if(lastTask && !lastTask.endAt){
+                setTask(lastTask);
+                restartTimer(new Date(lastTask.startAt));
+            }
+        }
+    },[data]);
 
     // Timer properties and actions
     const [timerState, setTimerState] = useState(0);
@@ -45,6 +56,17 @@ export default function Timelogs() {
             setTimerState(
                 setInterval(() => {
                     setTimer(Date.now() - timerStart)
+                }, 10)
+            );
+        }
+    };
+    const restartTimer = (startAt) => {
+        if (timerState === 0) {
+            setTimerStart(startAt - timer);
+            setTimer(Date.now() - startAt);
+            setTimerState(
+                setInterval(() => {
+                    setTimer( Date.now() - startAt)
                 }, 10)
             );
         }
