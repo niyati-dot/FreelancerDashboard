@@ -204,8 +204,24 @@ export default App;
 - [DevTo](https://dev.to/abdulbasit313/how-to-develop-a-stopwatch-in-react-js-with-custom-hook-561b)'s Code was modified by @sancheti
 
 
+
 ## Contributions
+
+###Author
 [Vishal Sancheti (B00877378)](vs488310@dal.ca)
+
+###Feature
+Timelogs: To log task and make timesheet
+
+####How to use the feature
+- Step 1: Login and Goto Dashboard
+- Step 2: Navigate to Timelogs
+- Step 3: Click Start Button and fill form for new Task
+- Step 4: Submit form and Continue with your work
+- Step 5: Navigate to Timelogs
+- Step 6: Click Stop Button once done
+
+###Files
 - api/controllers/timelogController.js
 - api/models/timelogModel.js
 - api/routes/timelogRoutes.js
