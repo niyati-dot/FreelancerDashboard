@@ -1,9 +1,9 @@
+/* Author: Vishal Sancheti */
+
 import '../styles/style.scss';
 import React, { useState } from 'react';
-import {
-    Collapse
-} from 'react-bootstrap';
-import { Drawer, } from 'react-bootstrap-drawer';
+import {Collapse} from 'react-bootstrap';
+import { Drawer } from 'react-bootstrap-drawer';
 import '../styles/DashboardSidebar.scss';
 
 export default function Sidebar(props) {

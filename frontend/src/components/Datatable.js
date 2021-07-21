@@ -1,3 +1,5 @@
+/* Author: Vishal Sancheti */
+
 import React from 'react';
 import {useGlobalFilter, usePagination, useSortBy, useTable} from "react-table";
 import {Col, Form, Row, Table} from "react-bootstrap";
@@ -5,6 +7,7 @@ import Pagination from "react-bootstrap/Pagination";
 import {CSVLink} from "react-csv";
 
 const Datatable = (props) => {
+    //Init
     const columns = props.columns;
     const data = props.data;
     const allowCSV = props.allowCSV == "false" ? false : true;
@@ -13,7 +16,6 @@ const Datatable = (props) => {
         useGlobalFilter,
         useSortBy,
         usePagination);
-
     const {
         getTableProps,
         getTableBodyProps,
@@ -35,20 +37,30 @@ const Datatable = (props) => {
     return (
         <div>
             <Row>
-            {allowCSV ? (<Col md={{ span: 2 }} className="my-2">
-                    <CSVLink data={data} filename={"export.csv"} className="secondary-button btn btn-secondary" target="_blank">
-                        Export CSV
-                    </CSVLink>
-                </Col>) : (<div></div>)
+                {/*Conditional Display Export CSV Button*/}
+                {allowCSV ?
+                    (<Col md={{ span: 2 }} className="my-2">
+                        <CSVLink data={data} filename={"export.csv"} className="secondary-button btn btn-secondary" target="_blank">
+                            Export CSV
+                        </CSVLink>
+                    </Col>)
+                    : (<></>)
                 }
-                {allowSearch ? (<Col md={{ span: 2, offset: 8 }}>
-                    <Form.Group>
-                        <Form.Control type="search" placeholder="Search"
-                            value={globalFilter || ""}
-                            onChange={e => setGlobalFilter(e.target.value)} />
-                    </Form.Group>
-                </Col>) : (<div></div>)}
+
+                {/*Conditional Display Search Form*/}
+                {allowSearch ?
+                    (<Col md={{ span: 2, offset: 8 }}>
+                        <Form.Group>
+                            <Form.Control type="search" placeholder="Search"
+                                          value={globalFilter || ""}
+                                          onChange={e => setGlobalFilter(e.target.value)} />
+                        </Form.Group>
+                    </Col>)
+                    : (<></>)
+                }
             </Row>
+
+            {/*Table*/}
             <div className="table-responsive">
                 <Table bordered striped {...getTableProps()}>
                     <thead>
@@ -83,14 +95,15 @@ const Datatable = (props) => {
                 </Table>
             </div>
 
+            {/*Filters and Pagination*/}
             <Row>
                 <Col>
                     <Form.Group>
                         <Form.Control as="select" style={{ width: "100px" }}
-                            value={pageSize}
-                            onChange={(e) => {
-                                setPageSize(Number(e.target.value));
-                            }}>
+                                      value={pageSize}
+                                      onChange={(e) => {
+                                          setPageSize(Number(e.target.value));
+                                      }}>
                             {[5, 10, 20, 30, 40, 50].map((pageSize) => (
                                 <option key={pageSize} value={pageSize}>
                                     Show {pageSize}
@@ -111,13 +124,13 @@ const Datatable = (props) => {
                     </Pagination>
                 </Col>
             </Row>
+
+            {/*Table Info*/}
             <Row>
                 <Col>
                     <span>Showing {pageSize} results of {rows.length} rows</span>
                 </Col>
             </Row>
-
-
         </div>
     )
 };
