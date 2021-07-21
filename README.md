@@ -207,13 +207,13 @@ export default App;
 
 ## Contributions
 
-###Author
+### Author
 [Vishal Sancheti (B00877378)](vs488310@dal.ca)
 
-###Feature
+### Feature
 Timelogs: To log task and make timesheet
 
-####How to use the feature
+#### How to use the feature
 - Step 1: Login and Goto Dashboard
 - Step 2: Navigate to Timelogs
 - Step 3: Click Start Button and fill form for new Task
@@ -221,7 +221,7 @@ Timelogs: To log task and make timesheet
 - Step 5: Navigate to Timelogs
 - Step 6: Click Stop Button once done
 
-###Files
+### Files
 - api/controllers/timelogController.js
 - api/models/timelogModel.js
 - api/routes/timelogRoutes.js
