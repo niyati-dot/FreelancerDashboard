@@ -19,11 +19,7 @@ export class InvoiceManagement extends Component{
             { Header: 'Project Name', accessor: 'projectname'},
             { Header: 'Payment Status', accessor: 'paymentstatus'},
             { Header: 'Action', accessor: 'button1',
-<<<<<<< HEAD:src/pages/InvoiceManagement.js
                 Cell: ({button1}) => (<div><Button  className="secondary-button">Edit</Button> | <Button  className="delete-button">Delete</Button></div>)},
-=======
-                Cell: ({button1}) => (<div><Button  className="secondary-button">Edit</Button><Button  className="delete-button">Delete</Button></div>)},
->>>>>>> e22009a81dd79ddbb4229deef6f3a2e905171e85:frontend/src/pages/InvoiceManagement.js
         ],
 
        data:[{    
@@ -75,11 +71,7 @@ render() {
             <div className="page-content"></div>
             <Row>
                 <Col>
-<<<<<<< HEAD:src/pages/InvoiceManagement.js
-                <input className="text-style" type="text" placeholder="Filter Option" name="textforfiletr" />
-=======
                 <input  type="text" placeholder="Filter" name="textforfiletr" />
->>>>>>> e22009a81dd79ddbb4229deef6f3a2e905171e85:frontend/src/pages/InvoiceManagement.js
                 </Col>
                 
             </Row>

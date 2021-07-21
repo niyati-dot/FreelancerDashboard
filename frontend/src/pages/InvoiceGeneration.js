@@ -9,14 +9,18 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios'
 
+var rn = require('random-number');
+var options = {
+    min: 10000,
+    integer: true
+}
+
 export class InvoiceGeneration extends Component {
 
     constructor(props) {
         super(props)
 
         this.state = {
-            client: "",
-            clientError: "",
             startDate: "",
             startDateError: "",
             endDate: "",
@@ -24,8 +28,12 @@ export class InvoiceGeneration extends Component {
             hourlyRate: "",
             hourlyRateError: "",
             project: "",
-            projectError: ""
+            projectError: "",
+            projects: [],
+            tags:[],
+            invoiceDetails:[]
         }
+
 
         this.columns = [
             { Header: 'Description', accessor: 'description' },
@@ -35,12 +43,11 @@ export class InvoiceGeneration extends Component {
 
         this.dummyData = [];
     }
-    
+
     componentDidMount() {
         axios.get('http://localhost:3000/getProject/getproject').then((response) => {
             if (response.status == 200) {
-                console.log("Enter")
-                console.log(response)
+                this.setState({ projects: response.data })
             }
         }).catch((error) => {
             console.log("Eroor")
@@ -48,48 +55,17 @@ export class InvoiceGeneration extends Component {
     }
 
     setDummyData() {
-        this.dummyData = [
-            {
-                description: 'Dashboard',
-                hours: 5,
-                total: this.state.hourlyRate * 5
-            },
-            {
-                description: 'Clients',
-                hours: 2,
-                total: this.state.hourlyRate * 2
-            },
-            {
-                description: 'Projects',
-                hours: 3,
-                total: this.state.hourlyRate * 3
-            },
-            {
-                description: 'Invoices',
-                hours: 4,
-                total: this.state.hourlyRate * 4
-            },
-            {
-                description: 'Invoice Generation',
-                hours: 0.5,
-                total: this.state.hourlyRate * 0.5
-            }
-        ]
+        console.log(this.state.invoiceDetails)
+        this.state.invoiceDetails.forEach(result =>
+            console.log(result)
+        )
+        console.log("dummy2",this.dummyData)
     }
 
     onValueChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
         });
-    }
-
-    validateClient = (event) => {
-        let isValid = true;
-        if (!this.state.client) {
-            this.setState({ clientError: "Client is required" })
-            isValid = false;
-        }
-        return isValid;
     }
 
     validateProject = (event) => {
@@ -159,9 +135,7 @@ export class InvoiceGeneration extends Component {
 
     validateForm = (event) => {
         let isValid = true
-        if (!this.validateClient()) {
-            isValid = false;
-        }
+
         if (!this.validateProject()) {
             isValid = false;
         }
@@ -176,9 +150,37 @@ export class InvoiceGeneration extends Component {
 
     generateInvoice = (event) => {
         event.preventDefault();
-        if (this.validateForm()) {
+        if(this.validateForm()){
+            let url = 'http://localhost:3000/getProject/tags/'+this.state.project
+            axios.get(url).then((response) => {
+                if (response.status == 200) {
+                    this.setState({ tags: response.data })
+                    {this.state.tags.map(row => {
+                        var startdate = new Date(row.startAt);
+                        
+                        var enddate = new Date(row.endAt);
+                      
+                        var seconds = Math.floor(((enddate) - (startdate))/1000)
+                        
+                        var minutes = Math.floor(seconds/60)
+                        var hour = Math.floor(minutes/60)
+                       
+                        var data = {
+                            description:row.task,
+                            hours:hour,
+                            total: this.state.hourlyRate *hour
+                        }
+                        this.state.invoiceDetails.push(data)
+                    })}
+                  
+
+                }
+            }).catch((error) => {
+                console.log("Eroor")
+            })
             this.setDummyData();
         }
+        
     }
 
     render() {
@@ -196,30 +198,14 @@ export class InvoiceGeneration extends Component {
                                         <Row>
                                             <Col>
                                                 <Form.Group>
-                                                    <Form.Label className="required">Client</Form.Label>
-                                                    <Form.Control as="select" name="client" value={this.state.client} onChange={this.onValueChange}
-                                                        onBlur={this.validateClient}
-                                                        isInvalid={this.state.clientError}>
-                                                        <option>Select Client</option>
-                                                        <option value="1">Freelancer dashboard</option>
-                                                        <option value="2">SIS</option>
-                                                        <option value="3">VM</option>
-                                                    </Form.Control>
-                                                    <Form.Control.Feedback type="invalid">
-                                                        {this.state.clientError}
-                                                    </Form.Control.Feedback>
-                                                </Form.Group>
-                                            </Col>
-                                            <Col>
-                                                <Form.Group>
                                                     <Form.Label className="required">Project</Form.Label>
                                                     <Form.Control as="select" name="project" value={this.state.project} onChange={this.onValueChange}
                                                         onBlur={this.validateProject}
                                                         isInvalid={this.state.projectError}>
-                                                        <option>Select Project</option>
-                                                        <option value="1">Freelancer dashboard</option>
-                                                        <option value="2">SIS</option>
-                                                        <option value="3">VM</option>
+                                                    <option>Select Project</option>
+                                                    {this.state.projects.map(onlineUsersRow => (
+                                                        <option value={onlineUsersRow.name}>{onlineUsersRow.name}</option>
+                                                    ))}
                                                     </Form.Control>
                                                     <Form.Control.Feedback type="invalid">
                                                         {this.state.projectError}

@@ -1,9 +1,11 @@
 const mongoose = require ('mongoose')
 
 const projectSchema = {
-    name: {type:String, required:true}
+    name: {type:String, required:true},
+    project_id: {type:Number, required:true}
+
 }
 
-const Project = mongoose.model('Project', projectSchema);
+const projects = mongoose.model('projects', projectSchema);
 
-module.exports = Project;
+module.exports = projects;
