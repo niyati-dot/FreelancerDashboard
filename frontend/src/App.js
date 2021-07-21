@@ -14,6 +14,7 @@ import EditProject from "./pages/EditProject";
 import Clients from "./pages/Clients";
 import AddClient from "./pages/AddClient";
 import EditClient from "./pages/EditClient";
+import ViewClient from "./pages/ViewClient";
 import Testimonials from "./pages/Testimonials";
 import InvoiceManagement from "./pages/InvoiceManagement"
 import TodoList from "./pages/TodoList"
@@ -84,6 +85,11 @@ export default function App() {
                 <Route path="/EditClient">
                     <DashboardLayout>
                         <EditClient />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/ViewClient">
+                    <DashboardLayout>
+                        <ViewClient />
                     </DashboardLayout>
                 </Route>
                 <Route path="/testimonials">

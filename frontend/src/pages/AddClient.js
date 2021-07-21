@@ -7,13 +7,13 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-import {curl_init} from 'react';
-import {curl_getinfo} from 'react';
-import {CURLINFO_HTTP_CODE} from 'react';
+import { curl_init } from 'react';
+import { curl_getinfo } from 'react';
+import { CURLINFO_HTTP_CODE } from 'react';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 
 export class AddClient extends Component {
- 
+
     constructor(props) {
         super(props)
 
@@ -26,6 +26,8 @@ export class AddClient extends Component {
             contactNoError: "",
             websiteName: "",
             websiteNameError: "",
+            linkedInProfile: "",
+            linkedInProfileError: "",
             emailId: "",
             emailIdError: "",
             street: "",
@@ -37,7 +39,7 @@ export class AddClient extends Component {
             meetingPlatformError: "",
             country: "",
             region: ""
-        }       
+        }
     }
 
     onValueChange = (event) => {
@@ -46,203 +48,184 @@ export class AddClient extends Component {
         });
     }
 
-    selectCountry (name, val) {
-      this.setState({  name: val });
+    selectCountry(val) {
+        this.setState({ country: val });
     }
-  
-    selectRegion (val) {
-      this.setState({ name: val });
+
+    selectRegion(val) {
+        this.setState({ region: val });
     }
 
     validateClient = (event) => {
         let isValid = true;
-        if (!this.state.client) {
+        if (!this.state.clientName) {
             this.setState({ clientNameError: "Client Name is required" })
             isValid = false;
+        }
+        else {
+            this.setState({ clientNameError: "" })
         }
         return isValid;
     }
 
     validateOrganization = (event) => {
-      let isValid = true;
-      if (!this.state.organizationName) {
-          this.setState({ organizationNameError: "Organization Name is required" })
-          isValid = false;
-      }
-      return isValid;
+        let isValid = true;
+        if (!this.state.organizationName) {
+            this.setState({ organizationNameError: "Organization Name is required" })
+            isValid = false;
+        }
+        else {
+            this.setState({ organizationNameError: "" })
+        }
+        return isValid;
     }
 
     validateContactNo = (event) => {
-      let isValid = true;
-      if (!this.state.contactNo) {
-          this.setState({ contactNoError: "Contact No is required" })
-          isValid = false;
-      }
-      var pattern = new RegExp(/^[0-9\b]+$/);
-      const result = pattern.test(this.state.contactNo);
-      if(result===false){
-        this.setState({
-          isValid:false,
-          contactNoError: "Contact No is invalid: can contain Number and contry code only"
-        })
-      }
-      return isValid;
-       /* let isValid = true;
+        let isValid = true;
         if (!this.state.contactNo) {
             this.setState({ contactNoError: "Contact No is required" })
             isValid = false;
         }
         var pattern = new RegExp(/^[0-9\b]+$/);
         const result = pattern.test(this.state.contactNo);
-        if(result===false){
-          this.setState({
-            isValid:false,
-            contactNoError: "Contact No is invalid: can contain Number and contry code only"
-          })
+        if (result === false) {
+            this.setState({
+                isValid: false,
+                contactNoError: "Contact No is invalid: can contain Number and contry code only"
+            })
         }
-        return isValid;*/
+        else {
+            this.setState({ contactNoError: "" })
+        }
+        return isValid;
     }
 
     validateWebsiteName = (event) => {
-      let isValid = true;
-      const pattern = /^(?:(?:(?:[a-zA-z\-]+)\:\/{1,3})?(?:[a-zA-Z0-9])(?:[a-zA-Z0-9\-\.]){1,61}(?:\.[a-zA-Z]{2,})+|\[(?:(?:(?:[a-fA-F0-9]){1,4})(?::(?:[a-fA-F0-9]){1,4}){7}|::1|::)\]|(?:(?:[0-9]{1,3})(?:\.[0-9]{1,3}){3}))(?:\:[0-9]{1,5})?$/g;
-      const result = pattern.test(this.state.websiteName);
-      if(result===false){
-        this.setState({
-          isValid:false,
-          websiteNameError: "Provided website is invalid: should contain domain name"
-        })
-      }
-      return isValid;
+        let isValid = true;
+        const pattern = /^(?:(?:(?:[a-zA-z\-]+)\:\/{1,3})?(?:[a-zA-Z0-9])(?:[a-zA-Z0-9\-\.]){1,61}(?:\.[a-zA-Z]{2,})+|\[(?:(?:(?:[a-fA-F0-9]){1,4})(?::(?:[a-fA-F0-9]){1,4}){7}|::1|::)\]|(?:(?:[0-9]{1,3})(?:\.[0-9]{1,3}){3}))(?:\:[0-9]{1,5})?$/g;
+        const result = pattern.test(this.state.websiteName);
+        if (result === false) {
+            this.setState({
+                isValid: false,
+                websiteNameError: "Provided website is invalid: should contain domain name"
+            })
+        }
+        else {
+            this.setState({ websiteNameError: "" })
+        }
+        return isValid;
     }
 
     validateEmailId = (event) => {
-      let isValid = true;
-      if (!this.state.emailId) {
-          this.setState({ emailIdError: "Email Id is required" })
-          isValid = false;
-      }
-      const pattern = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
-      const result = pattern.test(this.state.emailId);
-      if(result===false){
-        this.setState({
-          isValid:false,
-          emailIdError: "Provided email Id is invalid: should contain '@' and domain name"    
-        })
-      } 
-      return isValid;
+        let isValid = true;
+        if (!this.state.emailId) {
+            this.setState({ emailIdError: "Email Id is required" })
+            isValid = false;
+        }
+        const pattern = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
+        const result = pattern.test(this.state.emailId);
+        if (result === false) {
+            this.setState({
+                isValid: false,
+                emailIdError: "Provided email Id is invalid: should contain '@' and domain name"
+            })
+        } else {
+            this.setState({ emailIdError: "" })
+        }
+        return isValid;
     }
 
-    validateLinkedInProfile = (event) => 
-    {
+    validateLinkedInProfile = (event) => {
 
-      let isValid = true;
-      const pattern = /(ftp|http|https):\/\/?(?:www\.)?linkedin.com(\w+:{0,1}\w*@)?(\S+)(:([0-9])+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g;
-      const result = pattern.test(this.state.linkedInProfile);
-      if(result===false){
-        this.setState({
-          isValid:false,
-          linkedInProfileError: "LinkedIn Profile is not valid"
-        })
-      }
-      /*const profileurl = this.state.linkedInProfile;
-      const fp = curl_init(profileurl);
-      const response_code = curl_getinfo(fp, CURLINFO_HTTP_CODE);
-
-      if(response_code===200){
-        this.setState({
-          isValid:false,
-          linkedInProfileError: "Provided Linkedin profile is invalid"    
-        })
-      }*/
-
-      return isValid;
-        /*let isValid = true;
+        console.log(this.state.linkedInProfile);
+        let isValid = true;
         const pattern = /(ftp|http|https):\/\/?(?:www\.)?linkedin.com(\w+:{0,1}\w*@)?(\S+)(:([0-9])+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g;
         const result = pattern.test(this.state.linkedInProfile);
-        if(result===false){
-          this.setState({
-            isValid:false,
-            linkedInProfileError: "LinkedIn Profile is not valid"
-          })
-        }*/
-        /*const profileurl = this.state.linkedInProfile;
-        const fp = curl_init(profileurl);
-        const response_code = curl_getinfo(fp, CURLINFO_HTTP_CODE);
-  
-        if(response_code===200){
-          this.setState({
-            isValid:false,
-            linkedInProfileError: "Provided Linkedin profile is invalid"    
-          })
-        }*/
+        if (result === false) {
+            this.setState({
+                isValid: false,
+                linkedInProfileError: "LinkedIn Profile is not valid"
+            })
+        } else {
+            this.setState({ linkedInProfileError: "" })
+        }
+        return isValid;
     }
 
     validateStreet = (event) => {
-      let isValid = true;
-      const pattern = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/g;
-      const result = pattern.test(this.state.street);
-      if(result===false){
-        this.setState({
-          isValid:false,
-          streetError: "Street should not contain special characters"
-        })
-      }
-      return isValid;
+        let isValid = true;
+        const pattern = /[a-zA-Z0-9]/g;
+        const result = pattern.test(this.state.street);
+        if (result === false) {
+            this.setState({
+                isValid: false,
+                streetError: "Street should not contain special characters"
+            })
+        }
+        else {
+            this.setState({ streetError: "" })
+        }
+        return isValid;
     }
 
     validatePostalcode = (event) => {
-      let isValid = true;
-      const pattern = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/g;
-      const result = pattern.test(this.state.postalCode);
-      if(result===false){
-        this.setState({
-          isValid:false,
-          PostalCodeError: "Postal code should not contain special characters"
-        })
-      }
-      return isValid;
+        let isValid = true;
+        const pattern = /[a-zA-Z0-9]/g;
+        const result = pattern.test(this.state.postalCode);
+        if (result === false) {
+            this.setState({
+                isValid: false,
+                PostalCodeError: "Postal code should not contain special characters"
+            })
+        }
+        else {
+            this.setState({ PostalCodeError: "" })
+        }
+        return isValid;
     }
 
     validateMeetingPlatform = (event) => {
-      let isValid = true;
-      if (!this.state.meetingPlatform) {
-          this.setState({ meetingPlatformError: "Meeting Platform is required" })
-          isValid = false;
-      }
-      return isValid;
+        let isValid = true;
+        if (!this.state.meetingPlatform) {
+            this.setState({ meetingPlatformError: "Meeting Platform is required" })
+            isValid = false;
+        }
+        else {
+            this.setState({ meetingPlatformError: "" })
+        }
+        return isValid;
     }
 
     validateForm = (event) => {
-      let isValid = true
-      if (!this.validateClient()) {
-          isValid = false;
-      }
-      if (!this.validateOrganization()) {
-          isValid = false;
-      }
-      if (!this.validateContactNo()) {
-          isValid = false;
-      }
-      if (!this.validateWebsiteName()) {
-          isValid = false;
-      }
-      if (!this.validateEmailId()) {
-        isValid = false;
-      }
-      if (!this.validateLinkedInProfile()) {
-        isValid = false;
-      }
-      if (!this.validateStreet()) {
-        isValid = false;
-      }
-      if (!this.validatePostalcode()) {
-        isValid = false;
-      }
-      if (!this.validateMeetingPlatform()) {
-        isValid = false;
-      }
-      return isValid;
+        let isValid = true
+        if (!this.validateClient()) {
+            isValid = false;
+        }
+        if (!this.validateOrganization()) {
+            isValid = false;
+        }
+        if (!this.validateContactNo()) {
+            isValid = false;
+        }
+        if (!this.validateWebsiteName()) {
+            isValid = false;
+        }
+        if (!this.validateEmailId()) {
+            isValid = false;
+        }
+        if (!this.validateLinkedInProfile()) {
+            isValid = false;
+        }
+        if (!this.validateStreet()) {
+            isValid = false;
+        }
+        if (!this.validatePostalcode()) {
+            isValid = false;
+        }
+        if (!this.validateMeetingPlatform()) {
+            isValid = false;
+        }
+        return isValid;
     }
 
     onSubmit = (event) => {
@@ -256,11 +239,16 @@ export class AddClient extends Component {
         })
     }
 
+    onClickBack = (event) => {
+        event.preventDefault();
+        this.props.history.push({ pathname: '/clients' });
+    }
+
     render() {
         return (
             <div className="page-container add-client-container">
                 <div className="page-header-container">
-                   <PageHeader title="New Client" subtitle="" />
+                    <PageHeader title="New Client" subtitle="" />
                 </div>
                 <div className="page-content-container">
                     <div className="page-content">
@@ -273,7 +261,7 @@ export class AddClient extends Component {
                                                 <Form.Label className="required">Client Name</Form.Label>
                                                 <Form.Control type="name" name="clientName" placeholder="Enter Client Name" value={this.state.ClientName} onChange={this.onValueChange}
                                                     onBlur={this.validateClientName}
-                                                    isInvalid = {this.state.clientNameError}/>
+                                                    isInvalid={this.state.clientNameError} />
                                                 <Form.Control.Feedback type="invalid">
                                                     {this.state.clientNameError}
                                                 </Form.Control.Feedback>
@@ -285,10 +273,10 @@ export class AddClient extends Component {
                                                 <Form.Label className="required">Organization</Form.Label>
                                                 <Form.Control type="name" name="organizationName" placeholder="Enter Organization Name" value={this.state.OrganizationName} onChange={this.onValueChange}
                                                     onBlur={this.validateOrganization}
-                                                    isInvalid = {this.state.organizationNameError} />
+                                                    isInvalid={this.state.organizationNameError} />
                                                 <Form.Control.Feedback type="invalid">
                                                     {this.state.organizationNameError}
-                                                </Form.Control.Feedback>        
+                                                </Form.Control.Feedback>
                                             </Form.Group>
                                         </Col>
                                     </Row>
@@ -316,7 +304,7 @@ export class AddClient extends Component {
                                                 </Form.Control.Feedback>
                                             </Form.Group>
                                         </Col>
-                                      
+
                                     </Row>
                                     <Row>
                                         <Col>
@@ -334,7 +322,7 @@ export class AddClient extends Component {
                                         <Col>
                                             <Form.Group>
                                                 <Form.Label>LinkedIn Profile</Form.Label>
-                                                <Form.Control type="name" name="LinkedInProfile" placeholder="Enter Clienet Name" value={this.state.LinkedInProfile} onChange={this.onValueChange}
+                                                <Form.Control type="name" name="linkedInProfile" placeholder="Enter Linkedin Profile" value={this.state.linkedInProfile} onChange={this.onValueChange}
                                                     onBlur={this.validateLinkedInProfile}
                                                     isInvalid={this.state.linkedInProfileError} />
                                                 <Form.Control.Feedback type="invalid">
@@ -342,7 +330,7 @@ export class AddClient extends Component {
                                                 </Form.Control.Feedback>
                                             </Form.Group>
                                         </Col>
-                                      
+
                                     </Row>
                                     <Row>
                                         <Col>
@@ -362,11 +350,11 @@ export class AddClient extends Component {
                                                 <Form.Label>Business Description</Form.Label>
                                                 <Form.Control type="name" name="businessDescription" placeholder="Enter Business Description" value={this.state.BusinessDescription} onChange={this.onValueChange}
                                                     onBlur={this.validatebusinessDescription}
-                                                     />
-                                               
+                                                />
+
                                             </Form.Group>
                                         </Col>
-                                      
+
                                     </Row>
 
                                     <Row>
@@ -387,49 +375,54 @@ export class AddClient extends Component {
                                                 <Form.Control as="select" name="meetingPlatform" placeholder="Enter meeting platform" value={this.state.MeetingPlatform} onChange={this.onValueChange}
                                                     onBlur={this.validateMeetingPlatform}
                                                     isInvalid={this.state.meetingPlatformError}>
-                                                      <option>Select Project</option>
-                                                    <option value="1">Google Meet</option>
-                                                    <option value="2">Skype</option>
-                                                    <option value="3">Zoom</option>
-                                                    <option value="4">In person</option>
-                                                  </Form.Control>
+                                                    <option>Select Project</option>
+                                                    <option value="Google Meet">Google Meet</option>
+                                                    <option value="Skype">Skype</option>
+                                                    <option value="Zoom">Zoom</option>
+                                                    <option value="In Person">In person</option>
+                                                </Form.Control>
                                                 <Form.Control.Feedback type="invalid">
                                                     {this.state.meetingPlatformError}
                                                 </Form.Control.Feedback>
-                                              
+
 
                                             </Form.Group>
                                         </Col>
 
                                     </Row>
-                                    {/* <Row>
-                                        <Col>
+                                    <Row>
+                                        <Col xs={6}>
                                             <Form.Group>
-                                                <Form.Label className="required">Country </Form.Label>
-                                                <CountryDropdown as="select" name="country" defaultOptionLabel="Select country" value={this.state.country} 
-                                                                 onChange={(name, value) => this.selectCountry(name, value)}
-                                                />
-                                            </Form.Group>
-                                        
-                                            <Form.Group>
-                                                <Form.Label>Region </Form.Label>
-                                                <RegionDropdown
-                                                       country={this.state.country} blankOptionLabel="No Country Selected" defaultOptionLabel="Select region"
-                                                       as="select" name="region" value={this.state.region} onChange={(name, value) => this.selectRegion(name,value)}>
-                                                </RegionDropdown>                            
+                                                <div className="country">
+                                                    <Form.Label className="required">Country </Form.Label>
+                                                    <CountryDropdown as="select" name="country" defaultOptionLabel="Select country" value={this.state.country}
+                                                        onChange={(value) => this.selectCountry(value)}
+                                                    />
+                                                </div>
+                                                <div className="region">
+                                                    <Form.Label>Region </Form.Label>
+                                                    <RegionDropdown
+                                                        country={this.state.country} blankOptionLabel="No Country Selected" defaultOptionLabel="Select region"
+                                                        as="select" name="region" value={this.state.region} onChange={(value) => this.selectRegion(value)}>
+                                                    </RegionDropdown>
+                                                </div>
                                             </Form.Group>
                                         </Col>
-                                    </Row> */}
-                                    
+
+                                    </Row>
+
                                     <Row className="generate-button-container">
                                         <Button className="primary-button" onClick={this.onSubmit}>
                                             Submit
+                                        </Button>
+                                        <Button className="primary-button" onClick={this.onClickBack}>
+                                            Back
                                         </Button>
                                     </Row>
                                 </Form>
                             </Col>
                         </Row>
-                        
+
                     </div>
                 </div>
             </div>

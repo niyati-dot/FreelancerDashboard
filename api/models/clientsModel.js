@@ -10,7 +10,7 @@ const clientsSchema = new Mongoose.Schema({
         type: String,
     },
     ContactNo: {
-        type: String,
+        type: Number,
     },
     Email: {
         type: String,
@@ -21,7 +21,12 @@ const clientsSchema = new Mongoose.Schema({
     PostalCode:{
         type: String,
     },
-
+    Region:{
+        type: String,
+    },
+    Country:{
+        type: String,
+    },
     Organization: {
         type: String,
     },

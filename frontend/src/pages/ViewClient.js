@@ -7,70 +7,51 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-import {curl_init} from 'react';
-import {curl_getinfo} from 'react';
-import {CURLINFO_HTTP_CODE} from 'react';
-import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 
 export class ViewClient extends Component {
  
+  
     constructor(props) {
         super(props)
 
+        console.log(props);
+        this.new = props.history;
+        console.log(props.history.location.state.state.LinkedInProfile);
         this.state = {
-            clientName: "",
-            organizationName: "",
-            contactNo: "",
-            websiteName: "",
-            emailId: "",
-            street: "",
-            businessDescription: "",
-            postalCode: "",
-            meetingPlatform: "",
-            country: "",
-            region: ""
+            ClientId: props.history.location.state.state.ClientId,
+            clientName: props.history.location.state.state.ClientName,
+            organizationName: props.history.location.state.state.Organization,
+            contactNo: props.history.location.state.state.ContactNo,
+            websiteName: props.history.location.state.state.Website,
+            linkedInProfile: props.history.location.state.state.LinkedInProfile,
+            emailId: props.history.location.state.state.Email,
+            street: props.history.location.state.state.ClientName,
+            businessDescription: props.history.location.state.state.ClientName,
+            postalCode: props.history.location.state.state.PostalCode,
+            meetingPlatform: props.history.location.state.state.MeetingPlatform,
+            country: props.history.location.state.state.Country,
+            region: props.history.location.state.state.Region
         }       
     }
 
-    componentDidMount() {
-
-        axios.get('http://localhost:3000/clientsRoutes/viewOne').then((response) => {
-            if (response.status == 200) {
-
-                this.state.clientName = response.data.ClientName;
-                this.state.organizationName = response.data.Organization;
-                this.state.contactNo = response.data.ContactNo;
-                this.state.websiteName = response.data.websiteName;
-                this.state.street = response.data.street;
-                this.state.businessDescription = response.data.businessDescription;
-                this.state.postalCode = response.data.postalCode;
-                this.state.meetingPlatform = response.data.meetingPlatform;
-                this.state.country = response.data.country;
-                this.state.region = response.data.region;
-                this.state.emailId = response.data.Emailid;
-               
-            }
-        }).catch((error) => {
-            console.log("Eroor")
-        })
+    selectCountry (name, val) {
+      this.setState({  name: val });
     }
-
-    onSubmit = (event) => {
+  
+    selectRegion (val) {
+      this.setState({ name: val });
+    }
+    
+    onClickBack = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:3000/clientsRoutes/add/', this.state).then((response) => {
-            if (this.validateForm()) {
-                alert("Details Successfully Saved!!");
-            }
-        }).catch((error) => {
-            console.log("Eroor")
-        })
+        this.props.history.push({ pathname: '/clients' });
     }
 
     render() {
         return (
             <div className="page-container add-client-container">
                 <div className="page-header-container">
-                   <PageHeader title="New Client" subtitle="" />
+                   <PageHeader title="View Client" subtitle="" />
                 </div>
                 <div className="page-content-container">
                     <div className="page-content">
@@ -78,119 +59,232 @@ export class ViewClient extends Component {
                             <Col>
                                 <Form>
                                     <Row>
-                                        <Col>
+                                        <Col xs={3}>
+                                            
+                                        </Col>
+                                        <Col xs={3}>
                                             <Form.Group>
-                                                <Form.Label className="required">Client Name</Form.Label>
-                                                <Form.Control type="name" name="clientName" placeholder="Enter Client Name" value={this.state.ClientName}
-                                                />
+                                                <Form.Label>Client Name: </Form.Label>
                                             </Form.Group>
                                         </Col>
-                                        <Col>
+                                        <Col xs={3}>
                                             <Form.Group>
-                                                <Form.Label className="required">Organization</Form.Label>
-                                                <Form.Control type="name" name="organizationName" placeholder="Enter Organization Name" value={this.state.OrganizationName} onChange={this.onValueChange}
-                                                 />      
+                                                <Form.Label type="name" name="clientName"> {this.state.clientName} </Form.Label>
                                             </Form.Group>
                                         </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col>
-                                            <Form.Group>
-                                                <Form.Label className="required">Contact No</Form.Label>
-                                                <Form.Control type="name" name="contactNo" placeholder="Enter Contact No" value={this.state.ContactNo} onChange={this.onValueChange}
-                                                   />
-                                            </Form.Group>
+                                        <Col xs={3}>
+                                            
                                         </Col>
-
-                                        <Col>
-                                            <Form.Group>
-                                                <Form.Label>Website</Form.Label>
-                                                <Form.Control type="name" name="websiteName" placeholder="Enter Website Name" value={this.state.WebsiteName} onChange={this.onValueChange}
-                                                   />
-                                            </Form.Group>
-                                        </Col>
-                                      
-                                    </Row>
-                                    <Row>
-                                        <Col>
-                                            <Form.Group>
-                                                <Form.Label className="required">Email</Form.Label>
-                                                <Form.Control type="name" name="emailId" placeholder="Enter Email Id" value={this.state.EmailId} onChange={this.onValueChange}
-                                                  />
-                                            </Form.Group>
-                                        </Col>
-
-                                        <Col>
-                                            <Form.Group>
-                                                <Form.Label>LinkedIn Profile</Form.Label>
-                                                <Form.Control type="name" name="LinkedInProfile" placeholder="Enter Clienet Name" value={this.state.LinkedInProfile} onChange={this.onValueChange}
-                                                 />
-                                            </Form.Group>
-                                        </Col>
-                                      
-                                    </Row>
-                                    <Row>
-                                        <Col>
-                                            <Form.Group>
-                                                <Form.Label>Street</Form.Label>
-                                                <Form.Control type="name" name="street" placeholder="Enter Street Name" value={this.state.Street} onChange={this.onValueChange}
-                                                    />
-                                            </Form.Group>
-                                        </Col>
-
-                                        <Col>
-                                            <Form.Group>
-                                                <Form.Label>Business Description</Form.Label>
-                                                <Form.Control type="name" name="businessDescription" placeholder="Enter Business Description" value={this.state.BusinessDescription} onChange={this.onValueChange}
-                                                   />
-                                    
-                                            </Form.Group>
-                                        </Col>
-                                      
-                                    </Row>
-
-                                    <Row>
-                                        <Col>
-                                            <Form.Group>
-                                                <Form.Label>Postal Code</Form.Label>
-                                                <Form.Control type="name" name="postalCode" placeholder="Enter Postal code" value={this.state.PostalCode} onChange={this.onValueChange}
-                                                    />
-                                            </Form.Group>
-                                        </Col>
-                                        <Col>
-                                            <Form.Group>
-                                                <Form.Label className="required">Meeting Platform</Form.Label>
-                                                <Form.Control as="select" name="meetingPlatform" placeholder="Enter meeting platform" value={this.state.MeetingPlatform} onChange={this.onValueChange}
-                                                    />
-                                              
-
-                                            </Form.Group>
-                                        </Col>
-
-                                    </Row>
-                                    {/* <Row>
-                                        <Col>
-                                            <Form.Group>
-                                                <Form.Label className="required">Country </Form.Label>
-                                                <CountryDropdown as="select" name="country" defaultOptionLabel="Select country" value={this.state.country} 
-                                                                 onChange={(name, value) => this.selectCountry(name, value)}
-                                                />
-                                            </Form.Group>
                                         
-                                            <Form.Group>
-                                                <Form.Label>Region </Form.Label>
-                                                <RegionDropdown
-                                                       country={this.state.country} blankOptionLabel="No Country Selected" defaultOptionLabel="Select region"
-                                                       as="select" name="region" value={this.state.region} onChange={(name, value) => this.selectRegion(name,value)}>
-                                                </RegionDropdown>                            
-                                            </Form.Group>
-                                        </Col>
-                                    </Row> */}
+                                    </Row>
+                                    <Row>
+                                            <Col xs={3}>
+                                            
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label>Contact No: </Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label type="name" name="contactNo"> {this.state.contactNo} </Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                
+                                            </Col>
+                                    </Row>
                                     
-                                    <Row className="generate-button-container">
-                                        <Button className="primary-button" onClick={this.onSubmit}>
-                                            Back
-                                        </Button>
+                                    <Row>
+                                            <Col xs={3}>
+                                            
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label>Email: </Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label type="name" name="emailId">{this.state.emailId}</Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                
+                                            </Col>
+                                    </Row>
+                                    <Row>
+                                            <Col xs={3}>
+                                            
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label>Street: </Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label type="name" name="street"> {this.state.street} </Form.Label>    
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                
+                                            </Col>
+                                    </Row>
+                                    <Row>
+                                            <Col xs={3}>
+                                            
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label>Postal Code: </Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label type="name" name="postalCode" > {this.state.postalCode} </Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                
+                                            </Col>
+                                    </Row>
+                                    <Row>
+                                            <Col xs={3}>
+                                            
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label>Region: </Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label type="name" name="region" > {this.state.region} </Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                
+                                            </Col>
+                                    </Row>
+                                    <Row>
+                                            <Col xs={3}>
+                                            
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label>Country: </Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label> {this.state.country} </Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                
+                                            </Col>
+                                    </Row>
+                                    
+                                    <Row>
+                                            <Col xs={3}>
+                                            
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label>Organization: </Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label >{this.state.organizationName}</Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                
+                                            </Col>                                     
+                                    </Row>
+                                    <Row>
+                                            <Col xs={3}>
+                                            
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label>Website: </Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label type="name" name="websiteName">{this.state.websiteName}</Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                
+                                            </Col>
+                                    </Row>
+                                    <Row>
+                                            <Col xs={3}>
+                                            
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label>LinkedIn Profile: </Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label >{this.state.linkedInProfile}</Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                
+                                            </Col>    
+                                    </Row>
+                                    <Row>
+                                            <Col xs={3}>
+                                            
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label>Business Description: </Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label >{this.state.businessDescription}</Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                
+                                            </Col>    
+                                    </Row>
+                                   
+                                    <Row>
+                                            <Col xs={3}>
+                                            
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label>Meeting Platform: </Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Form.Group>
+                                                    <Form.Label >{this.state.meetingPlatform}</Form.Label>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={3} className="generate-button-container">
+                                            <Button className="primary-button" onClick={this.onClickBack}>
+                                              Back
+                                            </Button>  
+                                            </Col>
+                                              
+                                    </Row>
+                                   
+                                    
+                                    <Row >
+                                        
                                     </Row>
                                 </Form>
                             </Col>

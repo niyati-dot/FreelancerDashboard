@@ -4,8 +4,8 @@ const router = express.Router();
 const clientsModel = require('../models/clientsModel');
 
 module.exports.add = (req, res) => {
-    console.log(req.body);
     
+    console.log(req.body);
     const addclient = new clientsModel();
     if(req.body && req.body.clientName)
     {
@@ -35,9 +35,9 @@ module.exports.add = (req, res) => {
     {
         addclient.Website =  req.body.websiteName;
     }
-    if(req.body && req.body.LinkedInProfile)
+    if(req.body && req.body.linkedInProfile)
     {
-        addclient.LinkedInProfile = req.body.LinkedInProfile;
+        addclient.LinkedInProfile = req.body.linkedInProfile;
     }
     if(req.body && req.body.businessDescription)
     {
@@ -47,101 +47,115 @@ module.exports.add = (req, res) => {
     {
         addclient.MeetingPlatform = req.body.meetingPlatform;
     }
-
-    console.log(addclient)
-    
+    if(req.body && req.body.country)
+    {
+        addclient.Country = req.body.country;
+    }
+    if(req.body && req.body.region)
+    {
+        addclient.Region = req.body.region;
+    }
+    console.log(addclient);
     clientsModel.count({}, function(error, numOfDocs){
         if(error) return callback(error);
-        console.log(numOfDocs)
         const ClientId = numOfDocs + 1;
-        console.log(ClientId)
         addclient.ClientId = Number(ClientId);
-        addclient.save(function(error, document) {
-            if (error) {
-                return res.status(400).json({
-                    result: [],
-                    message: error,
-                    success: false
-                })
-            } else {
-                return res.status(200).json({
-                    result: addclient,
-                    success: true
-                })
-            }
+        clientsModel.findOne({'ClientName': req.body.clientName, 'ContactNo': req.body.contactNo}, function(error, result)
+        {
+            console.log('result',result);
+            addclient.save(function(error, document) {
+                if (error) {
+                    return res.status(400).json({
+                        result: [],
+                        message: error,
+                        success: false
+                    })
+                } else {
+                    return res.status(200).json({
+                        result: addclient,
+                        success: true
+                    })
+                }
+            });
         });
-        console.log(addclient.ClientId);
     });
-
-   
 }
 
 module.exports.edit = (req, res) => {
-    console.log(req.body);
-    
-    const editclient = new clientsModel();
+   
+    clientsModel.find({'ClientId': Number(req.body.ClientId)}, function(error, document) {
 
-    if(req.body && req.body.clientName)
-    {
-        editclient.ClientName = req.body.clientName;
-    }
-    if(req.body && req.body.contactNo)
-    {
-        editclient.ContactNo =  req.body.contactNo;
-    }
-    if(req.body && req.body.emailId)
-    {
-        editclient.Email =  req.body.emailId;
-    }
-    if(req.body && req.body.street)
-    {
-        editclient.Street = req.body.street;
-    }
-    if(req.body && req.body.postalCode)
-    {
-        editclient.PostalCode = req.body.postalCode;
-    }
-    if(req.body && req.body.organizationName)
-    {
-        editclient.Organization= req.body.organizationName;
-    }
-    if(req.body && req.body.websiteName)
-    {
-        editclient.Website =  req.body.websiteName;
-    }
-    if(req.body && req.body.LinkedInProfile)
-    {
-        editclient.LinkedInProfile = req.body.LinkedInProfile;
-    }
-    if(req.body && req.body.businessDescription)
-    {
-        editclient.BusinessDescription = req.body.businessDescription;
-    }
-    if(req.body && req.body.meetingPlatform)
-    {
-        editclient.MeetingPlatform = req.body.meetingPlatform;
-    }
+            let doc = document[0]
+               
+            if(req.body && req.body.clientName)
+            {
+                doc.ClientName = req.body.clientName;
+            }
+            if(req.body && req.body.contactNo)
+            {
+                doc.ContactNo =  req.body.contactNo;
+            }
+            if(req.body && req.body.emailId)
+            {
+                doc.Email =  req.body.emailId;
+            }
+            if(req.body && req.body.street)
+            {
+                doc.Street = req.body.street;
+            }
+            if(req.body && req.body.postalCode)
+            {
+                doc.PostalCode = req.body.postalCode;
+            }
+            if(req.body && req.body.organizationName)
+            {
+                doc.Organization= req.body.organizationName;
+            }
+            if(req.body && req.body.websiteName)
+            {
+                doc.Website =  req.body.websiteName;
+            }
+            if(req.body && req.body.LinkedInProfile)
+            {
+                doc.LinkedInProfile = req.body.LinkedInProfile;
+            }
+            if(req.body && req.body.businessDescription)
+            {
+                doc.BusinessDescription = req.body.businessDescription;
+            }
+            if(req.body && req.body.meetingPlatform)
+            {
+                doc.MeetingPlatform = req.body.meetingPlatform;
+            }
+            if(req.body && req.body.country)
+            {
+                doc.Country = req.body.country;
+            }
+            if(req.body && req.body.region)
+            {
+                doc.Region = req.body.region;
+            }
 
-    console.log(editclient)
-    addclient.findOneAndUpdate(function(error, document) {
-        if (error) {
-            return res.status(400).json({
-                result: [],
-                message: error,
-                success: false
-            })
-        } else {
-            return res.status(200).json({
-                result: addclient,
-                success: true
-            })
-        }
+            doc.save(function(error,result){
+                if (error) {
+                    console.log("update error")
+                    return res.status(400).json({
+                        result: [],
+                        message: error,
+                        success: false
+                    })
+                } else {
+                        return res.status(200).json({
+                            success: true
+                        })
+
+                }
+             })
     });
 }
 
 module.exports.viewOne = (req, response) => {
 
-    console.log(req.body);
 
     if (req.body && req.body.ClientName && req.body.ContactNo) 
     {
@@ -169,7 +183,6 @@ module.exports.viewOne = (req, response) => {
 module.exports.getAll = (req, response) => {
     clientsModel.find({}, function(error, result)
     {
-        console.log(result)
         if (error) {
              return response.status(400).json({
                  result: [],
@@ -189,12 +202,9 @@ module.exports.getAll = (req, response) => {
 
 module.exports.delete = (req, response) => {
 
-    console.log("hello");
-    console.log(req.body);
     if(req.body && req.body.ClientName && req.body.ContactNo){
         clientsModel.findOneAndRemove({'ClientName': req.body.ClientName, 'ContactNo': req.body.ContactNo}, function(error, result)
         {
-            console.log(result)
             if (error) {
                 return response.status(400).json({
                     result: [],

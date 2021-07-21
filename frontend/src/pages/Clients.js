@@ -15,20 +15,25 @@ export class Clients extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data : []
+      data : [],
+      ClientName: "",
+      Organization: "",
+      ContactNo: "",
+      Emailid: ""
     }
     this.handleNewClient = this.handleNewClient.bind(this);
 
     this.columns = [
       { Header: 'Client Name', accessor: 'ClientName' },
-      { Header: 'Organization', accessor: 'organization' },
       { Header: 'Contact No', accessor: 'ContactNo' },
       { Header: 'Email', accessor: 'Emailid' },
+      { Header: 'Website', accessor: 'Website' },
       {
         Header: 'Action', accessor: 'row',
         Cell: ({ row }) => (
+          
           <div className="generate-button-container">
-            <Button className="secondary-button" align="right" onClick={this.viewDetails} >View</Button>
+            <Button className="secondary-button" align="right" onClick={() => this.viewDetails(row)} >View</Button>
             <Button className="secondary-button" align="right"  onClick={() => this.editDetails(row)} >Edit</Button>
             <Button className="delete-button" align="right"  onClick={() => this.deleteDetails(row)} >Delete</Button>
           </div>
@@ -41,15 +46,14 @@ export class Clients extends Component {
 
     axios.get('http://localhost:3000/clientsRoutes/getAll').then((response) => {
         if (response.status == 200) {
-            console.log(response.data)
             this.setData(response.data);
             let invoiceDetails = [];
             response.data.forEach(element => {
               let row = {}
               row.ClientName = element.ClientName;
-              row.Organization = element.Organization;
               row.ContactNo = element.ContactNo;
-              row.Emailid = element.Emailid;
+              row.Emailid = element.Email;
+              row.Website = element.Website;
               invoiceDetails.push(row)
             });
             this.setState({
@@ -62,12 +66,13 @@ export class Clients extends Component {
   }
 
 
-  viewDetails = (event) => {
-    event.preventDefault();
-    axios.post('http://localhost:3000/clientsRoutes/viewOne', this.state).then((response) => {
-        alert("Details Successfully Saved!!");
+  viewDetails = (row) => {
+    axios.post('http://localhost:3000/clientsRoutes/viewOne', row.original).then((response) => {  
+        this.props.history.push({ pathname: '/ViewClient' }, {
+          state: response.data
+        })
     }).catch((error) => {
-        console.log("Eroor")
+        console.log("Error")
     })
   }
 
@@ -77,46 +82,25 @@ export class Clients extends Component {
   };
 
   editDetails = (row) => {
-    axios.post('http://localhost:3000/clientsRoutes/viewOne', row.original).then((response) => {                                                                                                           
+    axios.post('http://localhost:3000/clientsRoutes/viewOne', row.original).then((response) => {  
         this.props.history.push({ pathname: '/EditClient' }, {
           state: response.data
         })
-        alert("Details Successfully Saved!!");
     }).catch((error) => {
         console.log("Eroor")
     })
-    this.props.history.push({ pathname: '/Editclient' });
   };
 
   deleteDetails = (row) => {
-    axios.post('http://localhost:3000/clientsRoutes/delete', row.original).then((response) => {
-        alert("Details Successfully Saved!!");
-    }).catch((error) => {
-        console.log("Eroor")
-    })
+      axios.post('http://localhost:3000/clientsRoutes/delete', row.original).then((response) => {
+          alert("Successfully deleted!");
+          this.setData();
+      }).catch((error) => {
+          console.log("Eroor")
+      })
   }
-
-
   setData = (response) => {
-    console.log(response);
-    this.data = [{
-      ClientName: "Jill Dupre",
-      organization: "Elegant Microweb",
-      ContactNo: "(+1)902-412-7654",
-      Emailid: "JillDupre@gmail.com"
-    },
-    {
-      ClientName: "Herry Chopra",
-      organization: "Meditab",
-      ContactNo: "(+1) 777-987-2345",
-      Emailid: "hhs12@yahoo.co.in"
-    },
-    {
-      ClientName: "Nayan Patel",
-      organization: "IBM",
-      ContactNo: "(+91) 9601739976",
-      Emailid: "nayan007@gmail.com"
-    }];
+    this.data = []
   }
   handleNewClient = (e) => {
     e.preventDefault();
