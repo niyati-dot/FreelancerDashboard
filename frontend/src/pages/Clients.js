@@ -15,8 +15,7 @@ export class Clients extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data : [],
-      editdata: []
+      data : []
     }
     this.handleNewClient = this.handleNewClient.bind(this);
 
@@ -29,9 +28,9 @@ export class Clients extends Component {
         Header: 'Action', accessor: 'row',
         Cell: ({ row }) => (
           <div className="generate-button-container">
-            <Button className="secondary-button" align="right" onClick={ () => this.viewDetails(row)} >View</Button>
-            <Button className="secondary-button" align="right"  onClick={ () => this.editDetails(row)} >Edit</Button>
-            <Button className="delete-button" align="right"  onClick= {() => this.deleteDetails(row)} >Delete</Button>
+            <Button className="secondary-button" align="right" onClick={this.viewDetails} >View</Button>
+            <Button className="secondary-button" align="right"  onClick={() => this.editDetails(row)} >Edit</Button>
+            <Button className="delete-button" align="right"  onClick={() => this.deleteDetails(row)} >Delete</Button>
           </div>
         )
       }];
@@ -63,17 +62,22 @@ export class Clients extends Component {
   }
 
 
-  viewDetails = (row) => {
-    axios.post('http://localhost:3000/clientsRoutes/delete', row.original).then((response) => {
+  viewDetails = (event) => {
+    event.preventDefault();
+    axios.post('http://localhost:3000/clientsRoutes/viewOne', this.state).then((response) => {
         alert("Details Successfully Saved!!");
     }).catch((error) => {
         console.log("Eroor")
     })
   }
 
+  handleEditClient = (e) => {
+    e.preventDefault();
+    this.props.history.push({ pathname: '/Editclient' });
+  };
+
   editDetails = (row) => {
     axios.post('http://localhost:3000/clientsRoutes/viewOne', row.original).then((response) => {                                                                                                           
-        console.log(editdata);
         this.props.history.push({ pathname: '/EditClient' }, {
           state: response.data
         })
@@ -90,6 +94,29 @@ export class Clients extends Component {
     }).catch((error) => {
         console.log("Eroor")
     })
+  }
+
+
+  setData = (response) => {
+    console.log(response);
+    this.data = [{
+      ClientName: "Jill Dupre",
+      organization: "Elegant Microweb",
+      ContactNo: "(+1)902-412-7654",
+      Emailid: "JillDupre@gmail.com"
+    },
+    {
+      ClientName: "Herry Chopra",
+      organization: "Meditab",
+      ContactNo: "(+1) 777-987-2345",
+      Emailid: "hhs12@yahoo.co.in"
+    },
+    {
+      ClientName: "Nayan Patel",
+      organization: "IBM",
+      ContactNo: "(+91) 9601739976",
+      Emailid: "nayan007@gmail.com"
+    }];
   }
   handleNewClient = (e) => {
     e.preventDefault();
