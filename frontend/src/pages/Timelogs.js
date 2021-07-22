@@ -8,6 +8,7 @@ import { Button, Card, Col, Container, Form, Modal, Row } from "react-bootstrap"
 
 import timelogServices from '../services/timelogServices.js'
 import projectServices from '../services/projectServices.js'
+import clientService from "../services/clientService";
 
 export default function Timelogs() {
     //Init
@@ -80,6 +81,10 @@ export default function Timelogs() {
 
     // New Task States
     const [projects, setProjects] = useState([]);
+    const [clients, setClients] = useState([]);
+    useEffect(() => {
+        clientService.getAllClients().then(res => setClients(res.data));
+    },[]);
     useEffect(() => {
         projectServices.list().then(res => setProjects(res.data));
     },[]);
@@ -211,9 +216,9 @@ export default function Timelogs() {
                                                               onChange={(e) => handleChange(e)}
                                                               className={taskError.client.length > 0 ? "is-invalid" : ""}>
                                                     <option value="">Select Client</option>
-                                                    <option value="Marco Botton">Marco Botton</option>
-                                                    <option value="Giacomo Guilizzoni">Giacomo Guilizzoni</option>
-                                                    <option value="Mariah Guilizzoni">Mariah Guilizzoni</option>
+                                                    {clients.length && clients.map(function(client,index){
+                                                        return <option key={index} value={client._id}>{client.ClientName}</option>
+                                                    })}
                                                 </Form.Control>
                                                 <Form.Text className="text-danger">{taskError.client}</Form.Text>
                                             </Form.Group>
@@ -225,9 +230,9 @@ export default function Timelogs() {
                                                               onChange={(e) => handleChange(e)}
                                                               className={taskError.project.length > 0 ? "is-invalid" : ""}>
                                                     <option value="">Select Project</option>
-                                                    {projects.filter(project => project.client && project.client.includes(task.client))
+                                                    {projects.length && projects.filter(project => project.client && project.client.includes(task.client))
                                                         .map(function(project,index){
-                                                            return <option key={index} value={project._id}>{project.name}</option>
+                                                            return <option key={index} value={project._id}>{project.title}</option>
                                                         })}
                                                 </Form.Control>
                                                 <Form.Text className="text-danger">{taskError.project}</Form.Text>
