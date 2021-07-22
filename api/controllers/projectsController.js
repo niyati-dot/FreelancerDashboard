@@ -1,5 +1,19 @@
+/**
+ * Author: Sanket Shah.
+ * Created On: 2021-07-20
+ * Controller for Projects.
+ */
+
 const projectsModel = require('../models/projectsModel');
 
+/**
+ * Method to fetch all the project list
+ * @param {*} request 
+ * @param {*} response 
+ * @returns 
+ * If projects exists, returns an array of type "ProjectsModel"
+ * Else returns empty array.
+ */
 const list = (req, res) => {
     projectsModel.find({}, function (err, docs) {
         if (err){
@@ -17,6 +31,14 @@ const list = (req, res) => {
     });
 };
 
+/**
+ * Method to fetch one single project
+ * @param {*} request 
+ * @param {*} response 
+ * @returns 
+ * If project exists, returns a project "ProjectsModel"
+ * Else returns empty array.
+ */
 const get = (req, res) => {
     projectsModel.findById(req.params.id, function (err, doc) {
         if (err){
@@ -35,6 +57,14 @@ const get = (req, res) => {
     });
 };
 
+/**
+ * Method to update the project
+ * @param {*} request 
+ * @param {*} response 
+ * @returns 
+ * It updates the project info in type "ProjectsModel"
+ * Else returns empty array.
+ */
 const update = (req, res) => {
     projectsModel.findById(req.params.id, function (err, projects) {
         if (err){
@@ -70,6 +100,14 @@ const update = (req, res) => {
     });
 };
 
+/**
+ * Method to fetch add the project in the list
+ * @param {*} request 
+ * @param {*} response 
+ * @returns 
+ * It adds the array of type "ProjectsModel"
+ * Else returns empty array.
+ */
 const add = async (req, res) => {
     
         const projects = new projectsModel();
@@ -101,7 +139,14 @@ const add = async (req, res) => {
         })
 };
 
-
+/**
+ * Method to remove the project from the project list
+ * @param {*} request 
+ * @param {*} response 
+ * @returns 
+ * If projects exists, deletes the Project
+ * Else returns empty array.
+ */
 const remove = (req, res) => {
     projectsModel.findOneAndRemove({_id: req.params.id},function (err, docs) {
         if (err){

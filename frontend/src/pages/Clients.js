@@ -1,3 +1,9 @@
+/**
+ * Author: Janvi Patel.
+ * Created On: 2021-06-07
+ * Clients details.
+ */
+
 import React from 'react';
 import PageHeader from "../components/PageHeader";
 import Datatable from "../components/Datatable";
@@ -11,7 +17,9 @@ import { Component } from "react";
 import axios from 'axios';
 import clientService from "../services/clientService"
 
+
 export class Clients extends Component {
+  
   //constructor for props
   constructor(props) {
     super(props);
@@ -39,10 +47,13 @@ export class Clients extends Component {
             <Button className="delete-button" align="right"  onClick={() => this.deleteDetails(row)} >Delete</Button>
           </div>
         )
-      }];
-      
+      }]; 
   }
 
+  /**
+     * On mount, set the values of table.
+     * @param {*} event 
+  */
   componentDidMount() {
     
     clientService.getAllClients().then((response) => {
@@ -67,7 +78,10 @@ export class Clients extends Component {
 
   }
 
-
+  /**
+     * On click of view details select view client API call
+     * @param {*} event 
+  */
   viewDetails = (row) => {
 
     clientService.viewOneClient(row.original).then((response) => {  
@@ -79,11 +93,10 @@ export class Clients extends Component {
     })
   }
 
-  handleEditClient = (e) => {
-    e.preventDefault();
-    this.props.history.push({ pathname: '/Editclient' });
-  };
-
+   /**
+     * On click of edit details edit client API call
+     * @param {*} event 
+  */
   editDetails = (row) => {
     clientService.viewOneClient(row.original).then((response) => {  
         this.props.history.push({ pathname: '/EditClient' }, {
@@ -94,9 +107,11 @@ export class Clients extends Component {
     })
   };
 
+  /**
+     * On click of delete details delete client API call and set table
+     * @param {*} event 
+  */
   deleteDetails = (row) => {
-
-    
     clientService.deleteClient(row.original).then((response) => {
           alert("Successfully deleted entry!!");
           clientService.getAllClients().then((response) => {
@@ -125,6 +140,10 @@ export class Clients extends Component {
     this.data = []
   }
 
+  /**
+     * On click of handle new client add new client detail redirected
+     * @param {*} event 
+  */
   handleNewClient = (e) => {
     e.preventDefault();
     this.props.history.push({ pathname: '/Addclient' });

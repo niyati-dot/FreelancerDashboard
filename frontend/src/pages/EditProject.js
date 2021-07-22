@@ -1,9 +1,18 @@
+/**
+ * Author: Sanket Shah.
+ * Created On: 2021-07-20
+ * Edit File for Projects.
+ */
+
 import {useState, useEffect, React} from 'react';
 import PageHeader from "../components/PageHeader";
 import { useParams, Redirect, useHistory } from 'react-router-dom';
 import projectsServices from '../services/projectsServices';
 import clientsServices from '../services/clientsServices';
 
+/**
+ *  Functionality for editing the project
+ */
 const EditProjects = (prop) => {
 
     const param = useParams();

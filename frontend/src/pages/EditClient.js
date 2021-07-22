@@ -1,4 +1,8 @@
-
+/**
+ * Author: Janvi Patel.
+ * Created On: 2021-06-07
+ * Edit Client details.
+ */
 import React, { Component } from 'react';
 import PageHeader from "../components/PageHeader";
 import { withRouter } from 'react-router-dom';
@@ -13,12 +17,10 @@ import clientService from "../services/clientService";
 
 export class EditClient extends Component
 {
- 
+    //constructor for props
     constructor(props) {
         super(props)
 
-        console.log(props);
-        this.new = props.history;
         this.state = {
             clientId: props.history.location.state.state.ClientId,
             clientName: props.history.location.state.state.ClientName,
@@ -45,20 +47,36 @@ export class EditClient extends Component
         }       
     }
 
+    /**
+     * On mount, set the values of table.
+     * @param {*} event 
+    */
     onValueChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
         });
     }
 
+    /**
+     * On mount, set the values of table.
+     * @param {*} event 
+    */
     selectCountry (name, val) {
       this.setState({  name: val });
     }
   
+    /**
+     * On mount, set the values of table.
+     * @param {*} event 
+    */
     selectRegion (val) {
       this.setState({ name: val });
     }
 
+    /**
+     * validate client name is null or not
+     * @param {*} event 
+    */
     validateClient = (event) => {
         let isValid = true;
         if (!this.state.clientName) {
@@ -71,6 +89,10 @@ export class EditClient extends Component
         return isValid;
     }
 
+     /**
+     * Validate organization is null or not
+     * @param {*} event 
+    */
     validateOrganization = (event) => {
         let isValid = true;
         if (!this.state.organizationName) {
@@ -83,6 +105,10 @@ export class EditClient extends Component
         return isValid;
     }
 
+    /**
+     * Validate contactNo with numbers and contact no is null or not
+     * @param {*} event 
+    */
     validateContactNo = (event) => {
         let isValid = true;
         if (!this.state.contactNo) {
@@ -103,6 +129,10 @@ export class EditClient extends Component
         return isValid;
     }
 
+     /**
+     * Validate website name with pattern and website is null or not
+     * @param {*} event 
+    */
     validateWebsiteName = (event) => {
         let isValid = true;
 
@@ -122,6 +152,10 @@ export class EditClient extends Component
         return isValid;
     }
 
+    /**
+     * Validate email id with pattern 
+     * @param {*} event 
+    */
     validateEmailId = (event) => {
         let isValid = true;
         if (!this.state.emailId) {
@@ -141,6 +175,10 @@ export class EditClient extends Component
         return isValid;
     }
 
+      /**
+     * Validate linkedin profile with pattern 
+     * @param {*} event 
+    */
     validateLinkedInProfile = (event) => {
 
         let isValid = true;
@@ -160,6 +198,10 @@ export class EditClient extends Component
         return isValid;
     }
 
+     /**
+     * Validate street with pattern 
+     * @param {*} event 
+    */
     validateStreet = (event) => {
         let isValid = true;
         if(this.state.street){
@@ -179,6 +221,10 @@ export class EditClient extends Component
         return isValid;
     }
 
+    /**
+     * Validate postal code with pattern 
+     * @param {*} event 
+    */
     validatePostalcode = (event) => {
         let isValid = true;
         if(this.state.postalCode){
@@ -197,6 +243,10 @@ export class EditClient extends Component
         return isValid;
     }
 
+    /**
+     * Validate meeting platform with pattern 
+     * @param {*} event 
+    */
     validateMeetingPlatform = (event) => {
         let isValid = true;
         if (!this.state.meetingPlatform) {
@@ -209,6 +259,10 @@ export class EditClient extends Component
         return isValid;
     }
 
+    /**
+     * Validate form 
+     * @param {*} event 
+    */
     validateForm = (event) => {
         let isValid = true
         if (!this.validateClient()) {
@@ -241,6 +295,10 @@ export class EditClient extends Component
         return isValid;
     }
 
+    /**
+     * On Update client will be updated and the api call will be made
+     * @param {*} event 
+    */
     onUpdate = (event) => {
         event.preventDefault();
         if (this.validateForm()) {
@@ -253,6 +311,10 @@ export class EditClient extends Component
         }
     }
 
+    /**
+     * On click back the clients page will be redirected
+     * @param {*} event 
+    */
     onClickBack = (event) => {
         event.preventDefault();
         this.props.history.push({ pathname: '/clients' });

@@ -1,3 +1,9 @@
+/**
+ * Author: Sanket Shah.
+ * Created On: 2021-07-20
+ * Listing File for Projects.
+ */
+
 import React from 'react';
 import { useState, useEffect } from 'react';
 import PageHeader from "../components/PageHeader";
@@ -9,6 +15,9 @@ import { Redirect, useHistory } from 'react-router-dom';
 import projectsServices from '../services/projectsServices.js'
 import "../styles/Projects.scss";
 
+/**
+ *  Functionality for listing down the list of projects
+ */
 export default function Projects() {
 
     const columns = [

@@ -1,3 +1,8 @@
+/**
+ * Author: Janvi Patel.
+ * Created On: 2021-06-07
+ * view Client details.
+ */
 import React, { Component } from 'react';
 import PageHeader from "../components/PageHeader";
 import { withRouter } from 'react-router-dom';
@@ -10,13 +15,10 @@ import axios from 'axios';
 
 export class ViewClient extends Component {
  
-  
+    //constructor for props
     constructor(props) {
         super(props)
 
-        console.log(props);
-        this.new = props.history;
-        console.log(props.history.location.state.state.LinkedInProfile);
         this.state = {
             ClientId: props.history.location.state.state.ClientId,
             clientName: props.history.location.state.state.ClientName,
@@ -34,14 +36,10 @@ export class ViewClient extends Component {
         }       
     }
 
-    selectCountry (name, val) {
-      this.setState({  name: val });
-    }
-  
-    selectRegion (val) {
-      this.setState({ name: val });
-    }
-    
+    /**
+     * On click back the clients page will be redirected
+     * @param {*} event 
+    */
     onClickBack = (event) => {
         event.preventDefault();
         this.props.history.push({ pathname: '/clients' });

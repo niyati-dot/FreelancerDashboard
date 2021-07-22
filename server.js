@@ -1,5 +1,3 @@
-/* Author: Team */
-
 const express = require('express');
 const mongoose = require("mongoose");
 
@@ -16,13 +14,14 @@ app.use(express.json());
 //API Routes
 app.use('/api',require('./api'));
 
-//Frontend Routes
+app.use(express.json());
 app.use(express.static(path.join(__dirname, './frontend/build')));
+app.use('/api',require('./api'));
 app.get('/*', (req,res) => {
     res.sendFile(path.join(__dirname, './frontend/build/index.html'));
 });
 
-//MongoDB Connection
+
 mongoose.connect(mongodb_url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -37,8 +36,7 @@ mongoose.connection.on("connected", (err, res) => {
 
     console.log("Mongoose connected");
 
-    //App Listen
     app.listen(port, () => {
-        console.log("App started on port:" + port)
+        console.log(`App started at http://localhost:${port}`)
     });
 });

@@ -1,7 +1,15 @@
+/**
+ * Author: Sanket Shah.
+ * Created On: 2021-07-20
+ * Model for Projects.
+ */
+
 const Mongoose = require("mongoose");
 const Schema = Mongoose.Schema;
 
-
+/**
+ * Model Schema for Projects
+ */
 const projectsSchema = {
     title: {
         type: String

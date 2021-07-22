@@ -1,9 +1,18 @@
+/**
+ * Author: Sanket Shah.
+ * Created On: 2021-07-20
+ * Add Project File.
+ */
+
 import {useState, useEffect, React} from 'react';
 import PageHeader from "../components/PageHeader";
 import { Redirect, useHistory } from 'react-router-dom';
 import projectsServices from '../services/projectsServices';
 import clientsServices from '../services/clientsServices';
 
+/**
+ *  Functionality for adding the project
+ */
 export default function AddProjects(){
 
     const history = useHistory();

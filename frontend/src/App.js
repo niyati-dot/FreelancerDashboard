@@ -18,6 +18,7 @@ import AddClient from "./pages/AddClient";
 import EditClient from "./pages/EditClient";
 import ViewClient from "./pages/ViewClient";
 import Testimonials from "./pages/Testimonials";
+import RequestTestimonials from "./pages/RequestTestimonial";
 import InvoiceManagement from "./pages/InvoiceManagement"
 import TodoList from "./pages/TodoList"
 import Calendar from "./pages/Calendar";
@@ -94,10 +95,15 @@ export default function App() {
                         <ViewClient />
                     </DashboardLayout>
                 </Route>
-                <Route path="/testimonials">
+                <Route exact path="/testimonials">
                     <DashboardLayout>
                         <Testimonials />
                     </DashboardLayout>
+                </Route>
+                <Route path="/testimonials/requestTestimonials/:id">
+                    <AppLayout>
+                        <RequestTestimonials />
+                    </AppLayout>
                 </Route>
                 <Route path="/invoicemanagement">
                     <DashboardLayout>
