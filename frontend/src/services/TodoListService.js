@@ -1,5 +1,9 @@
+/**
+ * Author: Bansi Mehta
+ * Created On: 20201-07-20
+ * Service containing api calls for TO-DO List.
+ */
 import axios from "axios"
-
 export class TodoListService {
     async getAllTasks(date) {
         const result = await axios.post("/api/todoLists/getList", { "currentDate": date });
