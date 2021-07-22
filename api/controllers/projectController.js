@@ -1,3 +1,9 @@
+/**
+ * Author: Sanket Shah.
+ * Created On: 2021-07-20
+ * Controller for Projects.
+ */
+
 const mongoose = require('mongoose');
 const express = require("express");
 const Project = require("../models/getProject");
