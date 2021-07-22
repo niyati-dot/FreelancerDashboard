@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import PageHeader from "../components/PageHeader";
 import { withRouter } from 'react-router-dom';
-import "./AddClient.scss";
+import "../styles/AddClient.scss";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import axios from 'axios';
 import { curl_init } from 'react';
 import { curl_getinfo } from 'react';
 import { CURLINFO_HTTP_CODE } from 'react';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
+import clientService from "../services/clientService"
 
 export class AddClient extends Component {
 
@@ -240,7 +240,7 @@ export class AddClient extends Component {
 
     onSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:3000/clientsRoutes/add/', this.state).then((response) => {
+        clientService.addNewClient(this.state).then((response) => {
             if (this.validateForm()) {
                 alert("Details Successfully Saved!!");
             }

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PageHeader from "../components/PageHeader";
 import { withRouter } from 'react-router-dom';
-import "./AddClient.scss";
+import "../styles/AddClient.scss";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
+import clientService from "../services/clientService";
 
 export class EditClient extends Component
 {
@@ -242,10 +243,9 @@ export class EditClient extends Component
     onUpdate = (event) => {
         event.preventDefault();
         if (this.validateForm()) {
-
-            axios.post('http://localhost:3000/clientsRoutes/edit', this.state).then((response) => {
+            clientService.editClient(this.state).then((response) => {
             }).catch((error) => {
-                console.log("Eroor")
+                console.log("Error")
             })
             alert('Successfully updated details!!');
             this.props.history.push({ pathname: '/clients' });

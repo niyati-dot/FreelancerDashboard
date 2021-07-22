@@ -5,10 +5,11 @@ import {
   withRouter
 } from "react-router-dom";
 import { Button, Col, Row } from "react-bootstrap";
-import "./Clients.scss";
+import "../styles/Clients.scss";
 import './AddClient'
 import { Component } from "react";
 import axios from 'axios';
+import clientService from "../services/clientService"
 
 export class Clients extends Component {
   //constructor for props
@@ -43,8 +44,8 @@ export class Clients extends Component {
   }
 
   componentDidMount() {
-
-    axios.get('http://localhost:3000/clientsRoutes/getAll').then((response) => {
+    
+    clientService.getAllClients().then((response) => {
         if (response.status == 200) {
             this.setData(response.data);
             let newDetails = [];
@@ -63,11 +64,13 @@ export class Clients extends Component {
     }).catch((error) => {
         console.log("Eroor")
     })
+
   }
 
 
   viewDetails = (row) => {
-    axios.post('http://localhost:3000/clientsRoutes/viewOne', row.original).then((response) => {  
+
+    clientService.viewOneClient(row.original).then((response) => {  
         this.props.history.push({ pathname: '/ViewClient' }, {
           state: response.data
         })
@@ -82,19 +85,21 @@ export class Clients extends Component {
   };
 
   editDetails = (row) => {
-    axios.post('http://localhost:3000/clientsRoutes/viewOne', row.original).then((response) => {  
+    clientService.viewOneClient(row.original).then((response) => {  
         this.props.history.push({ pathname: '/EditClient' }, {
           state: response.data
         })
     }).catch((error) => {
-        console.log("Eroor")
+        console.log("Error")
     })
   };
 
   deleteDetails = (row) => {
-      axios.post('http://localhost:3000/clientsRoutes/delete', row.original).then((response) => {
+
+    
+    clientService.deleteClient(row.original).then((response) => {
           alert("Successfully deleted entry!!");
-          axios.get('http://localhost:3000/clientsRoutes/getAll').then((response) => {
+          clientService.getAllClients().then((response) => {
               if (response.status == 200) {
                   this.setData(response.data);
                   let newdetails = [];
