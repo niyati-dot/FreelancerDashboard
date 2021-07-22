@@ -1,3 +1,8 @@
+/**
+ * Author: Janvi Patel.
+ * Created On: 2021-06-07
+ * Add Client details.
+ */
 import React, { Component } from 'react';
 import PageHeader from "../components/PageHeader";
 import { withRouter } from 'react-router-dom';
@@ -14,6 +19,7 @@ import clientService from "../services/clientService"
 
 export class AddClient extends Component {
 
+    //constructor for props
     constructor(props) {
         super(props)
 
@@ -42,20 +48,36 @@ export class AddClient extends Component {
         }
     }
 
+    /**
+     * On mount, set the values of table.
+     * @param {*} event 
+    */
     onValueChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
         });
     }
 
+    /**
+     * On mount, set the values of table.
+     * @param {*} event 
+    */
     selectCountry(val) {
         this.setState({ country: val });
     }
 
+    /**
+     * On mount, set the values of table.
+     * @param {*} event 
+    */
     selectRegion(val) {
         this.setState({ region: val });
     }
 
+    /**
+     * validate client name is null or not
+     * @param {*} event 
+    */
     validateClient = (event) => {
         let isValid = true;
         if (!this.state.clientName) {
@@ -68,6 +90,10 @@ export class AddClient extends Component {
         return isValid;
     }
 
+    /**
+     * Validate organization is null or not
+     * @param {*} event 
+    */
     validateOrganization = (event) => {
         let isValid = true;
         if (!this.state.organizationName) {
@@ -80,6 +106,10 @@ export class AddClient extends Component {
         return isValid;
     }
 
+    /**
+     * Validate contactNo with numbers and contact no is null or not
+     * @param {*} event 
+    */    
     validateContactNo = (event) => {
         let isValid = true;
         if (!this.state.contactNo) {
@@ -100,6 +130,10 @@ export class AddClient extends Component {
         return isValid;
     }
 
+    /**
+     * Validate website name with pattern and website is null or not
+     * @param {*} event 
+    */
     validateWebsiteName = (event) => {
         let isValid = true;
 
@@ -119,6 +153,10 @@ export class AddClient extends Component {
         return isValid;
     }
 
+    /**
+     * Validate email id with pattern 
+     * @param {*} event 
+    */
     validateEmailId = (event) => {
         let isValid = true;
         if (!this.state.emailId) {
@@ -138,6 +176,10 @@ export class AddClient extends Component {
         return isValid;
     }
 
+    /**
+     * Validate linkedin profile with pattern 
+     * @param {*} event 
+    */
     validateLinkedInProfile = (event) => {
 
         let isValid = true;
@@ -157,6 +199,10 @@ export class AddClient extends Component {
         return isValid;
     }
 
+    /**
+     * Validate street with pattern 
+     * @param {*} event 
+    */
     validateStreet = (event) => {
         let isValid = true;
         if(this.state.street){
@@ -176,6 +222,10 @@ export class AddClient extends Component {
         return isValid;
     }
 
+    /**
+     * Validate postal code with pattern 
+     * @param {*} event 
+    */
     validatePostalcode = (event) => {
         let isValid = true;
         if(this.state.postalCode){
@@ -194,6 +244,10 @@ export class AddClient extends Component {
         return isValid;
     }
 
+    /**
+     * Validate meeting platform with pattern 
+     * @param {*} event 
+    */
     validateMeetingPlatform = (event) => {
         let isValid = true;
         if (!this.state.meetingPlatform) {
@@ -206,6 +260,10 @@ export class AddClient extends Component {
         return isValid;
     }
 
+    /**
+     * Validate form 
+     * @param {*} event 
+    */
     validateForm = (event) => {
         let isValid = true
         if (!this.validateClient()) {
@@ -238,6 +296,10 @@ export class AddClient extends Component {
         return isValid;
     }
 
+    /**
+     * On submit new client will be added and the api call will be made
+     * @param {*} event 
+    */
     onSubmit = (event) => {
         event.preventDefault();
         clientService.addNewClient(this.state).then((response) => {
@@ -251,6 +313,10 @@ export class AddClient extends Component {
         })
     }
 
+    /**
+     * On click back the clients page will be redirected
+     * @param {*} event 
+    */
     onClickBack = (event) => {
         event.preventDefault();
         this.props.history.push({ pathname: '/clients' });

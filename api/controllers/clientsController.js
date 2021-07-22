@@ -1,11 +1,22 @@
-const express = require('express');
+/**
+ * Author: Janvi Patel.
+ * Created On: 2021-07-20
+ * Controller for Clients Controller.
+ */
 
-const router = express.Router();
 const clientsModel = require('../models/clientsModel');
 
+/**
+ * Method to add all the details of the client lists.
+ * @param {*} request 
+ * @param {*} response 
+ * @returns 
+ * Client Id will be generated automatically by total document number.
+ * If client already exist for the same Client Name and Contact No then the client will not be added to list
+ * If having error returns false.
+ */
 module.exports.add = (req, res) => {
     
-    console.log(req.body);
     const addclient = new clientsModel();
     if(req.body && req.body.clientName)
     {
@@ -55,109 +66,120 @@ module.exports.add = (req, res) => {
     {
         addclient.Region = req.body.region;
     }
-    console.log(addclient);
+
     clientsModel.count({}, function(error, numOfDocs){
         if(error) return callback(error);
         const ClientId = numOfDocs + 1;
         addclient.ClientId = Number(ClientId);
         clientsModel.findOne({'ClientName': addclient.ClientName, 'ContactNo': addclient.ContactNo}, function(error, result)
         {
-            console.log('result',result);
             if(!result){
-            addclient.save(function(error, document) {
-                if (error) {
-                    return res.status(400).json({
-                        result: [],
-                        message: error,
-                        success: false
-                    })
-                } else {
-                    return res.status(200).json({
-                        result: addclient,
-                        success: true
-                    })
-                }
-            });
+                addclient.save(function(error, document) {
+                    if (error) {
+                        return res.status(400).json({
+                            result: [],
+                            message: error,
+                            success: false
+                        })
+                    } else {
+                        return res.status(200).json({
+                            result: addclient,
+                            success: true
+                        })
+                    }
+                });
             }
         });
     });
 }
 
+/**
+ * Method to update the details of the client.
+ * @param {*} request 
+ * @param {*} response 
+ * @returns 
+ * find the client details by ID and update the details by new details
+ * returns empty list if any error
+ */
 module.exports.edit = (req, res) => {
    
-    clientsModel.find({'ClientName': req.body.clientName , 'ContactNo': req.body.contactNo}, function(error, document) {
+    clientsModel.find({'ClientId': req.body.clientId}, function(error, document) {
 
-            let doc = document[0]
-            console.log('request',req);
-            if(req.body && req.body.clientName)
-            {
-                doc.ClientName = req.body.clientName;
-            }
-            if(req.body && req.body.contactNo)
-            {
-                doc.ContactNo =  req.body.contactNo;
-            }
-            if(req.body && req.body.emailId)
-            {
-                doc.Email =  req.body.emailId;
-            }
-            if(req.body && req.body.street)
-            {
-                doc.Street = req.body.street;
-            }
-            if(req.body && req.body.postalCode)
-            {
-                doc.PostalCode = req.body.postalCode;
-            }
-            if(req.body && req.body.organizationName)
-            {
-                doc.Organization= req.body.organizationName;
-            }
-            if(req.body && req.body.websiteName)
-            {
-                doc.Website =  req.body.websiteName;
-            }
-            if(req.body && req.body.LinkedInProfile)
-            {
-                doc.LinkedInProfile = req.body.LinkedInProfile;
-            }
-            if(req.body && req.body.businessDescription)
-            {
-                doc.BusinessDescription = req.body.businessDescription;
-            }
-            if(req.body && req.body.meetingPlatform)
-            {
-                doc.MeetingPlatform = req.body.meetingPlatform;
-            }
-            if(req.body && req.body.country)
-            {
-                doc.Country = req.body.country;
-            }
-            if(req.body && req.body.region)
-            {
-                doc.Region = req.body.region;
-            }
+    let doc = document[0]
+    if(req.body && req.body.clientName)
+    {
+        doc.ClientName = req.body.clientName;
+    }
+    if(req.body && req.body.contactNo)
+    {
+        doc.ContactNo =  req.body.contactNo;
+    }
+    if(req.body && req.body.emailId)
+    {
+        doc.Email =  req.body.emailId;
+    }
+    if(req.body && req.body.street)
+    {
+        doc.Street = req.body.street;
+    }
+    if(req.body && req.body.postalCode)
+    {
+        doc.PostalCode = req.body.postalCode;
+    }
+    if(req.body && req.body.organizationName)
+    {
+        doc.Organization= req.body.organizationName;
+    }
+    if(req.body && req.body.websiteName)
+    {
+        doc.Website =  req.body.websiteName;
+    }
+    if(req.body && req.body.LinkedInProfile)
+    {
+        doc.LinkedInProfile = req.body.LinkedInProfile;
+    }
+    if(req.body && req.body.businessDescription)
+    {
+        doc.BusinessDescription = req.body.businessDescription;
+    }
+    if(req.body && req.body.meetingPlatform)
+    {
+        doc.MeetingPlatform = req.body.meetingPlatform;
+    }
+    if(req.body && req.body.country)
+    {
+        doc.Country = req.body.country;
+    }
+    if(req.body && req.body.region)
+    {
+        doc.Region = req.body.region;
+    }
 
-            doc.save(function(error,result){
-                if (error) {
-                    console.log("update error")
-                    return res.status(400).json({
-                        result: [],
-                        message: error,
-                        success: false
-                    })
-                } else {
-                        return res.status(200).json({
-                            success: true
-                        })
-
-                }
-             })
+    doc.save(function(error,result){
+        if (error) {
+            return res.status(400).json({
+                result: [],
+                message: error,
+                success: false
+            })
+        } else {
+            return res.status(200).json({
+                success: true
+            })
+        }
+        })
     });
 }
 
+/**
+ * Method to view one the details of the client.
+ * @param {*} request 
+ * @param {*} response 
+ * @returns 
+ * find the client details by client name and contact no
+ * and send the response as a return statement
+ */
 module.exports.viewOne = (req, response) => {
-
 
     if (req.body && req.body.ClientName && req.body.ContactNo) 
     {
@@ -182,6 +204,13 @@ module.exports.viewOne = (req, response) => {
     }
 }
 
+/**
+ * Method to get all the details of the clients.
+ * @param {*} request 
+ * @param {*} response 
+ * @returns 
+ * find the all clients details and returns result as response
+ */
 module.exports.getAll = (req, response) => {
     clientsModel.find({}, function(error, result)
     {
@@ -202,6 +231,14 @@ module.exports.getAll = (req, response) => {
     });
 }
 
+/**
+ * Method to delete one client detail.
+ * @param {*} request 
+ * @param {*} response 
+ * @returns 
+ * find the client with same client name and contact No and remove it from database and returns 
+ * empty array if any error
+ */
 module.exports.delete = (req, response) => {
 
     if(req.body && req.body.ClientName && req.body.ContactNo){

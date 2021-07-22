@@ -1,3 +1,8 @@
+/**
+ * Author: Janvi Patel.
+ * Created On: 2021-07-20.
+ * Model for clients.
+ */
 const Mongoose = require("mongoose");
 const Schema = Mongoose.Schema;
 
@@ -44,4 +49,5 @@ const clientsSchema = new Mongoose.Schema({
     },
 });
 
+// Model according to collection: "clients"
 module.exports = Mongoose.model("clients", clientsSchema);
