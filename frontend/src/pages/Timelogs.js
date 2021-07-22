@@ -13,7 +13,7 @@ import clientService from "../services/clientService";
 export default function Timelogs() {
     //Init
     const columns = [
-        { Header: 'Project', accessor: 'project.name' },
+        { Header: 'Project', accessor: 'project.title' },
         { Header: 'Client', accessor: 'project.client' },
         { Header: 'Task', accessor: 'task' },
         { Header: 'Start At', accessor: row => moment(row.startAt).format("DD-MM-YYYY hh:mm:ss")},
@@ -217,7 +217,7 @@ export default function Timelogs() {
                                                               className={taskError.client.length > 0 ? "is-invalid" : ""}>
                                                     <option value="">Select Client</option>
                                                     {clients.length && clients.map(function(client,index){
-                                                        return <option key={index} value={client._id}>{client.ClientName}</option>
+                                                        return <option key={index} value={client.ClientName}>{client.ClientName}</option>
                                                     })}
                                                 </Form.Control>
                                                 <Form.Text className="text-danger">{taskError.client}</Form.Text>
