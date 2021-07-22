@@ -1,23 +1,23 @@
+/* Author: Vishal Sancheti */
+
 const Mongoose = require("mongoose");
 const Schema = Mongoose.Schema;
 
-
 const timelogSchema = new Mongoose.Schema({
     project: {
-        type: Number
+        type: Schema.Types.ObjectID,
+        ref: "Project",
     },
     task: {
-        type: String
+        type: String,
     },
     startAt: {
-        type: Date
+        type: Date,
+        default: Date.now
     },
     endAt: {
-        type: Date
+        type: Date,
     },
 });
 
-
-const timelogs = Mongoose.model('timelogs', timelogSchema);
-
-module.exports = timelogs;
+module.exports = Mongoose.model("Timelog", timelogSchema);

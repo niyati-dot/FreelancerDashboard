@@ -1,11 +1,15 @@
-const mongoose = require ('mongoose')
+/* Author: Vishal Sancheti */
 
-const projectSchema = {
-    name: {type:String, required:true},
-    project_id: {type:Number, required:true}
+const Mongoose = require("mongoose");
+const Schema = Mongoose.Schema;
 
-}
+const projectSchema = new Mongoose.Schema({
+    client: {
+        type: String,
+    },
+    name: {
+        type: String,
+    },
+});
 
-const projects = mongoose.model('projects', projectSchema);
-
-module.exports = projects;
+module.exports = Mongoose.model("Project", projectSchema);

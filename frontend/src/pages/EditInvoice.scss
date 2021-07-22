@@ -1,6 +1,6 @@
 $containerHeight: 15rem;
 
-.invoice-generation-container {
+.edit-invoice-generation-container {
     .generate-button-container {
         justify-content: center;
     }
@@ -13,13 +13,12 @@ $containerHeight: 15rem;
     }
 
     .invoice-generation-content {
-        height: $containerHeight;
+      
         display: inline-block;
         width: 100%;  
     }
 
     .generate-forms {
-        height: 13rem;
         display: inline-block;
         width: 100%;
     }
