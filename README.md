@@ -5,15 +5,29 @@ As more opportunities shift towards work from home, there is an increase in numb
 * Date Created: 24 05 2021
 * Last Modification Date: 21 07 2021
 * URL: https://csci5709-group5-s21.herokuapp.com/
+* Branch URL: https://git.cs.dal.ca/janvi/csci5709_group5_s21/-/tree/todo-list-bansi
+* Master Code URL: https://git.cs.dal.ca/janvi/csci5709_group5_s21/-/tree/master
 
 ## Authors
 
-* [Bansi Mehta(B00875640)](bn955101@dal.ca) - (Developer)
-* [Deep Patel(B00865413)](dp889845@dal.ca) - (Developer)
-* [Janvi Patel (B00863421)](jn410076@dal.ca) - (Developer)
-* [Sanket Shah(B00862499)](sn488207@dal.ca) - (Developer)
-* [Tejaswi Chaudhary(B00858613)](tj754396@dal.ca) - (Developer)
-* [Vishal Sancheti (B00877378)](vs488310@dal.ca) - (Developer)
+* [Bansi Mehta(B00875640)](bn955101@dal.ca) - (Developer) Individual Assignment
+
+## Todo List
+Maintaining daily todo list for the users. Segregation between complete and incomplete task.
+
+### Screens:
+api\controllers\TodoListController.js
+api\models\TodoListModel.js
+api\routes\TodoListRoutes.js
+frontend\src\pages\TodoList.js
+frontend\src\services\TodoListService.js
+frontend\src\styles\TodoList.scss
+
+### Functionaliy:
+* View tasks by date.
+* Add new task.
+* Mark task as done.
+* Delete task.
 
 ## Getting Started
 
@@ -85,125 +99,6 @@ yarn start
 * [Heroku DevCenter](https://devcenter.heroku.com/articles/git) - Official Heroku Documentation
 * [Dev.To](https://dev.to/abdulbasit313/how-to-develop-a-stopwatch-in-react-js-with-custom-hook-561b) - Developers Community Article
 * [Mongoose](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/mongoose) - MDN documentation for MongoDB ORM
-### frontend/src/pages/Timelogs.js
-
-*Between Lines 40 - 74*
-
-```
-const [timerState, setTimerState] = useState(0);
-    const [timerStart, setTimerStart] = useState(Date.now());
-    const [timerEnd, setTimerEnd] = useState(Date.now());
-    const [timerString, setTimerString] = useState("00 : 00 : 00 : 00");
-    const [timer, setTimer] = useState(0);
-    useEffect(() => {
-        let centiseconds = ("0" + (Math.floor(timer / 10) % 100)).slice(-2);
-        let seconds = ("0" + (Math.floor(timer / 1000) % 60)).slice(-2);
-        let minutes = ("0" + (Math.floor(timer / 60000) % 60)).slice(-2);
-        let hours = ("0" + Math.floor(timer / 3600000)).slice(-2);
-        setTimerString(hours + " : " + minutes+ " : " + seconds+ " : " + centiseconds);
-    });
-    const startTimer = () => {
-        if(timerState === 0){
-            setTimerStart(Date.now() - timer);
-            setTimerState (
-                setInterval(() => {
-                    setTimer(Date.now() - timerStart)
-                }, 10)
-            );
-        }
-    };
-    const stopTimer = () => {
-        setTimerEnd(Date.now());
-        clearInterval(timerState);
-        setTimerState(0);
-        setTimer(0);
-    };
-
-```
-
-The code above was created by adapting the code in [DevTo](https://dev.to/abdulbasit313/how-to-develop-a-stopwatch-in-react-js-with-custom-hook-561b) as shown below: 
-
-```
-import React, { useState, useRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faClock } from '@fortawesome/free-regular-svg-icons'
-
-import './App.css';
-
-const element = <FontAwesomeIcon icon={faClock} />
-
-const App = () => {
-  const [timer, setTimer] = useState(3595)
-  const [isActive, setIsActive] = useState(false)
-  const [isPaused, setIsPaused] = useState(false)
-  const increment = useRef(null)
-
-  const handleStart = () => {
-    setIsActive(true)
-    setIsPaused(true)
-    increment.current = setInterval(() => {
-      setTimer((timer) => timer + 1)
-    }, 1000)
-  }
-
-  const handlePause = () => {
-    clearInterval(increment.current)
-    setIsPaused(false)
-  }
-
-  const handleResume = () => {
-    setIsPaused(true)
-    increment.current = setInterval(() => {
-      setTimer((timer) => timer + 1)
-    }, 1000)
-  }
-
-  const handleReset = () => {
-    clearInterval(increment.current)
-    setIsActive(false)
-    setIsPaused(false)
-    setTimer(0)
-  }
-
-  const formatTime = () => {
-    const getSeconds = `0${(timer % 60)}`.slice(-2)
-    const minutes = `${Math.floor(timer / 60)}`
-    const getMinutes = `0${minutes % 60}`.slice(-2)
-    const getHours = `0${Math.floor(timer / 3600)}`.slice(-2)
-
-    return `${getHours} : ${getMinutes} : ${getSeconds}`
-  }
-
-  return (
-    <div className="app">
-      <h3>React Stopwatch {element}</h3>
-      <div className='stopwatch-card'>
-        <p>{formatTime()}</p>
-        <div className='buttons'>
-          {
-            !isActive && !isPaused ?
-              <button onClick={handleStart}>Start</button>
-              : (
-                isPaused ? <button onClick={handlePause}>Pause</button> :
-                  <button onClick={handleResume}>Resume</button>
-              )
-          }
-          <button onClick={handleReset} disabled={!isActive}>Reset</button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default App;
-
-```
-
-- The code in [DevTo](https://dev.to/abdulbasit313/how-to-develop-a-stopwatch-in-react-js-with-custom-hook-561b) was implemented by Abdul Basit
-- [DevTo](https://dev.to/abdulbasit313/how-to-develop-a-stopwatch-in-react-js-with-custom-hook-561b)'s Code was used to implement a timer module which display continuously the time since a task started
-- [DevTo](https://dev.to/abdulbasit313/how-to-develop-a-stopwatch-in-react-js-with-custom-hook-561b)'s Code was modified by @sancheti
-
-
 
 ## Contributions
 
