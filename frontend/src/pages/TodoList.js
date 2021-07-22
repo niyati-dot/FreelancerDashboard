@@ -84,6 +84,7 @@ export class TodoList extends Component {
         todoListService.markTaskAsDone(rowData._id).then(response => {
             if (response.status == 200) {
                 this.getAllData(this.state.date)
+                alert("Task completed successfully");
             }
         })
     }
@@ -96,7 +97,8 @@ export class TodoList extends Component {
     taskItemDelete(rowData) {
         todoListService.deleteTask(rowData._id).then(response => {
             if (response.status == 200) {
-                this.getAllData(this.state.date)
+                this.getAllData(this.state.date);
+                alert("Task deleted successfully");
             }
         })
     }
@@ -116,6 +118,7 @@ export class TodoList extends Component {
             if (response.status == 200) {
                 this.setState({ newTask: '' })
                 this.getAllData(this.state.date)
+                alert("Task added successfully");
             }
         })
     }
