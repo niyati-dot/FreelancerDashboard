@@ -93,15 +93,33 @@ export class Clients extends Component {
 
   deleteDetails = (row) => {
       axios.post('http://localhost:3000/clientsRoutes/delete', row.original).then((response) => {
-          alert("Successfully deleted!");
-          this.setData();
+          alert("Successfully deleted entry!!");
+          axios.get('http://localhost:3000/clientsRoutes/getAll').then((response) => {
+              if (response.status == 200) {
+                  this.setData(response.data);
+                  let invoiceDetails = [];
+                  response.data.forEach(element => {
+                    let row = {}
+                    row.ClientName = element.ClientName;
+                    row.ContactNo = element.ContactNo;
+                    row.Emailid = element.Email;
+                    row.Website = element.Website;
+                    invoiceDetails.push(row)
+                  });
+                  this.setState({data: invoiceDetails})
+                }
+          }).catch((error) => {
+              console.log("Eroor")
+          })
       }).catch((error) => {
           console.log("Eroor")
       })
   }
+
   setData = (response) => {
     this.data = []
   }
+
   handleNewClient = (e) => {
     e.preventDefault();
     this.props.history.push({ pathname: '/Addclient' });

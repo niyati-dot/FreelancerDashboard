@@ -29,9 +29,11 @@ export class EditClient extends Component
             websiteNameError: "",
             emailId: props.history.location.state.state.Email,
             emailIdError: "",
-            street: props.history.location.state.state.ClientName,
+            linkedInProfile: props.history.location.state.state.LinkedInProfile,
+            linkedInProfileError: "",
+            street: props.history.location.state.state.Street,
             streetError: "",
-            businessDescription: props.history.location.state.state.ClientName,
+            businessDescription: props.history.location.state.state.BusinessDescription,
             postalCode: props.history.location.state.state.PostalCode,
             PostalCodeError: "",
             meetingPlatform: props.history.location.state.state.MeetingPlatform,
@@ -68,164 +70,173 @@ export class EditClient extends Component
     }
 
     validateOrganization = (event) => {
-      let isValid = true;
-      if (!this.state.organizationName) {
-          this.setState({ organizationNameError: "Organization Name is required" })
-          isValid = false;
-      }
-      else {
-        this.setState({ organizationNameError: "" })
-      }   
-      return isValid;
+        let isValid = true;
+        if (!this.state.organizationName) {
+            this.setState({ organizationNameError: "Organization Name is required" })
+            isValid = false;
+        }
+        else {
+            this.setState({ organizationNameError: "" })
+        }
+        return isValid;
     }
 
     validateContactNo = (event) => {
-      let isValid = true;
-      if (!this.state.contactNo) {
-          this.setState({ contactNoError: "Contact No is required" })
-          isValid = false;
-      }
-      var pattern = new RegExp(/^[0-9\b]+$/);
-      const result = pattern.test(this.state.contactNo);
-      if(result===false){
-        this.setState({
-          isValid:false,
-          contactNoError: "Contact No is invalid: can contain Number and contry code only"
-        })
-      }
-      else {
-        this.setState({ contactNoError: "" })
-      }
-      return isValid;
+        let isValid = true;
+        if (!this.state.contactNo) {
+            this.setState({ contactNoError: "Contact No is required" })
+            isValid = false;
+        }
+        var pattern = new RegExp(/^[0-9\b]+$/);
+        const result = pattern.test(this.state.contactNo);
+        if (result === false) {
+            this.setState({
+                isValid: false,
+                contactNoError: "Contact No is invalid: can contain Number and contry code only"
+            })
+        }
+        else {
+            this.setState({ contactNoError: "" })
+        }
+        return isValid;
     }
 
     validateWebsiteName = (event) => {
-      let isValid = true;
-      const pattern = /^(?:(?:(?:[a-zA-z\-]+)\:\/{1,3})?(?:[a-zA-Z0-9])(?:[a-zA-Z0-9\-\.]){1,61}(?:\.[a-zA-Z]{2,})+|\[(?:(?:(?:[a-fA-F0-9]){1,4})(?::(?:[a-fA-F0-9]){1,4}){7}|::1|::)\]|(?:(?:[0-9]{1,3})(?:\.[0-9]{1,3}){3}))(?:\:[0-9]{1,5})?$/g;
-      const result = pattern.test(this.state.websiteName);
-      if(result===false){
-        this.setState({
-          isValid:false,
-          websiteNameError: "Provided website is invalid: should contain domain name"
-        })
-      }
-      else {
-        this.setState({ websiteNameError: "" })
-      }
-      return isValid;
+        let isValid = true;
+
+        if(this.state.websiteName){
+            const pattern = /^(?:(?:(?:[a-zA-z\-]+)\:\/{1,3})?(?:[a-zA-Z0-9])(?:[a-zA-Z0-9\-\.]){1,61}(?:\.[a-zA-Z]{2,})+|\[(?:(?:(?:[a-fA-F0-9]){1,4})(?::(?:[a-fA-F0-9]){1,4}){7}|::1|::)\]|(?:(?:[0-9]{1,3})(?:\.[0-9]{1,3}){3}))(?:\:[0-9]{1,5})?$/g;
+            const result = pattern.test(this.state.websiteName);
+            if (result === false) {
+                this.setState({
+                    isValid: false,
+                    websiteNameError: "Provided website is invalid: should contain domain name"
+                })
+            }
+            else {
+                this.setState({ websiteNameError: "" })
+            }
+        }
+        return isValid;
     }
 
     validateEmailId = (event) => {
-      let isValid = true;
-      if (!this.state.emailId) {
-          this.setState({ emailIdError: "Email Id is required" })
-          isValid = false;
-      }
-      const pattern = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
-      const result = pattern.test(this.state.emailId);
-      if(result===false){
-        this.setState({
-          isValid:false,
-          emailIdError: "Provided email Id is invalid: should contain '@' and domain name"    
-        })
-      } else {
-        this.setState({ emailIdError: "" })
+        let isValid = true;
+        if (!this.state.emailId) {
+            this.setState({ emailIdError: "Email Id is required" })
+            isValid = false;
         }
-
-      return isValid;
+        const pattern = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
+        const result = pattern.test(this.state.emailId);
+        if (result === false) {
+            this.setState({
+                isValid: false,
+                emailIdError: "Provided email Id is invalid: should contain '@' and domain name"
+            })
+        } else {
+            this.setState({ emailIdError: "" })
+        }
+        return isValid;
     }
 
-    validateLinkedInProfile = (event) => 
-    {
+    validateLinkedInProfile = (event) => {
 
-      let isValid = true;
-      const pattern = /(ftp|http|https):\/\/?(?:www\.)?linkedin.com(\w+:{0,1}\w*@)?(\S+)(:([0-9])+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g;
-      const result = pattern.test(this.state.linkedInProfile);
-      if(result===false){
-        this.setState({
-          isValid:false,
-          linkedInProfileError: "LinkedIn Profile is not valid"
-        })
-      } else {
-        this.setState({ linkedInProfileError: "" })
-      }
-      return isValid;
+        let isValid = true;
+        if(this.state.linkedInProfile){
+
+            const pattern = /(ftp|http|https):\/\/?(?:www\.)?linkedin.com(\w+:{0,1}\w*@)?(\S+)(:([0-9])+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g;
+            const result = pattern.test(this.state.linkedInProfile);
+            if (result === false) {
+                this.setState({
+                    isValid: false,
+                    linkedInProfileError: "LinkedIn Profile is not valid"
+                })
+            } else {
+                this.setState({ linkedInProfileError: "" })
+            }
+        }
+        return isValid;
     }
 
     validateStreet = (event) => {
-      let isValid = true;
-      const pattern = /[a-zA-Z0-9]/g;
-      const result = pattern.test(this.state.street);
-      if(result===false){
-        this.setState({
-          isValid:false,
-          streetError: "Street should not contain special characters"
-        })
-      }
-      else {
-        this.setState({ streetError: "" })
-      }
-      return isValid;
+        let isValid = true;
+        if(this.state.street){
+
+            const pattern = /[a-zA-Z0-9]/g;
+            const result = pattern.test(this.state.street);
+            if (result === false) {
+                this.setState({
+                    isValid: false,
+                    streetError: "Street should not contain special characters"
+                })
+            }
+            else {
+                this.setState({ streetError: "" })
+            }
+        }   
+        return isValid;
     }
 
     validatePostalcode = (event) => {
-      let isValid = true;
-      const pattern = /[a-zA-Z0-9]/g;
-      const result = pattern.test(this.state.postalCode);
-      if(result===false){
-        this.setState({
-          isValid:false,
-          PostalCodeError: "Postal code should not contain special characters"
-        })
-      }
-      else {
-        this.setState({ PostalCodeError: "" })
-      }
-      return isValid;
+        let isValid = true;
+        if(this.state.postalCode){
+            const pattern = /[a-zA-Z0-9]/g;
+            const result = pattern.test(this.state.postalCode);
+            if (result === false) {
+                this.setState({
+                    isValid: false,
+                    PostalCodeError: "Postal code should not contain special characters"
+                })
+            }
+            else {
+                this.setState({ PostalCodeError: "" })
+            }
+        }
+        return isValid;
     }
 
     validateMeetingPlatform = (event) => {
-      let isValid = true;
-      if (!this.state.meetingPlatform) {
-          this.setState({ meetingPlatformError: "Meeting Platform is required" })
-          isValid = false;
-      }
-      else {
-        this.setState({ meetingPlatformError: "" })
-      }
-      return isValid;
+        let isValid = true;
+        if (!this.state.meetingPlatform) {
+            this.setState({ meetingPlatformError: "Meeting Platform is required" })
+            isValid = false;
+        }
+        else {
+            this.setState({ meetingPlatformError: "" })
+        }
+        return isValid;
     }
 
     validateForm = (event) => {
-      let isValid = true
-      if (!this.validateClient()) {
-          isValid = false;
-      }
-      if (!this.validateOrganization()) {
-          isValid = false;
-      }
-      if (!this.validateContactNo()) {
-          isValid = false;
-      }
-      if (!this.validateWebsiteName()) {
-          isValid = false;
-      }
-      if (!this.validateEmailId()) {
-        isValid = false;
-      }
-      if (!this.validateLinkedInProfile()) {
-        isValid = false;
-      }
-      if (!this.validateStreet()) {
-        isValid = false;
-      }
-      if (!this.validatePostalcode()) {
-        isValid = false;
-      }
-      if (!this.validateMeetingPlatform()) {
-        isValid = false;
-      }
-      return isValid;
+        let isValid = true
+        if (!this.validateClient()) {
+            isValid = false;
+        }
+        if (!this.validateOrganization()) {
+            isValid = false;
+        }
+        if (!this.validateContactNo()) {
+            isValid = false;
+        }
+        if (!this.validateWebsiteName()) {
+            isValid = false;
+        }
+        if (!this.validateEmailId()) {
+            isValid = false;
+        }
+        if (!this.validateLinkedInProfile()) {
+            isValid = false;
+        }
+        if (!this.validateStreet()) {
+            isValid = false;
+        }
+        if (!this.validatePostalcode()) {
+            isValid = false;
+        }
+        if (!this.validateMeetingPlatform()) {
+            isValid = false;
+        }
+        return isValid;
     }
 
     onUpdate = (event) => {
@@ -237,6 +248,7 @@ export class EditClient extends Component
                 console.log("Eroor")
             })
             alert('Successfully updated details!!');
+            this.props.history.push({ pathname: '/clients' });
         }
     }
 

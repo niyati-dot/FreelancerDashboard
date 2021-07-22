@@ -102,16 +102,19 @@ export class AddClient extends Component {
 
     validateWebsiteName = (event) => {
         let isValid = true;
-        const pattern = /^(?:(?:(?:[a-zA-z\-]+)\:\/{1,3})?(?:[a-zA-Z0-9])(?:[a-zA-Z0-9\-\.]){1,61}(?:\.[a-zA-Z]{2,})+|\[(?:(?:(?:[a-fA-F0-9]){1,4})(?::(?:[a-fA-F0-9]){1,4}){7}|::1|::)\]|(?:(?:[0-9]{1,3})(?:\.[0-9]{1,3}){3}))(?:\:[0-9]{1,5})?$/g;
-        const result = pattern.test(this.state.websiteName);
-        if (result === false) {
-            this.setState({
-                isValid: false,
-                websiteNameError: "Provided website is invalid: should contain domain name"
-            })
-        }
-        else {
-            this.setState({ websiteNameError: "" })
+
+        if(this.state.websiteName){
+            const pattern = /^(?:(?:(?:[a-zA-z\-]+)\:\/{1,3})?(?:[a-zA-Z0-9])(?:[a-zA-Z0-9\-\.]){1,61}(?:\.[a-zA-Z]{2,})+|\[(?:(?:(?:[a-fA-F0-9]){1,4})(?::(?:[a-fA-F0-9]){1,4}){7}|::1|::)\]|(?:(?:[0-9]{1,3})(?:\.[0-9]{1,3}){3}))(?:\:[0-9]{1,5})?$/g;
+            const result = pattern.test(this.state.websiteName);
+            if (result === false) {
+                this.setState({
+                    isValid: false,
+                    websiteNameError: "Provided website is invalid: should contain domain name"
+                })
+            }
+            else {
+                this.setState({ websiteNameError: "" })
+            }
         }
         return isValid;
     }
@@ -137,49 +140,56 @@ export class AddClient extends Component {
 
     validateLinkedInProfile = (event) => {
 
-        console.log(this.state.linkedInProfile);
         let isValid = true;
-        const pattern = /(ftp|http|https):\/\/?(?:www\.)?linkedin.com(\w+:{0,1}\w*@)?(\S+)(:([0-9])+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g;
-        const result = pattern.test(this.state.linkedInProfile);
-        if (result === false) {
-            this.setState({
-                isValid: false,
-                linkedInProfileError: "LinkedIn Profile is not valid"
-            })
-        } else {
-            this.setState({ linkedInProfileError: "" })
+        if(this.state.linkedInProfile){
+
+            const pattern = /(ftp|http|https):\/\/?(?:www\.)?linkedin.com(\w+:{0,1}\w*@)?(\S+)(:([0-9])+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g;
+            const result = pattern.test(this.state.linkedInProfile);
+            if (result === false) {
+                this.setState({
+                    isValid: false,
+                    linkedInProfileError: "LinkedIn Profile is not valid"
+                })
+            } else {
+                this.setState({ linkedInProfileError: "" })
+            }
         }
         return isValid;
     }
 
     validateStreet = (event) => {
         let isValid = true;
-        const pattern = /[a-zA-Z0-9]/g;
-        const result = pattern.test(this.state.street);
-        if (result === false) {
-            this.setState({
-                isValid: false,
-                streetError: "Street should not contain special characters"
-            })
-        }
-        else {
-            this.setState({ streetError: "" })
-        }
+        if(this.state.street){
+
+            const pattern = /[a-zA-Z0-9]/g;
+            const result = pattern.test(this.state.street);
+            if (result === false) {
+                this.setState({
+                    isValid: false,
+                    streetError: "Street should not contain special characters"
+                })
+            }
+            else {
+                this.setState({ streetError: "" })
+            }
+        }   
         return isValid;
     }
 
     validatePostalcode = (event) => {
         let isValid = true;
-        const pattern = /[a-zA-Z0-9]/g;
-        const result = pattern.test(this.state.postalCode);
-        if (result === false) {
-            this.setState({
-                isValid: false,
-                PostalCodeError: "Postal code should not contain special characters"
-            })
-        }
-        else {
-            this.setState({ PostalCodeError: "" })
+        if(this.state.postalCode){
+            const pattern = /[a-zA-Z0-9]/g;
+            const result = pattern.test(this.state.postalCode);
+            if (result === false) {
+                this.setState({
+                    isValid: false,
+                    PostalCodeError: "Postal code should not contain special characters"
+                })
+            }
+            else {
+                this.setState({ PostalCodeError: "" })
+            }
         }
         return isValid;
     }
@@ -234,7 +244,9 @@ export class AddClient extends Component {
             if (this.validateForm()) {
                 alert("Details Successfully Saved!!");
             }
+            this.props.history.push({ pathname: '/clients' });
         }).catch((error) => {
+            alert("Duplicate details found!!");
             console.log("Eroor")
         })
     }

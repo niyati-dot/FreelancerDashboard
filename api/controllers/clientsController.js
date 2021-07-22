@@ -60,9 +60,10 @@ module.exports.add = (req, res) => {
         if(error) return callback(error);
         const ClientId = numOfDocs + 1;
         addclient.ClientId = Number(ClientId);
-        clientsModel.findOne({'ClientName': req.body.clientName, 'ContactNo': req.body.contactNo}, function(error, result)
+        clientsModel.findOne({'ClientName': addclient.ClientName, 'ContactNo': addclient.ContactNo}, function(error, result)
         {
             console.log('result',result);
+            if(!result){
             addclient.save(function(error, document) {
                 if (error) {
                     return res.status(400).json({
@@ -77,16 +78,17 @@ module.exports.add = (req, res) => {
                     })
                 }
             });
+            }
         });
     });
 }
 
 module.exports.edit = (req, res) => {
    
-    clientsModel.find({'ClientId': Number(req.body.ClientId)}, function(error, document) {
+    clientsModel.find({'ClientName': req.body.clientName , 'ContactNo': req.body.contactNo}, function(error, document) {
 
             let doc = document[0]
-               
+            console.log('request',req);
             if(req.body && req.body.clientName)
             {
                 doc.ClientName = req.body.clientName;
