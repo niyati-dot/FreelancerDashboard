@@ -3,10 +3,13 @@
 
 const express = require('express');
 const router = express.Router();
-const projectRouter = require('./routes/projectRoutes');
+const testRouter = require('./routes/testRoutes');
+const projectsRouter = require('./routes/projectsRoutes');
 const timelogRouter = require('./routes/timelogRoutes');
 const todoListRouter = require('./routes/TodoListRoutes')
 const invoiceRouter = require('./routes/invoices');
+const clientsRouter = require('./routes/clientsRoutes')
+
 //Main API Endpoint
 router.get('/', (req,res) => {
     return res.status(200).json({
@@ -16,10 +19,13 @@ router.get('/', (req,res) => {
 });
 
 //Models API Endpoint
-router.use('/projects',projectRouter);
+router.use('/test',testRouter);
+router.use('/projects',projectsRouter);
 router.use('/timelogs',timelogRouter);
 router.use('/todoLists', todoListRouter)
 router.use('/invoices',invoiceRouter);
+router.use('/clients', clientsRouter);
+
 //404 Error Handling
 router.use(function(req, res, next) {
     res.status(404).json({
