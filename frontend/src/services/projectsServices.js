@@ -1,3 +1,9 @@
+/**
+ * Author: Sanket Shah.
+ * Created On: 2021-07-20
+ * Services for Projects.
+ */
+
 import axios from "axios";
 
 export class projectsServices{

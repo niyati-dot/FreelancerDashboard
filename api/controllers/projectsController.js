@@ -1,3 +1,9 @@
+/**
+ * Author: Sanket Shah.
+ * Created On: 2021-07-20
+ * Controller for Projects.
+ */
+
 const projectsModel = require('../models/projectsModel');
 
 const list = (req, res) => {
