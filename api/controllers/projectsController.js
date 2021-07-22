@@ -18,8 +18,7 @@ const list = (req, res) => {
 };
 
 const get = (req, res) => {
-    console.log(req);
-    projectsModel.findById(req.id, function (err, doc) {
+    projectsModel.findById(req.params.id, function (err, doc) {
         if (err){
             return res.status(404).json({
                 success: false,

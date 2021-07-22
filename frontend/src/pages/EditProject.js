@@ -16,8 +16,6 @@ const EditProjects = (prop) => {
     }
 
     const params = history.location.pathname.split('/');
-
-    console.log(params[params.length-1]);
     
     const [project, setProject] = useState({
         title: "",
