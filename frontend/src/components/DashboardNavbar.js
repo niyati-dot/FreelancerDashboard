@@ -1,5 +1,7 @@
+/* Author: Vishal Sancheti */
+
 import {Container, Nav, Navbar} from "react-bootstrap";
-import "./DashboardNavbar.scss";
+import "../styles/DashboardNavbar.scss";
 
 export default function DashboardNavbar(){
     return (
@@ -8,13 +10,13 @@ export default function DashboardNavbar(){
                 <Navbar.Brand className="nav-bar-text" href="/">Freelance Dashboard</Navbar.Brand>
                 <Nav className="ml-auto">
                     <Nav.Link title="Notification" className="nav-bar-link" href="#notification">
-                        <i class="fas fa-bell"></i>
+                        <i className="fas fa-bell"/>
                     </Nav.Link>
                     <Nav.Link title="Profile" className="nav-bar-link" href="#profile">
-                        <i class="fas fa-user"></i>
+                        <i className="fas fa-user"/>
                     </Nav.Link>
                     <Nav.Link title="Log Out" className="nav-bar-link" href="/">
-                        <i class="fas fa-sign-out-alt"></i>
+                        <i className="fas fa-sign-out-alt"/>
                     </Nav.Link>
                 </Nav>
             </Container>

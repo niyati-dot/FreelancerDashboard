@@ -4,9 +4,9 @@ import {Button,Col,Row} from "react-bootstrap";
 import Datatable from "../components/Datatable";
 import { withRouter } from 'react-router-dom';
 import "../components/DashboardNavbar.scss";
-import "./InvoiceManagement.scss"
-import axios from 'axios'
-
+import axios from 'axios';
+import "../styles/InvoiceManagement.scss";
+import invoiceServices from "../services/invoiceServices";
 export class InvoiceManagement extends Component{
     
     constructor(props) {
@@ -34,7 +34,8 @@ export class InvoiceManagement extends Component{
     }
 
     getAllInvoices() {
-        axios.get('http://localhost:3000/getProject/fetchinvoices').then((response) => {
+        
+        invoiceServices.getAllInvoices().then((response) => {
             if (response.status == 200) {
                let invoiceDetails = [];
                response.data.forEach(element => {
@@ -78,8 +79,7 @@ export class InvoiceManagement extends Component{
           })
     }
     deleteInvoice = (row) => {
-        console.log(row.original)
-        axios.post('http://localhost:3000/getProject/deleteinvoice',row.original).then((response) => {
+        invoiceServices.deleteinvoice(row.original).then((response) => {
             if(response){
                 this.setState({delete:'true'})
                 alert("Invoice Deleted")

@@ -5,7 +5,7 @@ import {
   withRouter
 } from "react-router-dom";
 import { Button, Col, Row } from "react-bootstrap";
-import "./Clients.scss";
+import "../styles/Clients.scss";
 import './AddClient'
 import { Component } from "react";
 
