@@ -3,7 +3,6 @@
 
 const express = require('express');
 const router = express.Router();
-const testRouter = require('./routes/testRoutes');
 const projectsRouter = require('./routes/projectsRoutes');
 const timelogRouter = require('./routes/timelogRoutes');
 const todoListRouter = require('./routes/TodoListRoutes')
@@ -19,7 +18,6 @@ router.get('/', (req,res) => {
 });
 
 //Models API Endpoint
-router.use('/test',testRouter);
 router.use('/projects',projectsRouter);
 router.use('/timelogs',timelogRouter);
 router.use('/todoLists', todoListRouter)

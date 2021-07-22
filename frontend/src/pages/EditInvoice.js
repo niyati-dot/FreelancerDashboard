@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios'
+import invoiceServices from "../services/invoiceServices";
 
 export class EditInvoice extends Component {
 
@@ -30,8 +31,8 @@ export class EditInvoice extends Component {
         }}
 
         componentDidMount() {
-            
-            axios.post('http://localhost:3000/getProject/findinvoice',this.state).then((response) =>{
+          
+            invoiceServices.findInvoice(this.state).then((response) =>{
                
                 if (response.status == 200){
                     this.setState({project: response.data.projectName})
@@ -84,7 +85,8 @@ export class EditInvoice extends Component {
                 if(!this.state.paymentstatus && !this.state.dueDate){
                     alert("Please fill the field")
                 }else{
-                    axios.post('http://localhost:3000/getProject/updateinvoice',this.state).then((response) => {
+                    
+                    invoiceServices.updateInvoice(this.state).then((response) => {
                     if(response){
                         alert("Updated Successfully")
                         this.cancel()

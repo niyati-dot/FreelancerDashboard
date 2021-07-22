@@ -1,3 +1,9 @@
+
+/**
+ * Author: Tejaswi Chaudhary.
+ * Created On: 2021-06-07
+ * Invoice Generation component.
+ */
 import React, { Component } from 'react';
 import PageHeader from "../components/PageHeader";
 import Datatable from "../components/Datatable";
@@ -8,6 +14,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios'
+import invoiceServices from "../services/invoiceServices";
 
 
 export class InvoiceGeneration extends Component {
@@ -49,10 +56,18 @@ export class InvoiceGeneration extends Component {
             { Header: 'Total', accessor: 'total' }
         ];
     }
-
+    /**
+     * when page renders it will fetch all the invoices or invoice based on read condition
+     * 
+     * If this component is called from invoiceManagement.js, this page will open as read-only mode. 
+     * in read-only mode, it will fetch generated invoice details based on the project id.
+     * 
+     * If this component is called from dahsboard, it will allow a user to generate invoice.
+     */
     componentDidMount() {
+        //executed when called in read-only mode
         if(this.state.readonly){
-            axios.post('http://localhost:3000/getProject/findinvoice',this.state).then((response) =>{
+            invoiceServices.findInvoice(this.state).then((response) =>{
                 console.log(response)
                 if (response.status == 200){
                     this.setState({ project: response.data.projectName})
@@ -82,7 +97,8 @@ export class InvoiceGeneration extends Component {
                 console.log(error)
             })
         }else{
-            axios.get('http://localhost:3000/getProject/getproject').then((response) => {
+            //Executed when called from dashbord page
+            invoiceServices.getAllProject().then((response) => {
             if (response.status == 200) {
                 this.setState({ projects: response.data })
             }
@@ -93,13 +109,15 @@ export class InvoiceGeneration extends Component {
         
     }
 
-
+    
+    //On value change of a control, set it in state.
     onValueChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
         });
     }
 
+    //validate project field
     validateProject = (event) => {
         let isValid = true;
         if (!this.state.project) {
@@ -108,7 +126,7 @@ export class InvoiceGeneration extends Component {
         }
         return isValid;
     }
-
+    //validate due date and project duration date
     validateDate = (event) => {
         let isValid = true;
         if (!this.validateDueDate()) {
@@ -162,6 +180,7 @@ export class InvoiceGeneration extends Component {
         return isValid;
     }
 
+    //validate horly rate field
     validateHourlyRate = (event) => {
         let isValid = true;
         if (!this.state.hourlyRate) {
@@ -189,20 +208,21 @@ export class InvoiceGeneration extends Component {
         return isValid;
     }
 
+    //Generate invoice by fetching all the task from the timelog collection
     generateInvoice = (event) => {
         event.preventDefault();
         this.setState({invoiceDetails:[]})
+        //invoice generation date
         this.setState({generateDate:Date.now()})
         if(this.validateForm()){
-            axios.post('http://localhost:3000/getProject/tags',this.state).then((response) => {
+            invoiceServices.getTags(this.state).then((response) => {
                 if (response.status == 200) {
                     console.log(response.data)
                     this.setState({ tags: response.data })
                     let invoiceDetails = []
                     let totalCost = 0
                     response.data.forEach(row => {
-                        console.log("in ")
-                        
+                                                
                         let data = {}
                         var startdate = new Date(row.startAt);
                         
@@ -221,6 +241,7 @@ export class InvoiceGeneration extends Component {
                         
                         
                     })
+                    //store tags, hours worked on that tags and total cost for performing that task
                     if(invoiceDetails.length !=0 ){
                         this.setState({invoiceDetails: this.state.invoiceDetails.concat(invoiceDetails)})
                         this.setState({totalcost:totalCost})
@@ -237,13 +258,14 @@ export class InvoiceGeneration extends Component {
         
     }
     
-
+    //this function store generated invoices in database
     saveInvoice =(event)=>{
         if(this.state.invoiceDetails.length == 0){
             this.generateInvoice()
         }
         if(this.validateForm()){
-            axios.post('http://localhost:3000/getProject/save',this.state).then((response) =>{
+           
+            invoiceServices.addInvoice(this.state).then((response) =>{
                 if (response.status == 200){
                     console.log(response)
                     alert("Ïnvoice Added")
@@ -253,6 +275,7 @@ export class InvoiceGeneration extends Component {
             })
         }
     }
+    //called when component is called in read-only mode. This function redirect to invoicemanagement page
     closeInvoice = (e) =>{
         this.props.history.push('/invoicemanagement')
     }
@@ -292,7 +315,7 @@ export class InvoiceGeneration extends Component {
                                                         isInvalid={this.state.projectError}>
                                                     <option>Select Project</option>
                                                     {this.state.projects.map(project => (
-                                                        <option value={project._id}>{project.name}</option>
+                                                        <option value={project._id}>{project.title}</option>
                                                     ))}
                                                     </Form.Control>
                                                     <Form.Control.Feedback type="invalid">

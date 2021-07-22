@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const express = require("express");
-const project = require("../models/getProject");
-const timelogs = require("../models/timelog");
+const project = require("../models/projectsModel");
+const timelogs = require("../models/timelogModel");
 const invoices = require("../models/invoiceGenerate");
 
 module.exports.getAllProject = async(req, res) => {
