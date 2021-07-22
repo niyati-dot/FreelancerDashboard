@@ -17,10 +17,7 @@ import { useParams, Redirect, useHistory } from 'react-router-dom';
 const RequestTestimonial = (prop) => {
 
     const param = useParams();
-
     const history = useHistory();
-
-    console.log(param);
 
     // feedback Details
     const [feedback, setFeedback] = useState({
@@ -34,12 +31,12 @@ const RequestTestimonial = (prop) => {
         setFeedback(newFeedback);
     };
 
+    // Calling updating API
     const storeData = (e) => {
         e.preventDefault();
         console.log(feedback);
         testimonialServices.update(feedback)
     }
-
 
     return (
         <div>
