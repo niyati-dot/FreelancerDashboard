@@ -3,10 +3,11 @@ import { useState, useEffect } from 'react';
 import PageHeader from "../components/PageHeader";
 import AddProject from './AddProject';
 import Datatable from "../components/Datatable";
-import '../style.scss';
+import '../styles/style.scss';
 import { Button, Card, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import { Redirect, useHistory } from 'react-router-dom';
-import "./Projects.scss";
+import projectsServices from '../services/projectsServices.js'
+import "../styles/Projects.scss";
 
 export default function Projects() {
 
@@ -17,102 +18,20 @@ export default function Projects() {
         { Header: 'Status', accessor: 'status' },
         {
             Header: 'Actions', accessor: 'row',
-            Cell: ({ row }) => (<div className="data-table-button"><a title="Edit Project" onClick={() => editProject(row.id)} className="secondary-button">Edit</a><a title="Delete Project" onClick={() => { deleteTask(row) }} className="delete-button">Delete</a></div>)
+            Cell: ({ row }) => (<div className="data-table-button"><a title="Edit Project" onClick={() => editProject(row.original._id)} className="secondary-button">Edit</a><a title="Delete Project" onClick={() => { deleteTask(row.original) }} className="delete-button">Delete</a></div>)
         }
     ];
 
     const [data, setData] = useState([]);
     useEffect(() => {
-        setData([
-            {
-                title: "Email Download",
-                description: "Providing this functionality will enable the access of email in PDF format.",
-                client: "Christ Fernandiz",
-                status: "In Progress"
-            },
-            {
-                title: "Navigation",
-                description: "Providing this functionality will navigate the project through navigation bar.",
-                client: "Shaun Bishop",
-                status: "Pending"
-            },
-            {
-                title: "Upgrade Database",
-                description: "Providing this service will migrate data to AWS.",
-                client: "Joseph Robinson",
-                status: "Completed"
-            },
-            {
-                title: "Email Download",
-                description: "Providing this functionality will enable the access of email in PDF format.",
-                client: "Christ Fernandiz",
-                status: "In Progress"
-            },
-            {
-                title: "Navigation",
-                description: "Providing this functionality will navigate the project through navigation bar.",
-                client: "Shaun Bishop",
-                status: "Pending"
-            },
-            {
-                title: "Upgrade Database",
-                description: "Providing this service will migrate data to AWS.",
-                client: "Joseph Robinson",
-                status: "Completed"
-            },
-            {
-                title: "Email Download",
-                description: "Providing this functionality will enable the access of email in PDF format.",
-                client: "Christ Fernandiz",
-                status: "In Progress"
-            },
-            {
-                title: "Navigation",
-                description: "Providing this functionality will navigate the project through navigation bar.",
-                client: "Shaun Bishop",
-                status: "Pending"
-            },
-            {
-                title: "Upgrade Database",
-                description: "Providing this service will migrate data to AWS.",
-                client: "Joseph Robinson",
-                status: "Completed"
-            },
-            {
-                title: "Email Download",
-                description: "Providing this functionality will enable the access of email in PDF format.",
-                client: "Christ Fernandiz",
-                status: "In Progress"
-            },
-            {
-                title: "Navigation",
-                description: "Providing this functionality will navigate the project through navigation bar.",
-                client: "Shaun Bishop",
-                status: "Pending"
-            },
-            {
-                title: "Upgrade Database",
-                description: "Providing this service will migrate data to AWS.",
-                client: "Joseph Robinson",
-                status: "Completed"
-            },
-        ])
-    }, []);
-
-    const [project, setProject] = useState({
-        title: "",
-        description: "",
-        client: "",
-        status: ""
-    });
-
+        projectsServices.list().then(res => setData(res.data));
+    },[]);
 
     const deleteTask = (project) => {
         if (window.confirm("Are you sure?")) {
             let newData = [...data];
-            newData.splice(project.index, 1);
-            console.log(newData);
-            setData(newData);
+            projectsServices.remove(project).then(res => alert(res.message));
+            projectsServices.list().then(res => setData(res.data));
         }
     };
 

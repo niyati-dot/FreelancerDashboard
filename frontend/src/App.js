@@ -1,3 +1,5 @@
+/* Author: Team */
+
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AppLayout from "./layouts/AppLayout";
@@ -13,11 +15,13 @@ import AddProject from "./pages/AddProject";
 import EditProject from "./pages/EditProject";
 import Clients from "./pages/Clients";
 import AddClient from "./pages/AddClient";
+import EditClient from "./pages/EditClient";
+import ViewClient from "./pages/ViewClient";
 import Testimonials from "./pages/Testimonials";
 import InvoiceManagement from "./pages/InvoiceManagement"
 import TodoList from "./pages/TodoList"
 import Calendar from "./pages/Calendar";
-
+import EditInvoice from "./pages/EditInvoice"
 export default function App() {
     return (
         <Router>
@@ -80,6 +84,16 @@ export default function App() {
                         <AddClient />
                     </DashboardLayout>
                 </Route>
+                <Route path="/EditClient">
+                    <DashboardLayout>
+                        <EditClient />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/ViewClient">
+                    <DashboardLayout>
+                        <ViewClient />
+                    </DashboardLayout>
+                </Route>
                 <Route path="/testimonials">
                     <DashboardLayout>
                         <Testimonials />
@@ -88,6 +102,11 @@ export default function App() {
                 <Route path="/invoicemanagement">
                     <DashboardLayout>
                         <InvoiceManagement />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/editinvoice">
+                    <DashboardLayout>
+                        <EditInvoice />
                     </DashboardLayout>
                 </Route>
                 <Route path="/todolist">

@@ -1,0 +1,26 @@
+.add-client-container {
+    .generate-button-container {
+        float: right;
+    }
+    
+    .data-table-container {
+        margin-top: 0.5rem;
+    }
+
+    .add-client-content {
+        overflow: auto;
+        height: 100%;
+        width: 100%;
+        display: inline-block;
+    }
+    
+    .region {
+        display: inline-block;
+        
+    }
+
+    .country {
+        display: inline-block;
+        padding-right: 0.5rem;
+    }
+}

@@ -1,140 +1,224 @@
-import React, { useState }  from 'react'
+/**
+ * Author: Bansi Mehta.
+ * Created On: 2021-06-07
+ * Todo list component.
+ */
+import React, { Component } from 'react';
 import { withRouter } from "react-router";
-import {Container,Col,Row,Button}  from 'react-bootstrap'
-import { Card,CardBody,CardTitle} from 'reactstrap';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
+import { Container, Col, Row, Button } from 'react-bootstrap'
+import { Card } from 'react-bootstrap';
+import moment from "moment";
+import axios from 'axios'
+import "../styles/TodoList.scss";
 import PageHeader from "../components/PageHeader";
-import "./TodoList.scss";
+import todoListService from "../services/TodoListService";
+export class TodoList extends Component {
 
-export default function TodoList(){
-    
-        
-         const incompletetask=[
-            {
-                id: 1,
-                title: "I will cut vegetable",
-            },
-            {
-                id: 2,
-                title: "I will make batter from besan.I will make batter from besan.I will make batter from besan.I will make batter from besan.I will make batter from besan.I will make batter from besan",
-            },
-            {
-                id: 3,
-                title: "I will make batter from besan.I will make batter from besan.I will make batter from besan.I will make batter from besan.I will make batter from besan.I will make batter from besan",
+    constructor(props) {
+        super(props)
+
+        const currentDate = moment().format('YYYY-MM-DD')
+        this.state = {
+            completeTasks: [],
+            incompleteTasks: [],
+            date: currentDate,
+            newTask: ''
+        }
+
+        this.item = {
+            title: '',
+            status: false,
+            date: currentDate
+        }
+    }
+
+    componentDidMount() {
+        this.getAllData(this.state.date)
+    }
+
+    /**
+     * On value change of a control, set it in state.
+     * @param {*} event 
+     */
+    onValueChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+
+    /**
+     * Get all the tasks based on date.
+     * Date format: "YYYY-MM-DD".
+     * Divide the tasks received into groups: complete and incomplete to display.
+     * @param {*} date 
+     */
+    getAllData(date) {
+        todoListService.getAllTasks(date).then(response => {
+            if (response.status === 200) {
+                if (response.data && response.data.result && response.data.result.length) {
+                    let completeTask = []
+                    let incompleteTask = []
+                    response.data.result.forEach(row => {
+                        if (row && row.status == true) {
+                            completeTask.push(row)
+                        } else {
+                            incompleteTask.push(row)
+                        }
+                    })
+                    this.setState({ completeTasks: completeTask })
+                    this.setState({ incompleteTasks: incompleteTask })
+                } else {
+                    this.setState({ completeTasks: [] })
+                    this.setState({ incompleteTasks: [] })
+                }
             }
-          ];
+        })
+    }
 
-        const completetask=[
-            {
-                id: 3,
-                title: "I am done with snacks",
-            },
-            {
-                id: 2,
-                title: "I will make batter from besan.I will make batter from besan.I will make batter from besan.I will make batter from besan.I will make batter from besan.I will make batter from besan",
+    /**
+     * Mark the task item as complete based on id.
+     * Refresh the list if successful.
+     * @param {*} rowData 
+     */
+    taskItemComplete(rowData) {
+        todoListService.markTaskAsDone(rowData._id).then(response => {
+            if (response.status == 200) {
+                this.getAllData(this.state.date)
+                alert("Task completed successfully");
             }
-        ];
-        
-         // this.handleClick=this.handleClick.bind(this)
-    
-    const [modal, setModal] = useState(false);
-    
-    const toggle = () => setModal(!modal);
+        })
+    }
 
-            return(
-                <div className="page-container">
-                    <div className="page-header-container">
-                        <PageHeader title="Todo List" subtitle="" />
-                    </div>
-                    <div className="page-content-container">
-                        <div className="page-content">
-                            <Container>
-                                <Row className="card-row">
-                                    <Col>
-                                    </Col>
-                                    <Col className="newtask-col">
-                                        <div className="alignment">
-                                            <Button   onClick={toggle} className="primary-button">Add</Button>
-                                        </div>
-                                       
-                                    </Col>
-                                </Row>
-                                <Row className="card-row">
-                                    <Col className="card-col"> 
-                                         <div>
-                                            {incompletetask.map(incompletetaskRows => (
-                                            <Card className="cards">
-                                                <div className="card-col-intask">
-                                                    <div className="checkbox-col">
-                                                         <input type="checkbox" id="defaultUnchecked"></input>
-                                                    </div>
-                                                    <div className="text-col">
-                                                        <CardBody>
-                                                            <CardTitle>{incompletetaskRows.title}</CardTitle>
-                                                        </CardBody>
-                                                    </div>
-                                                    <div className="button-col">
-                                                        <Button  className="delete-button">Delete</Button>
-                                                    </div>
-                                                </div>
+    /**
+     * Delete the task based on id.
+     * Refresh the list if successful.
+     * @param {*} rowData 
+     */
+    taskItemDelete(rowData) {
+        todoListService.deleteTask(rowData._id).then(response => {
+            if (response.status == 200) {
+                this.getAllData(this.state.date);
+                alert("Task deleted successfully");
+            }
+        })
+    }
+
+    /**
+     * Add new task.
+     * Refresh the list if successful.
+     * @param {*} event 
+     */
+    saveItem = (event) => {
+        event.preventDefault()
+        if (this.state.newTask) {
+            let saveData = {
+                title: this.state.newTask,
+                date: this.state.date
+            }
+            todoListService.saveTask(saveData).then(response => {
+                if (response.status == 200) {
+                    this.setState({ newTask: '' })
+                    this.getAllData(this.state.date)
+                    alert("Task added successfully");
+                }
+            })
+        } else {
+            alert("Cannot enter empty task")
+        }
+        
+    }
+
+    /**
+     * Date navigation: Get previous date from the date for which tasks are currently displayed.
+     * @param {*} event 
+     */
+    getPreviousDate = (event) => {
+        let previousDate = moment(this.state.date, 'YYYY-MM-DD').subtract(1, 'day').format("YYYY-MM-DD")
+        this.setState({ date: previousDate })
+        this.getAllData(previousDate)
+    }
+
+    /**
+     * Date navigaiton: Get next date from the date for which tasks are currently displayed.
+     * @param {*} event 
+     */
+    getNextDate = (event) => {
+        let nextDate = moment(this.state.date, 'YYYY-MM-DD').add(1, 'day').format("YYYY-MM-DD")
+        this.setState({ date: nextDate })
+        this.getAllData(nextDate)
+    }
+
+    render() {
+        return (
+            <div className="page-container to-do-list-container">
+                <div className="page-header-container">
+                    <PageHeader title="Todo List" subtitle="" />
+                </div>
+                <div className="page-content-container">
+                    <div className="page-content">
+                        <Container className="to-do-list-content">
+                            <Row className="date-row">
+                                <Col className="date-control">
+                                    <span className="navigate-date" onClick={this.getPreviousDate}>
+                                        <i className="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span>
+                                        {this.state.date}
+                                    </span>
+                                    <span className="navigate-date" onClick={this.getNextDate}>
+                                        <i className="fas fa-chevron-right"></i>
+                                    </span>
+                                </Col>
+                            </Row>
+                            <Row className="add-row">
+                                <div className="add-text">
+                                    <input type="text" palceholder="Add task" name="newTask" value={this.state.newTask} onChange={this.onValueChange} className="input-control" />
+                                </div>
+                                <div className="add-button">
+                                    <Button className="primary-button add-button" onClick={this.saveItem}>Add</Button>
+                                </div>
+                            </Row>
+                            <Row className="to-do-list-items">
+                                <Col md={12} lg={6}>
+                                    <div>
+                                        {this.state.incompleteTasks.map(row => (
+                                            <Card className="card-content-incomplete">
+                                                <Row className="card-item">
+                                                    <Col xs={3} md={2} className="card-item-content">
+                                                        <input type="checkbox" checked={row.status} onClick={() => this.taskItemComplete(row)}></input>
+                                                    </Col>
+                                                    <Col xs={3} md={7} className="card-item-content">
+                                                        <Card.Body>
+                                                            <Card.Title>{row.title}</Card.Title>
+                                                        </Card.Body>
+                                                    </Col>
+                                                    <Col xs={3} md={3} className="card-item-content">
+                                                        <Button className="primary-button" onClick={() => this.taskItemDelete(row)}>Delete</Button>
+                                                    </Col>
+                                                </Row>
                                             </Card>
-                                            ))}                              
-                                         </div>
-                                    </Col>
-                                    <span className="vertical-break"></span>
-                                    <Col className="card-col"> 
-                                        <div>
-                                        {completetask.map(completetaskRows => (
-                                        <Card className="cards">
-                                            <CardBody>
-                                                <CardTitle className = "text-todo">{completetaskRows.title}</CardTitle>
-                                            </CardBody>
-                                        </Card>
-                                        ))}                              
-                                        </div>
-                                    </Col>
-                                </Row>
-                           
-                            <Modal size= "xl" isOpen={modal} toggle={toggle} className="modal">
-                                <ModalHeader toggle={toggle} className="modal-header">Add Task</ModalHeader>
-                                <ModalBody>
-                                <input type="text" palceholder ="Add task" name="tasktag" />
-                                </ModalBody>
-                                <ModalFooter>
-                                <Button color="primary" className="primary-button" onClick={toggle}>Save</Button>{' '}
-                                </ModalFooter>
-                            </Modal>
-                            </Container>
-                        </div>
+                                        ))}
+                                    </div>
+                                </Col>
+                                <Col md={12} lg={6}>
+                                    <div>
+                                        {this.state.completeTasks.map(row => (
+                                            <Card className="card-content-complete">
+                                                <Card.Body>
+                                                    <Card.Title className="card-item-completed">{row.title}</Card.Title>
+                                                </Card.Body>
+                                            </Card>
+                                        ))}
+                                    </div>
+                                </Col>
+                            </Row>
+                        </Container>
                     </div>
                 </div>
-            )
+            </div>
+        )
+
+    }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default withRouter(TodoList);
