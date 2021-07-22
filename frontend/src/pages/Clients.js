@@ -47,17 +47,17 @@ export class Clients extends Component {
     axios.get('http://localhost:3000/clientsRoutes/getAll').then((response) => {
         if (response.status == 200) {
             this.setData(response.data);
-            let invoiceDetails = [];
+            let newDetails = [];
             response.data.forEach(element => {
               let row = {}
               row.ClientName = element.ClientName;
               row.ContactNo = element.ContactNo;
               row.Emailid = element.Email;
               row.Website = element.Website;
-              invoiceDetails.push(row)
+              newDetails.push(row)
             });
             this.setState({
-              data: invoiceDetails
+              data: newDetails
             })
         }
     }).catch((error) => {
@@ -97,16 +97,16 @@ export class Clients extends Component {
           axios.get('http://localhost:3000/clientsRoutes/getAll').then((response) => {
               if (response.status == 200) {
                   this.setData(response.data);
-                  let invoiceDetails = [];
+                  let newdetails = [];
                   response.data.forEach(element => {
                     let row = {}
                     row.ClientName = element.ClientName;
                     row.ContactNo = element.ContactNo;
                     row.Emailid = element.Email;
                     row.Website = element.Website;
-                    invoiceDetails.push(row)
+                    newdetails.push(row)
                   });
-                  this.setState({data: invoiceDetails})
+                  this.setState({data: newdetails})
                 }
           }).catch((error) => {
               console.log("Eroor")
