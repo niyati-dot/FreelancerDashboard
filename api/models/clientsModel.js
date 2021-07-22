@@ -1,7 +1,7 @@
 /**
  * Author: Deep Patel.
  * Created On: 2021-07-20
- * Controller for project model.
+ * Model for Clients.
  */
 
 const Mongoose = require("mongoose");
@@ -16,4 +16,4 @@ const projectSchema = new Mongoose.Schema({
     },
 });
 
-module.exports = Mongoose.model("Project", projectSchema);
+module.exports = Mongoose.model("client", projectSchema);

@@ -1,3 +1,9 @@
+/**
+ * Author: Deep Patel.
+ * Created On: 2021-07-20
+ *  Frontend Page for Testimonials.
+ */
+
 import React from 'react';
 import { useState, useEffect } from 'react';
 import PageHeader from "../components/PageHeader";
@@ -6,38 +12,82 @@ import Datatable from '../components/Datatable';
 import emailjs from 'emailjs-com';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import "../styles/Testimonials.scss"
+import "../styles/Testimonials.scss";
+import projectServices from '../services/projectServices.js';
+import clientServices from '../services/clientServices.js';
+import testimonialServices from '../services/testimonialServices.js';
+var dateFormat = require("dateformat");
+
 const Testimonials = () => {
 
-    const GOOGLE_FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSeW4VWOiYbxnd3qJ4wUhNnFuA5_tmiQbyBFeGtz4PreKGZnrA/viewform?usp=sf_link'
+    const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeW4VWOiYbxnd3qJ4wUhNnFuA5_tmiQbyBFeGtz4PreKGZnrA/viewform?usp=sf_link'
+    const FORM_URL = 'https://dashboard.heroku.com/apps/csci5709-group5-s21/requestTestimonial'
+    const TEMP_FORM_URL = 'localhost:3000/requestTestimonial'
+
+
     const columns = [
-        { Header: '#', accessor: 'no' },
+        { Header: '#', accessor: row => 1 },
         { Header: 'Project', accessor: 'project' },
-        { Header: 'Status', accessor: 'status' },
-        { Header: 'Requested on', accessor: 'requestedOn' },
+        { Header: 'Client', accessor: 'client' },
+        { Header: 'Feedback', accessor: 'feedback' },
+        { Header: 'Requested on', accessor: row => dateFormat(row.requestedOn, "dd-mm-yyyy, HH:MM:ss") },
+        
         {
             Header: 'Actions', accessor: 'row',
             Cell: ({ row }) => (
-                <div className="row">
-                    <div className="col-md-3">
-                        <button className="secondary-button" onClick={() => setLgShow(true)}>Re-Request</button>
+                <div className="action">
+                    <div className="button-container">
+                        <Button className="secondary-button" onClick={() => setLgShow(true)}>View</Button>
                         {/* <a href="#">Re-Request</a> */}
-                    </div>
-
-                    <div className="col-md-3">
-                        <button className="delete-button" onClick={deleteTask} >Delete</button>
-                        {/* <a href="#">Delete</a> */}
+                        <Button className="delete-button" align="right"  onClick= {() => deleteTestimonial(row)} >Delete</Button>
                     </div>
                 </div>
             )
         }
     ];
 
+    // project details
+    const [project, setProjects] = useState([]);
+    useEffect(() => {
+        projectServices.list().then(res => setProjects(res.data));
+    },[]); 
+    // console.log(project);
 
-    function sendEmail(e) {
+    // client details
+    const [client, setClient] = useState([]);
+    useEffect(() => {
+        clientServices.list().then(res => setClient(res.data));
+    },[]); 
+
+    // Testimonial Details
+    const [testimonial, setTestimonial] = useState([]);
+    useEffect(() => {
+        testimonialServices.list().then(res => setTestimonial(res.data));
+    },[]);
+
+    // Mailing Details
+    const [mailInfo, setMailInfo] = useState({
+        project: "",
+        client: "",
+        message: "",
+        id: ""
+    });
+
+    const storeData = (e) => {
         e.preventDefault();
+        console.log(mailInfo);
+        testimonialServices.add(mailInfo).then(response => {
+            mailInfo.id = response.result._id
+        })
 
-        // console.log(e.target.data);
+        sendEmail(testimonialServices.add(mailInfo));
+    }
+
+    function sendEmail(data) {
+        console.log('hello',mailInfo)
+        console.log(mailInfo);
+        const Form_Link = "http://localhost:3001/testimonials/requestTestimonials/" + mailInfo.id;
+
         var mailParams = {
             //Mail Sender Details
             freelancerName: 'Freelancer_Deep',
@@ -47,8 +97,10 @@ const Testimonials = () => {
             clientName: 'Client_Deep',
             clientMail: 'dee16798ppatel@gmail.com',
 
+            
             //Attachment Messages
-            message: 'Success!!'
+            message: mailInfo.message,
+            link: Form_Link
         };
 
         emailjs.send('testimonial_request', 'template_fmwc5oo', mailParams, 'user_INB1ILGAt4GVje2eeyj2V')
@@ -62,118 +114,18 @@ const Testimonials = () => {
             });
     }
 
-    const [data, setData] = useState([]);
-    useEffect(() => {
-        setData([
-            {
-                no: "1",
-                project: "S-A-M",
-                client: "Deep Patel",
-                requestedOn: "20-06-2021",
-                status: "Pending"
-            },
-            {
-                no: "2",
-                project: "S-A-M",
-                client: "Deep Patel",
-                requestedOn: "20-06-2021",
-                status: "Pending"
-            },
-            {
-                no: "3",
-                project: "S-A-M",
-                client: "Deep Patel",
-                requestedOn: "20-06-2021",
-                status: "Pending"
-            },
-            {
-                no: "4",
-                project: "S-A-M",
-                client: "Deep Patel",
-                requestedOn: "20-06-2021",
-                status: "Pending"
-            },
-            {
-                no: "5",
-                project: "S-A-M",
-                client: "Deep Patel",
-                requestedOn: "20-06-2021",
-                status: "Pending"
-            },
-            {
-                no: "6",
-                project: "S-A-M",
-                client: "Deep Patel",
-                requestedOn: "20-06-2021",
-                status: "Pending"
-            },
-            {
-                no: "7",
-                project: "S-A-M",
-                client: "Deep Patel",
-                requestedOn: "20-06-2021",
-                status: "Pending"
-            },
-            {
-                no: "8",
-                project: "S-A-M",
-                client: "Deep Patel",
-                requestedOn: "20-06-2021",
-                status: "Pending"
-            },
-            {
-                no: "9",
-                project: "S-A-M",
-                client: "Deep Patel",
-                requestedOn: "20-06-2021",
-                status: "Pending"
-            },
-            {
-                no: "10",
-                project: "S-A-M",
-                client: "Deep Patel",
-                requestedOn: "20-06-2021",
-                status: "Pending"
-            },
-            {
-                no: "11",
-                project: "S-A-M",
-                client: "Deep Patel",
-                requestedOn: "20-06-2021",
-                status: "Pending"
-            },
-            {
-                no: "12",
-                project: "S-A-M",
-                client: "Deep Patel",
-                requestedOn: "20-06-2021",
-                status: "Pending"
-            },
-            {
-                no: "13",
-                project: "S-A-M",
-                client: "Deep Patel",
-                requestedOn: "20-06-2021",
-                status: "Pending"
-            }
-        ])
-    }, []);
-
-    const [testimonial, setTestimonial] = useState({
-        no: "",
-        project: "",
-        client: "",
-        requestedOn: "",
-        status: ""
-    });
-
-    const deleteTask = (task) => {
+    const deleteTestimonial = (task) => {
         if (window.confirm("Are you sure?")) {
-            let newData = [...data];
+            let newData = [...testimonial];
             newData.splice(testimonial.index, 1);
             console.log(newData);
-            setData(newData);
+            setTestimonial(newData);
         }
+    };
+
+    const handleChange = (e) => {
+        let newRequest = {...mailInfo, [e.target.name]: e.target.value};
+        setMailInfo(newRequest);
     };
 
     const [lgShow, setLgShow] = useState(false);
@@ -217,33 +169,40 @@ const Testimonials = () => {
                                                     <input type="hidden" name="message" id="message" value="From hidden" />
 
                                                     <Form.Group>
-                                                        <Form.Label>Project</Form.Label>
-                                                        <Form.Control as="select">
-                                                            <option>Project 1</option>
-                                                            <option>Project 2</option>
-                                                            <option>Project 3</option>
-                                                            <option>Project 4</option>
-                                                            <option>Project 5</option>
+                                                        <Form.Label className="required form-label">Project</Form.Label>
+                                                        <Form.Control as="select" name="project"
+                                                            onChange={(e) => handleChange(e)} 
+                                                        >
+                                                            <option>Select Project</option>
+                                                            {project.map(onlineUsersRow => (
+                                                                <option value={onlineUsersRow.title} >
+                                                                    {onlineUsersRow.title}
+                                                                </option>
+                                                            ))}
                                                         </Form.Control>
                                                     </Form.Group>
 
                                                     <Form.Group>
-                                                        <Form.Label>Client</Form.Label>
-                                                        <Form.Control as="select">
-                                                            <option>Client 1</option>
-                                                            <option>Client 2</option>
-                                                            <option>Client 3</option>
-                                                            <option>Clientv 4</option>
-                                                            <option>Clientv 5</option>
+                                                        <Form.Label className="required form-label">Client</Form.Label>
+                                                        <Form.Control as="select" name="client"
+                                                            onChange={(e) => handleChange(e)} 
+                                                        >
+                                                            <option>Select Client</option>
+                                                            {client.map(onlineUsersRow => (
+                                                                <option value={onlineUsersRow.ClientName}>{onlineUsersRow.ClientName}</option>
+                                                            ))}
                                                         </Form.Control>
                                                     </Form.Group>
 
                                                     <Form.Group>
-                                                        <Form.Label>Testimonial Message</Form.Label>
-                                                        <Form.Control as="textarea" name="message" rows={3} id="message" />
+                                                            <Form.Label className="required form-label">Description Message</Form.Label>
+                                                            <Form.Control as="textarea" name="message" rows={3} id="message" 
+                                                                onChange={(e) => handleChange(e)} 
+                                                            />
                                                     </Form.Group>
 
-                                                    <Button variant="primary" type="submit" id="button" value="Send" onClick={sendEmail}>
+                                                    {/* <Button variant="primary" type="submit" id="button" value="Send" onClick={() => sendEmail(mailInfo)}> */}
+                                                    <Button variant="primary" type="submit" id="button" value="Send" onClick={storeData}>   
                                                         Send
                                                     </Button>
                                                 </Form>
@@ -254,7 +213,7 @@ const Testimonials = () => {
                             </div>
                         </Col>
                         <Col xs={12}>
-                            <Datatable columns={columns} data={data} />
+                            <Datatable columns={columns} data={testimonial} />
                         </Col>
                     </Row>
                 </div>

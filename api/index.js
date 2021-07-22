@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const projectRouter = require('./routes/projectRoutes');
-const testimonialRouter = require('./routes/testimonialRouter');
+const testimonialRouter = require('./routes/testimonialRoutes');
+const clientsRouter = require('./routes/clientsRoutes');
 const timelogRouter = require('./routes/timelogRoutes');
 
 //Main API Endpoint
@@ -14,6 +15,7 @@ router.get('/', (req,res) => {
 
 //Models API Endpoint
 router.use('/projects',projectRouter);
+router.use('/clients',clientsRouter);
 router.use('/timelogs',timelogRouter);
 router.use('/testimonials',testimonialRouter);
 
