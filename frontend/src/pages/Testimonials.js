@@ -20,11 +20,6 @@ var dateFormat = require("dateformat");
 
 const Testimonials = () => {
 
-    const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeW4VWOiYbxnd3qJ4wUhNnFuA5_tmiQbyBFeGtz4PreKGZnrA/viewform?usp=sf_link'
-    const FORM_URL = 'https://dashboard.heroku.com/apps/csci5709-group5-s21/requestTestimonial'
-    const TEMP_FORM_URL = 'localhost:3000/requestTestimonial'
-
-
     const columns = [
         { Header: '#', accessor: row => 1 },
         { Header: 'Project', accessor: 'project' },
@@ -51,7 +46,6 @@ const Testimonials = () => {
     useEffect(() => {
         projectServices.list().then(res => setProjects(res.data));
     },[]); 
-    // console.log(project);
 
     // client details
     const [client, setClient] = useState([]);
@@ -83,6 +77,7 @@ const Testimonials = () => {
         sendEmail(testimonialServices.add(mailInfo));
     }
 
+    // Send Mail Module
     function sendEmail(data) {
         console.log('hello',mailInfo)
         console.log(mailInfo);
@@ -103,6 +98,7 @@ const Testimonials = () => {
             link: Form_Link
         };
 
+        // calling emailJS functionality
         emailjs.send('testimonial_request', 'template_fmwc5oo', mailParams, 'user_INB1ILGAt4GVje2eeyj2V')
             .then(function (response) {
                 alert("Email Sent");
@@ -114,6 +110,7 @@ const Testimonials = () => {
             });
     }
 
+    // Delete testimonials
     const deleteTestimonial = (task) => {
         if (window.confirm("Are you sure?")) {
             let newData = [...testimonial];
