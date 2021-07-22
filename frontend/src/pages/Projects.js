@@ -15,6 +15,9 @@ import { Redirect, useHistory } from 'react-router-dom';
 import projectsServices from '../services/projectsServices.js'
 import "../styles/Projects.scss";
 
+/**
+ *  Functionality for listing down the list of projects
+ */
 export default function Projects() {
 
     const columns = [
