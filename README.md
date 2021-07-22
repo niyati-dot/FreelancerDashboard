@@ -15,19 +15,23 @@ As more opportunities shift towards work from home, there is an increase in numb
 ## Todo List
 Maintaining daily todo list for the users. Segregation between complete and incomplete task.
 
-### Screens:
-api\controllers\TodoListController.js
-api\models\TodoListModel.js
-api\routes\TodoListRoutes.js
-frontend\src\pages\TodoList.js
-frontend\src\services\TodoListService.js
-frontend\src\styles\TodoList.scss
+### Screens Related To Feature:
+* api\controllers\TodoListController.js
+* api\models\TodoListModel.js
+* api\routes\TodoListRoutes.js
+* frontend\src\pages\TodoList.js
+* frontend\src\services\TodoListService.js
+* frontend\src\styles\TodoList.scss
 
+### Other Screens:
+* frontend\src\styles\variable.scss
+* frontend\src\styles\style.scss
+* frontend\src\styles\button_style.scss
 ### Functionaliy:
-* View tasks by date.
-* Add new task.
-* Mark task as done.
-* Delete task.
+* View tasks by date: View all the tasks which are present by date. Navigate date to refresh and fetch tasks for that date.
+* Add new task: New task can be added for current date. User cannot select date nor add task for future dates.
+* Mark task as done: Pending tasks can be marked as done.
+* Delete task: Pending tasks can be deleted.
 
 ## Getting Started
 
@@ -99,18 +103,7 @@ yarn start
 * [Heroku DevCenter](https://devcenter.heroku.com/articles/git) - Official Heroku Documentation
 * [Dev.To](https://dev.to/abdulbasit313/how-to-develop-a-stopwatch-in-react-js-with-custom-hook-561b) - Developers Community Article
 * [Mongoose](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/mongoose) - MDN documentation for MongoDB ORM
-
-## Contributions
-
-| Author  |  Feature 1 |  Status |  Feature 2 |  Status |
-|---|---|---|---|---|
-|  [Bansi Mehta(B00875640)](bn955101@dal.ca) |  ToDo List | Done  | V-Card  | Pending  |
-|  [Deep Patel(B00865413)](dp889845@dal.ca) |   |   |   |   |
-|  [Janvi Patel (B00863421)](jn410076@dal.ca) |   |   |   |   |
-| [Sanket Shah(B00862499)](sn488207@dal.ca) |   |   |   |   |
-| [Tejaswi Chaudhary(B00858613)](tj754396@dal.ca) |   |   |   |   |
-| [Vishal Sancheti (B00877378)](vs488310@dal.ca) |  Timelogs |  Done |  Dashboard Stats | Pending  |
-
+  
 ## Acknowledgments
 
 * Gabriella Mosquera
