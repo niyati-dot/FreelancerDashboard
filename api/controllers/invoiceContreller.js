@@ -1,27 +1,49 @@
+/**
+ * Author: Tejaswi Chaudhary.
+ * Created On: 2021-06-07
+ * Controller for invoice management, invoice generation and edit invoice..
+ */
 const mongoose = require('mongoose');
 const express = require("express");
 const project = require("../models/projectsModel");
 const timelogs = require("../models/timelogModel");
 const invoices = require("../models/invoiceGenerate");
 
+
+/**
+ * Fetch data to generate based on task end date, delete or update invoices.
+ * Date is received in the format: "YYYY-MM-DD"
+ * @param {*} request 
+ * @param {*} response 
+ * @returns 
+ */
+
+//Get list of all the projects
 module.exports.getAllProject = async(req, res) => {
     await project.find().exec().then((m) => (res.send(m)))
         .catch((err) => (console.log(err)));
 
 };
 
+//get list of all the tags based on task end end date
 module.exports.getTags = (req, res) => {
    
     _id = req.body.project
     edate = new Date(req.body.endDate)
 
     timelogs.find().populate("project").where({"project":_id}).exec((err, result) => {
-      res.send(result)
+      if(err) {
+        return (err)}
+      else{
+        res.send(result)
+      }
+      
     })
     
 
 };
 
+//Add generated invoice
 module.exports.addInvoice = (req, res) => {
  
   generateDate = new Date(req.body.generateDate)
@@ -92,6 +114,8 @@ module.exports.addInvoice = (req, res) => {
       })
     })
 };
+
+//fetch list of all the generated invoices
 module.exports.getAllInvoices = async(req, res) => {
   invoices.find({}, function(error, result){
     if (error) {
@@ -107,6 +131,7 @@ module.exports.getAllInvoices = async(req, res) => {
 
 };
 
+//find invoice based on given invoice id
 module.exports.findInvoice = async(req, res) => {
   if(req.body && req.body.projectId){
     invoices.findOne({"invId":req.body.projectId}, function(err, result) {
@@ -125,6 +150,7 @@ module.exports.findInvoice = async(req, res) => {
 }
 };
 
+//Delete invoice based on invoice id
 module.exports.deleteinvoice = (req, res) => {
   
   if(req.body && req.body.invoicename){
@@ -147,7 +173,7 @@ module.exports.deleteinvoice = (req, res) => {
   }
   
 };
-
+//update invoice based on invoice id
 module.exports.updateInvoice = (req, res) => {
   
   invoices.find({"invId":req.body.invoiceNumber}, function(err, result) {

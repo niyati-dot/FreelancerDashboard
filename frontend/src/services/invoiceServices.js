@@ -1,7 +1,7 @@
 /**
- * Author: Bansi Mehta
- * Created On: 20201-07-20
- * Service containing api calls for TO-DO List.
+ * Author: Tejaswi Chaudhary.
+ * Created On: 2021-06-07
+ * Service Containing API calls for Invoice management, Invoice generation and Edit invoice.
  */
  import axios from "axios"
  export class TodoListService {

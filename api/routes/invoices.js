@@ -1,3 +1,8 @@
+/**
+ * Author: Tejaswi Chaudhary.
+ * Created On: 2021-06-07
+ * Route information for invoice management, invoice generation and edit invoice.
+ */
 const express = require('express')
 const router= express.Router();
 

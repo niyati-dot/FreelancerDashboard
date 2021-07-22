@@ -1,3 +1,8 @@
+/**
+ * Author: Tejaswi Chaudhary.
+ * Created On: 2021-06-07
+ * Invoice Edit component.
+ */
 import React, { Component } from 'react';
 import PageHeader from "../components/PageHeader";
 import Datatable from "../components/Datatable";
@@ -29,7 +34,7 @@ export class EditInvoice extends Component {
             taskendDate:""
             
         }}
-
+        //Fetch invoice based on invoice is to update it.
         componentDidMount() {
           
             invoiceServices.findInvoice(this.state).then((response) =>{
@@ -49,12 +54,14 @@ export class EditInvoice extends Component {
             })
         }
 
+        //On value change of a control, set it in state.
         onValueChange = (event) => {
             this.setState({
                 [event.target.name]: event.target.value
             });
         }
     
+        //validate due date
         validateDueDate = (event) => {
             let isValid = true;
             if (this.state.dueDate) {
@@ -71,7 +78,7 @@ export class EditInvoice extends Component {
             return isValid;
         }
     
-    
+        //validate form
         validateForm = (event) => {
             let isValid = true
             if (!this.validateDueDate()) {
@@ -80,6 +87,7 @@ export class EditInvoice extends Component {
            
             return isValid;
         }
+        //update invoice
         update = (e) =>{
             if(this.validateForm()){
                 if(!this.state.paymentstatus && !this.state.dueDate){
@@ -98,7 +106,7 @@ export class EditInvoice extends Component {
             }
         }   
         }
-        
+        //redirect to invoice management screen
         cancel = (e) =>{
             this.props.history.push('/invoicemanagement')
         }

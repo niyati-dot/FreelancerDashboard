@@ -1,3 +1,8 @@
+/**
+ * Author: Tejaswi Chaudhary.
+ * Created On: 2021-06-07
+ * Invoice Management component.
+ */
 import React,{Component} from 'react';
 import PageHeader from "../components/PageHeader";
 import {Button,Col,Row} from "react-bootstrap";
@@ -31,6 +36,7 @@ export class InvoiceManagement extends Component{
         }
     }
 
+    //fetch list of all the generated invoices
     getAllInvoices() {
         
         invoiceServices.getAllInvoices().then((response) => {
@@ -64,11 +70,13 @@ export class InvoiceManagement extends Component{
       this.getAllInvoices()
     }
     
+    //Edit invoice
     editInvoice=(row)=>{
         this.props.history.push({ pathname:'/editinvoice' }, {
             state: row.original.invoicename
           })
     }
+    //open InvoiceGeneration.js in read-only mode to view generated invoice details.
     viewInvoice=(row)=>{
        
         console.log("enterd");
@@ -76,6 +84,8 @@ export class InvoiceManagement extends Component{
             state: row.original.invoicename
           })
     }
+
+    //delete invoice
     deleteInvoice = (row) => {
         invoiceServices.deleteinvoice(row.original).then((response) => {
             if(response){
@@ -87,11 +97,7 @@ export class InvoiceManagement extends Component{
             console.log("Eroor")
        })
     }
-    
-    handleClick=(e)=>{
-        this.setState({checkbox:'true'})
-    }
-
+   
 render() {
     return (
 

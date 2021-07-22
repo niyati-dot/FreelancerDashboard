@@ -1,3 +1,8 @@
+/**
+ * Author: Tejaswi Chaudhary.
+ * Created On: 2021-06-07
+ * model for invoice management, invoice generation and edit invoice.
+ */
 const mongoose = require ('mongoose')
 
 const invoiceSchema = {
@@ -17,6 +22,7 @@ const invoiceSchema = {
     }]
 }
 
+//create model accoridng to collection : "invoices"
 const invoices = mongoose.model('invoices', invoiceSchema);
 
 module.exports = invoices;
