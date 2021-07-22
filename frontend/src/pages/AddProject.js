@@ -1,7 +1,8 @@
-import {useState, React} from 'react';
+import {useState, useEffect, React} from 'react';
 import PageHeader from "../components/PageHeader";
 import { Redirect, useHistory } from 'react-router-dom';
 import projectsServices from '../services/projectsServices';
+import clientsServices from '../services/clientsServices';
 
 export default function AddProjects(){
 
@@ -20,6 +21,15 @@ export default function AddProjects(){
         invoice: "",
         status: ""
     });
+
+    const [clients, setClient] = useState({
+        ClientName : ""
+    });
+
+    useEffect(() => {
+        clientsServices.list().then(res => setClient(res.data));
+        console.log(clients);
+    },[]);
 
     const [projectError, setProjectError] = useState({
         title: "",
@@ -109,8 +119,8 @@ export default function AddProjects(){
         }
 
         if(valid === true){
-            projectsServices.add(project).then(res => {project._id = res.data._id;});
-            Redirect("/projects");
+            projectsServices.add(project).then(res => res);
+            history.push('/projects');
         }
         return valid;
     };
@@ -140,10 +150,9 @@ export default function AddProjects(){
                         <select title="Client Name" onChange={(e) => handleChange(e)}
                                                       className={projectError.client.length > 0 ? "is-invalid form-control" : "form-control"} title="client" name="client" className="form-control">
                             <option value="">Select Client</option>
-                            <option value="client1">Client1</option>
-                            <option value="client2">Client2</option>
-                            <option value="client3">Client3</option>
-                            <option value="client4">Client4</option>
+                            {clients.length > 0 && clients.map(function(client,index){
+                                return <option value={client.ClientName}>{client.ClientName}</option>
+                            })}
                         </select>
                         <p className="text-danger">{projectError.client}</p>
                     </div>
@@ -159,7 +168,7 @@ export default function AddProjects(){
                 </div>
 
                 <div className="form-group row">
-                    <label className="col-md-2 col-form-label">Hourly ++++++++++++*:</label>
+                    <label className="col-md-2 col-form-label">Hourly Rates*:</label>
                     <div className="col-md-10">
                         <input title="Hourly Rates" min="0" placeholder="Enter Decided Hourly Rates" onChange={(e) => handleChange(e)} className={projectError.rate.length > 0 ? "is-invalid form-control" : "form-control"} type="number" name="rate" id="rate"/>
                         <p className="text-danger">{projectError.rate}</p>

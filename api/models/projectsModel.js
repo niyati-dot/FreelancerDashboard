@@ -23,4 +23,4 @@ const projectsSchema = {
     },
 }
 
-module.exports = Mongoose.model("Projects", projectsSchema);
+module.exports = Mongoose.model("projects", projectsSchema);

@@ -6,6 +6,11 @@ export class projectsServices{
         return result.data;
     };
 
+    async get(id){
+        const result = await axios.get("/api/projects/"+id);
+        return result.data;
+    };
+
     async add(data){
         //data.projectId = data.project;
         const result = await axios.post("/api/projects/add",data);

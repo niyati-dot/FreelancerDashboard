@@ -18,31 +18,21 @@ export default function Projects() {
         { Header: 'Status', accessor: 'status' },
         {
             Header: 'Actions', accessor: 'row',
-            Cell: ({ row }) => (<div className="data-table-button"><a title="Edit Project" onClick={() => editProject(row.id)} className="secondary-button">Edit</a><a title="Delete Project" onClick={() => { deleteTask(row) }} className="delete-button">Delete</a></div>)
+            Cell: ({ row }) => (<div className="data-table-button"><a title="Edit Project" onClick={() => editProject(row.original._id)} className="secondary-button">Edit</a><a title="Delete Project" onClick={() => { deleteTask(row.original) }} className="delete-button">Delete</a></div>)
         }
     ];
 
     const [data, setData] = useState([]);
     useEffect(() => {
         projectsServices.list().then(res => setData(res.data));
+        console.log(data);
     },[]);
-
-    const [project, setProject] = useState({
-        title: "",
-        client: "",
-        description: "",
-        rate: "",
-        invoice: "",
-        status: ""
-    });
-
 
     const deleteTask = (project) => {
         if (window.confirm("Are you sure?")) {
             let newData = [...data];
-            newData.splice(project.index, 1);
-            console.log(newData);
-            setData(newData);
+            projectsServices.remove(project).then(res => alert(res.message));
+            projectsServices.list().then(res => setData(res.data));
         }
     };
 

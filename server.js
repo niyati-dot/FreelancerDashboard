@@ -4,7 +4,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const path = require('path');
 
-const mongodb_url = "mongodb+srv://sanket34:Sanket@3198@projects.ritbx.mongodb.net/freelancerDB?retryWrites=true&w=majority";
+const mongoUrl = "mongodb://ass3:2020@assignment3-shard-00-00.3zfwi.mongodb.net:27017,assignment3-shard-00-01.3zfwi.mongodb.net:27017,assignment3-shard-00-02.3zfwi.mongodb.net:27017/freelancer?ssl=true&replicaSet=atlas-7i888h-shard-0&authSource=admin&retryWrites=true&w=majority";
 
 
 
@@ -15,7 +15,7 @@ app.get('/*', (req,res) => {
     res.sendFile(path.join(__dirname, './frontend/build/index.html'));
 });
 
-mongoose.connect(mongodb_url, {
+mongoose.connect(mongoUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,

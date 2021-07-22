@@ -1,6 +1,8 @@
-import {useState, React} from 'react';
+import {useState, useEffect, React} from 'react';
 import PageHeader from "../components/PageHeader";
 import { useParams, Redirect, useHistory } from 'react-router-dom';
+import projectsServices from '../services/projectsServices';
+import clientsServices from '../services/clientsServices';
 
 const EditProjects = (prop) => {
 
@@ -13,6 +15,10 @@ const EditProjects = (prop) => {
         history.push(url);
     }
 
+    const params = history.location.pathname.split('/');
+
+    console.log(params[params.length-1]);
+    
     const [project, setProject] = useState({
         title: "",
         client: "",
@@ -21,6 +27,16 @@ const EditProjects = (prop) => {
         rate: "",
         status: ""
     });
+
+    const [clients, setClient] = useState({
+        ClientName : ""
+    });
+
+    useEffect(() => {
+        projectsServices.get(params[params.length-1]).then(res => setProject(res.data));
+        console.log(project);
+        clientsServices.list().then(res => setClient(res.data));
+    },[]);
 
     const [projectError, setProjectError] = useState({
         title: "",
@@ -79,15 +95,15 @@ const EditProjects = (prop) => {
             setProjectError(newProjectError);
         }
 
-        if(!project.rate.value > 0){
-            newProjectError.rate = "Rate is required";
-            setProjectError(newProjectError);
-            valid = false;
-        }
-        else{
-            newProjectError.rate = "";
-            setProjectError(newProjectError);
-        }
+        // if(!project.rate.value > 0){
+        //     newProjectError.rate = "Rate is required";
+        //     setProjectError(newProjectError);
+        //     valid = false;
+        // }
+        // else{
+        //     newProjectError.rate = "";
+        //     setProjectError(newProjectError);
+        // }
 
         if(!project.invoice.length > 0){
             newProjectError.invoice = "Invoice Duration is required";
@@ -110,7 +126,8 @@ const EditProjects = (prop) => {
         }
 
         if(valid === true){
-            Redirect("/projects");
+            projectsServices.update(project).then(res => res);
+            history.push('/projects');
         }
         return valid;
     };
@@ -129,7 +146,7 @@ const EditProjects = (prop) => {
                     <label className="col-md-2 col-form-label">Project Title*: </label>
                     <div className="col-md-10">
                         <input title="Project Title" placeholder="Enter Project Title" onChange={(e) => handleChange(e)}
-                                                      className={projectError.title.length > 0 ? "is-invalid form-control" : "form-control"} type="text" name="title" id="title"/>
+                                                      className={projectError.title.length > 0 ? "is-invalid form-control" : "form-control"} type="text" value={project.title.length > 0 && project.title} name="title" id="title"/>
                         <p className="text-danger">{projectError.title}</p>
                     </div>
                 </div>
@@ -140,10 +157,9 @@ const EditProjects = (prop) => {
                         <select title="Client Name" onChange={(e) => handleChange(e)}
                                                       className={projectError.client.length > 0 ? "is-invalid form-control" : "form-control"} title="client" name="client" className="form-control">
                             <option value="">Select Client</option>
-                            <option value="client1">Client1</option>
-                            <option value="client2">Client2</option>
-                            <option value="client3">Client3</option>
-                            <option value="client4">Client4</option>
+                            {clients.length > 0 && clients.map(function(client,index){
+                                return <option value={client.ClientName} selected={client.ClientName === project.client ? "true":"false"}>{client.ClientName}</option>
+                            })}
                         </select>
                         <p className="text-danger">{projectError.client}</p>
                     </div>
@@ -153,7 +169,7 @@ const EditProjects = (prop) => {
                     <label className="col-md-2 col-form-label">Description*:</label>
                     <div className="col-md-10">
                         <textarea title="Project Description" placeholder="Enter Project Description"  onChange={(e) => handleChange(e)}
-                                                      className={projectError.description.length > 0 ? "is-invalid form-control" : "form-control"} type="textarea" rows="5" title="description" name="description" id="description"/>
+                                                      className={projectError.description.length > 0 ? "is-invalid form-control" : "form-control"} value={project.description} type="textarea" rows="5" title="description" name="description" id="description"/>
                         <p className="text-danger">{projectError.description}</p>
                     </div>
                 </div>
@@ -161,7 +177,7 @@ const EditProjects = (prop) => {
                 <div className="form-group row">
                     <label className="col-md-2 col-form-label">Hourly Rates*:</label>
                     <div className="col-md-10">
-                        <input title="Hourly Rates" min="0" placeholder="Enter Decided Hourly Rates" onChange={(e) => handleChange(e)} className={projectError.rate.length > 0 ? "is-invalid form-control" : "form-control"} type="number" name="rate" id="rate"/>
+                        <input title="Hourly Rates" min="0" placeholder="Enter Decided Hourly Rates" onChange={(e) => handleChange(e)} value={project.rate} className={projectError.rate.length > 0 ? "is-invalid form-control" : "form-control"} type="number" name="rate" id="rate"/>
                         <p className="text-danger">{projectError.rate}</p>
                     </div>
                 </div>
@@ -171,9 +187,9 @@ const EditProjects = (prop) => {
                     <div className="col-md-10">
                         <select title="Invoice Duration" onChange={(e) => handleChange(e)} className={projectError.invoice.length > 0 ? "is-invalid form-control" : "form-control"} name="invoice" title="invoice" className="form-control">
                             <option value="">Select Invoice Duration</option>
-                            <option value="Daily">Daily</option>
-                            <option value="Weekly">Weekly</option>
-                            <option value="Monthly">Monthly</option>
+                            <option value="Daily" selected={project.invoice === "Daily" ? "true":"false"}>Daily</option>
+                            <option value="Weekly" selected={project.invoice === "Weekly" ? "true":"false"}>Weekly</option>
+                            <option value="Monthly" selected={project.invoice === "Monthly" ? "true":"false"}>Monthly</option>
                         </select>
                         <p className="text-danger">{projectError.invoice}</p>
                     </div>
@@ -184,9 +200,9 @@ const EditProjects = (prop) => {
                     <div className="col-md-10">
                         <select title="Project Status" onChange={(e) => handleChange(e)} className={projectError.status.length > 0 ? "is-invalid form-control" : "form-control"} name="status" title="status" className="form-control">
                             <option value="">Select Project Status</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Completed">Completed</option>
+                            <option value="In Progress" selected={project.status === "In Progress" ? "true":"false"}>In Progress</option>
+                            <option value="Pending" selected={project.status === "Pending" ? "true":"false"}>Pending</option>
+                            <option value="Completed" selected={project.status === "Completed" ? "true":"false"}>Completed</option>
                         </select>
                         <p className="text-danger">{projectError.status}</p>
                     </div>
