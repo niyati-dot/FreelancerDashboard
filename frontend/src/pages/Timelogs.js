@@ -184,13 +184,13 @@ export default function Timelogs() {
                                 <Card.Body className="text-center">
                                     <Card.Title style={{ fontSize: "2.5rem" }}>{timerString}</Card.Title>
                                     {timer <= 0 &&
-                                        <Button className="primary-button btn" onClick={handleModalShow}>Start</Button>
+                                    <Button className="primary-button btn" onClick={handleModalShow}>Start</Button>
                                     }
                                     {timer > 0 &&
-                                        <>
-                                            <Card.Subtitle className="mb-2 text-muted">Task: {task.task}</Card.Subtitle>
-                                            <Button className="delete-button btn" onClick={stopTask}>Stop</Button>
-                                        </>
+                                    <>
+                                        <Card.Subtitle className="mb-2 text-muted">Task: {task.task}</Card.Subtitle>
+                                        <Button className="delete-button btn" onClick={stopTask}>Stop</Button>
+                                    </>
                                     }
                                 </Card.Body>
                             </Card>
@@ -208,8 +208,8 @@ export default function Timelogs() {
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Client</Form.Label>
                                                 <Form.Control as="select" name="client"
-                                                    onChange={(e) => handleChange(e)}
-                                                    className={taskError.client.length > 0 ? "is-invalid" : ""}>
+                                                              onChange={(e) => handleChange(e)}
+                                                              className={taskError.client.length > 0 ? "is-invalid" : ""}>
                                                     <option value="">Select Client</option>
                                                     <option value="Marco Botton">Marco Botton</option>
                                                     <option value="Giacomo Guilizzoni">Giacomo Guilizzoni</option>
@@ -222,12 +222,13 @@ export default function Timelogs() {
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Project</Form.Label>
                                                 <Form.Control as="select" name="project"
-                                                    onChange={(e) => handleChange(e)}
-                                                    className={taskError.project.length > 0 ? "is-invalid" : ""}>
+                                                              onChange={(e) => handleChange(e)}
+                                                              className={taskError.project.length > 0 ? "is-invalid" : ""}>
                                                     <option value="">Select Project</option>
-                                                    {projects.filter(project => project.client.includes(task.client)).map(function(project,index){
-                                                        return <option key={index} value={project._id}>{project.name}</option>
-                                                    })}
+                                                    {projects.filter(project => project.client && project.client.includes(task.client))
+                                                        .map(function(project,index){
+                                                            return <option key={index} value={project._id}>{project.name}</option>
+                                                        })}
                                                 </Form.Control>
                                                 <Form.Text className="text-danger">{taskError.project}</Form.Text>
                                             </Form.Group>
@@ -238,8 +239,8 @@ export default function Timelogs() {
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Task</Form.Label>
                                                 <Form.Control type="text" name="task" placeholder="Task Description..."
-                                                    onChange={(e) => handleChange(e)}
-                                                    className={taskError.task.length > 0 ? "is-invalid" : ""} />
+                                                              onChange={(e) => handleChange(e)}
+                                                              className={taskError.task.length > 0 ? "is-invalid" : ""} />
                                                 <Form.Text className="text-danger">{taskError.task}</Form.Text>
                                             </Form.Group>
                                         </Col>
