@@ -3,8 +3,6 @@ import PageHeader from "../components/PageHeader";
 import {Button,Col,Row} from "react-bootstrap";
 import Datatable from "../components/Datatable";
 import { withRouter } from 'react-router-dom';
-import "../components/DashboardNavbar.scss";
-import axios from 'axios';
 import "../styles/InvoiceManagement.scss";
 import invoiceServices from "../services/invoiceServices";
 export class InvoiceManagement extends Component{
