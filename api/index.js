@@ -2,12 +2,10 @@
 
 const express = require('express');
 const router = express.Router();
-const testRouter = require('./routes/testRoutes');
 const projectsRouter = require('./routes/projectsRoutes');
-const projectRouter = require('./routes/projectRoutes');
 const timelogRouter = require('./routes/timelogRoutes');
-const todoListRouter = require('./routes/TodoListRoutes')
-const clientsRouter = require('./routes/clientsRoutes')
+const todoListRouter = require('./routes/TodoListRoutes');
+const clientsRouter = require('./routes/clientsRoutes');
 
 //Main API Endpoint
 router.get('/', (req,res) => {
@@ -18,9 +16,7 @@ router.get('/', (req,res) => {
 });
 
 //Models API Endpoint
-router.use('/test',testRouter);
 router.use('/projects',projectsRouter);
-router.use('/projects',projectRouter);
 router.use('/timelogs',timelogRouter);
 router.use('/todoLists', todoListRouter);
 router.use('/clients', clientsRouter);
