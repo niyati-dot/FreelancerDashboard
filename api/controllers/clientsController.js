@@ -3,6 +3,23 @@ const express = require('express');
 const router = express.Router();
 const clientsModel = require('../models/clientsModel');
 
+module.exports.list = (req, res) => {
+    clientsModel.find({}, function (err, docs) {
+        if (err){
+            return res.status(404).json({
+                success: false,
+                message: 'Clients not found!',
+                data: null
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: 'Clients found!',
+            data: docs
+        })
+    });
+};
+
 module.exports.add = (req, res) => {
     
     console.log(req.body);
