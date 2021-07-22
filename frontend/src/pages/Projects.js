@@ -3,11 +3,11 @@ import { useState, useEffect } from 'react';
 import PageHeader from "../components/PageHeader";
 import AddProject from './AddProject';
 import Datatable from "../components/Datatable";
-import '../style.scss';
+import '../styles/style.scss';
 import { Button, Card, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import { Redirect, useHistory } from 'react-router-dom';
-import "./Projects.scss";
 import projectsServices from '../services/projectsServices.js'
+import "../styles/Projects.scss";
 
 export default function Projects() {
 
@@ -25,7 +25,6 @@ export default function Projects() {
     const [data, setData] = useState([]);
     useEffect(() => {
         projectsServices.list().then(res => setData(res.data));
-        console.log(data);
     },[]);
 
     const deleteTask = (project) => {

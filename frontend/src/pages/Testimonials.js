@@ -6,7 +6,7 @@ import Datatable from '../components/Datatable';
 import emailjs from 'emailjs-com';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import "./Testimonials.scss"
+import "../styles/Testimonials.scss"
 const Testimonials = () => {
 
     const columns = [
@@ -158,18 +158,18 @@ const Testimonials = () => {
         ])
     }, []);
 
-    const [testimonial, setTestimonial] = useState({
-        no: "",
-        project: "",
-        client: "",
-        requestedOn: "",
-        status: ""
-    });
+    // const [testimonial, setTestimonial] = useState({
+    //     no: "",
+    //     project: "",
+    //     client: "",
+    //     requestedOn: "",
+    //     status: ""
+    // });
 
     const deleteTask = (task) => {
         if (window.confirm("Are you sure?")) {
             let newData = [...data];
-            newData.splice(testimonial.index, 1);
+            // newData.splice(testimonial.index, 1);
             console.log(newData);
             setData(newData);
         }

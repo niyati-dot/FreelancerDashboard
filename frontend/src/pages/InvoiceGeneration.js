@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PageHeader from "../components/PageHeader";
 import Datatable from "../components/Datatable";
 import { withRouter } from 'react-router-dom';
-import "./InvoiceGeneration.scss";
+import "../styles/InvoiceGeneration.scss";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
