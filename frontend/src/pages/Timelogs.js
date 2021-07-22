@@ -7,7 +7,7 @@ import Datatable from "../components/Datatable";
 import { Button, Card, Col, Container, Form, Modal, Row } from "react-bootstrap";
 
 import timelogServices from '../services/timelogServices.js'
-import projectServices from '../services/projectServices.js'
+import projectServices from '../services/projectsServices.js'
 import clientService from "../services/clientService";
 
 export default function Timelogs() {
