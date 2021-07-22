@@ -110,17 +110,22 @@ export class TodoList extends Component {
      */
     saveItem = (event) => {
         event.preventDefault()
-        let saveData = {
-            title: this.state.newTask,
-            date: this.state.date
-        }
-        todoListService.saveTask(saveData).then(response => {
-            if (response.status == 200) {
-                this.setState({ newTask: '' })
-                this.getAllData(this.state.date)
-                alert("Task added successfully");
+        if (this.state.newTask) {
+            let saveData = {
+                title: this.state.newTask,
+                date: this.state.date
             }
-        })
+            todoListService.saveTask(saveData).then(response => {
+                if (response.status == 200) {
+                    this.setState({ newTask: '' })
+                    this.getAllData(this.state.date)
+                    alert("Task added successfully");
+                }
+            })
+        } else {
+            alert("Cannot enter empty task")
+        }
+        
     }
 
     /**
