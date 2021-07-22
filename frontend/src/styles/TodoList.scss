@@ -1,80 +1,80 @@
+// Author: Bansi Mehta
 @import "./variable.scss";
 
-.card-row{
-    display: flex;
-    flex-wrap:wrap;
-    margin-bottom: 10px;   
-}
+.to-do-list-container {
+    .to-do-list-content {
+        height: 100%;
+    }
+    .date-row {
+        height: 2rem;
+    }
+    .navigate-date {
+        padding: 0rem 0.8rem;
 
-.card-col{
-    width:50%;
-    white-space: normal;
-}
-.card-col-incompletetask{
-    display: inline-block;
-}
-.cards{
-    margin-bottom: 10px;
-    border-radius: 10px;
-    background-color: $primaryBackground;
-    border:1px solid $borderColor;
-    text-align: left;
+        &:hover {
+            font-size: 1.4rem;
+        }
+    }
 
-}
-.card-col-intask{
-    display: flex;
-    justify-content: center;
-}
-.text-todo{
-    text-decoration-line: line-through;
-}
-.checkbox-col{
-    width: 5%;
-    display: flex;
-    justify-content: center;
-    margin: auto 0px;
-}
-.text-col{
-    width:85%;
-}
-.button-col {
-    display: flex;
-    justify-content: center;
-    margin: auto 0px;
-}
-.vertical-break{
-    border-left: 1.5px solid darkgray;
-}
-.modal{
-    position:fixed;
-    left:0;
-    top:0;
-    right:0;
-    bottom:0;
-    background-color: rgba(0,0,0,0.5);
-    display:flex;
-    align-items:center;
-    justify-content: center;
-}
-.alignment{
-margin-left: 700px;
-}
-.modal-content{
-    width:500px;
-    background-color: white;
-}
-.modal-header, .modal-footer{
-    padding: 10px;
-}
-.modal-title{
-    margin:0;
-}
+    .add-row {
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        justify-self: center;
+        padding: 0rem 1rem;
 
-.modal-body{
-    padding:10px;
-    border-top:1px solid #eee;
-    border-bottom: 1px solid #eee;
-}
-.button{
-    width:100%;
+        .add-text {
+            display: inline-block;
+            width: 75%;
+            padding-right: 0.5rem;
+            .input-control {
+                width: 100%;
+                
+            }
+        }
+
+        .add-button {
+            display: inline-block;
+            width: 25%;
+        }
+    }
+    .date-control {
+        display: flex;
+        justify-content: center;
+        font-size: 1.2rem;
+    }
+
+    .card-item-content {
+        margin: auto;
+    }
+    .card-item {
+        padding: 0.5rem;
+    }
+
+    .card-content-incomplete {
+        border: 1px solid $borderColor;
+        background: aliceblue;
+        margin-bottom: 1rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 10px 0 rgba(0, 0, 0, 0.1);
+        &:hover {
+            box-shadow: none;
+            border: 1px solid $primaryGrey;
+            cursor: pointer;
+        }
+    }
+
+    .card-content-complete {
+        border: 1px solid $borderColor;
+        background: $primaryBackground;
+        margin-bottom: 1rem;
+    }
+
+    .card-item-completed {
+        text-decoration-line: line-through;
+    }
+
+    .to-do-list-items {
+        height: calc(100% - 2rem - 3rem);
+        overflow: auto;
+    }
 }

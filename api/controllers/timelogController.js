@@ -1,11 +1,11 @@
 /* Author: Vishal Sancheti */
 
 const timelogModel = require('../models/timelogModel');
-const projectModel = require('../models/projectModel');
+const projectsModel = require('../models/projectsModel');
 
 //List all documents
 const list = (req, res) => {
-    timelogModel.find({}).populate("project").exec(function (err, timelogs) {
+    timelogModel.find({}).sort({'_id': -1}).populate("project").exec(function (err, timelogs) {
         if (err){
             return res.status(404).json({
                 success: false,
@@ -73,7 +73,7 @@ const add = async (req, res) => {
 
     if (req.body && req.body.projectId) {
         try {
-            project = await projectModel.findById(req.body.projectId).exec();
+            project = await projectsModel.findById(req.body.projectId).exec();
         } catch (e) {
             return res.status(404).json({
                 success: false,

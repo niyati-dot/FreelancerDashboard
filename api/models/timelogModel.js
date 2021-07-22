@@ -6,7 +6,7 @@ const Schema = Mongoose.Schema;
 const timelogSchema = new Mongoose.Schema({
     project: {
         type: Schema.Types.ObjectID,
-        ref: "Project",
+        ref: "projects",
     },
     task: {
         type: String,
@@ -20,4 +20,4 @@ const timelogSchema = new Mongoose.Schema({
     },
 });
 
-module.exports = Mongoose.model("Timelog", timelogSchema);
+module.exports = Mongoose.model("timelogs", timelogSchema);

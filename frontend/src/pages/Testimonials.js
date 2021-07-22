@@ -13,7 +13,7 @@ import emailjs from 'emailjs-com';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import "../styles/Testimonials.scss";
-import projectServices from '../services/projectServices.js';
+import projectServices from '../services/projectsServices.js';
 import clientServices from '../services/clientServices.js';
 import testimonialServices from '../services/testimonialServices.js';
 var dateFormat = require("dateformat");
@@ -81,7 +81,7 @@ const Testimonials = () => {
     function sendEmail(data) {
         console.log('hello',mailInfo)
         console.log(mailInfo);
-        const Form_Link = "http://localhost:3001/testimonials/requestTestimonials/" + mailInfo.id;
+        const Form_Link = "https://csci5709-group5-s21.herokuapp.com/testimonials/requestTestimonials/" + mailInfo.id;
 
         var mailParams = {
             //Mail Sender Details
@@ -120,6 +120,7 @@ const Testimonials = () => {
         }
     };
 
+    // handling changes
     const handleChange = (e) => {
         let newRequest = {...mailInfo, [e.target.name]: e.target.value};
         setMailInfo(newRequest);

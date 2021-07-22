@@ -1,7 +1,7 @@
 /**
  * Author: Deep Patel.
  * Created On: 2021-07-20
- * Controller for project model.
+ * Model for project.
  */
 
 const Mongoose = require("mongoose");

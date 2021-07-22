@@ -1,21 +1,17 @@
+/* Author: Vishal Sancheti */
+
 import '../styles/style.scss';
 import React, { useState } from 'react';
-import {
-    Collapse
-} from 'react-bootstrap';
-import { Drawer, } from 'react-bootstrap-drawer';
+import {Collapse} from 'react-bootstrap';
+import { Drawer } from 'react-bootstrap-drawer';
 import '../styles/DashboardSidebar.scss';
+import { useLocation } from 'react-router-dom'
 
 export default function Sidebar(props) {
-    let index = 0;
+    const location = useLocation();
     const [open, setOpen] = useState(false);
-
     const handleToggle = () => setOpen(!open);
 
-    const setActiveItem = (index) => {
-        console.log(index)
-        this.index = index;
-    }
     return (
         <Drawer { ...props }>
             <Drawer.Toggle onClick={ handleToggle } />
@@ -23,18 +19,38 @@ export default function Sidebar(props) {
             <Collapse in={ open }>
                 <Drawer.Overflow>
                     <Drawer.ToC>
-                        <Drawer.Header href="/dashboard">Dashboard</Drawer.Header>
+                        <Drawer.Item href="/dashboard">
+                            <span className={location.pathname === "/dashboard" ? 'nav-item-active' : ''}>Dashboard</span>
+                        </Drawer.Item>
 
                         <Drawer.Nav>
-                            <Drawer.Item className={`${index === 0 ? 'nav-item-active' : ''}`} href="/clients" onClick={() => setActiveItem(0)}>Clients</Drawer.Item>
-                            <Drawer.Item className={`${index === 1 ? 'nav-item-active' : ''}`} href="/projects" onClick={() => setActiveItem(1)}>Projects</Drawer.Item>
-                            <Drawer.Item className={`${index === 2 ? 'nav-item-active' : ''}`} href="/timelogs" onClick={() => setActiveItem(2)}>Time Logs</Drawer.Item>
-                            <Drawer.Item className={`${index === 3 ? 'nav-item-active' : ''}`} href="/invoicemanagement" onClick={() => setActiveItem(3)}>Invoices</Drawer.Item>
-                            <Drawer.Item className={`${index === 4 ? 'nav-item-active' : ''}`} href="/invoice-generation" onClick={() => setActiveItem(4)}>Invoice Generation</Drawer.Item>
-                            <Drawer.Item className={`${index === 5 ? 'nav-item-active' : ''}`} href="/testimonials" onClick={() => setActiveItem(5)}>Testimonials</Drawer.Item>
-                            <span className="horizontal-break"></span>
-                            <Drawer.Item className={`${index === 6 ? 'nav-item-active' : ''}`} href="/todolist" onClick={() => setActiveItem(6)}>ToDo</Drawer.Item>
-                            <Drawer.Item className={`${index === 7 ? 'nav-item-active' : ''}`} href="/calendar" onClick={() => setActiveItem(7)}>Calendar</Drawer.Item>
+                            <Drawer.Item href="/clients">
+                                <span className={location.pathname === "/clients" ? 'nav-item-active' : ''}>Clients</span>
+                            </Drawer.Item>
+                            <Drawer.Item  href="/projects">
+                                <span className={location.pathname === "/projects" ? "nav-item-active" : ''}>Projects</span>
+                            </Drawer.Item>
+                            <Drawer.Item href="/timelogs">
+                                <span className={location.pathname === "/timelogs" ? 'nav-item-active' : ''}>Time Logs</span>
+                            </Drawer.Item>
+                            <Drawer.Item href="/invoicemanagement">
+                                <span className={location.pathname === "/invoicemanagement" ? 'nav-item-active' : ''}>Invoices</span>
+                            </Drawer.Item>
+                            <Drawer.Item href="/invoice-generation">
+                                <span className={location.pathname === "/invoice-generation" ? 'nav-item-active' : ''}>Invoice Generation</span>
+                            </Drawer.Item>
+                            <Drawer.Item href="/testimonials">
+                                <span className={location.pathname === "/testimonials" ? 'nav-item-active' : ''}>Testimonials</span>
+                            </Drawer.Item>
+
+                            <hr className="horizontal-break"/>
+
+                            <Drawer.Item href="/todolist">
+                                <span className={location.pathname === "/todolist" ? 'nav-item-active' : ''}>ToDo</span>
+                            </Drawer.Item>
+                            <Drawer.Item href="/calendar">
+                                <span className={location.pathname === "/calendar" ? 'nav-item-active' : ''}>Calendar</span>
+                            </Drawer.Item>
                         </Drawer.Nav>
                     </Drawer.ToC>
                 </Drawer.Overflow>

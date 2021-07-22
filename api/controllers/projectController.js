@@ -1,10 +1,12 @@
 /**
- * Author: Deep Patel.
+ * Author: Sanket Shah.
  * Created On: 2021-07-20
- * Controller for Projects Controller.
+ * Controller for Projects.
  */
 
-const projectModel = require('../models/projectModel');
+const mongoose = require('mongoose');
+const express = require("express");
+const Project = require("../models/getProject");
 
 //List all documents
 const list = (req, res) => {

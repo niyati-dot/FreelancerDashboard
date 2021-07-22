@@ -1,6 +1,14 @@
-import {useState, React} from 'react';
+/**
+ * Author: Sanket Shah.
+ * Created On: 2021-07-20
+ * Add Project File.
+ */
+
+import {useState, useEffect, React} from 'react';
 import PageHeader from "../components/PageHeader";
 import { Redirect, useHistory } from 'react-router-dom';
+import projectsServices from '../services/projectsServices';
+import clientsServices from '../services/clientsServices';
 
 export default function AddProjects(){
 
@@ -15,17 +23,26 @@ export default function AddProjects(){
         title: "",
         client: "",
         description: "",
-        invoice: "",
         rate: "",
+        invoice: "",
         status: ""
     });
+
+    const [clients, setClient] = useState({
+        ClientName : ""
+    });
+
+    useEffect(() => {
+        clientsServices.list().then(res => setClient(res.data));
+        console.log(clients);
+    },[]);
 
     const [projectError, setProjectError] = useState({
         title: "",
         client: "",
         description: "",
-        invoice: "",
         rate: "",
+        invoice: "",
         status: ""
     });
 
@@ -41,8 +58,8 @@ export default function AddProjects(){
             title: "",
             client: "",
             description: "",
-            invoice: "",
             rate: "",
+            invoice: "",
             status: ""
         });
         let newProjectError = {...projectError};
@@ -77,15 +94,15 @@ export default function AddProjects(){
             setProjectError(newProjectError);
         }
 
-        if(!project.rate.value > 0){
-            newProjectError.rate = "Rate is required";
-            setProjectError(newProjectError);
-            valid = false;
-        }
-        else{
-            newProjectError.rate = "";
-            setProjectError(newProjectError);
-        }
+        // if(!project.rate.value > 0){
+        //     newProjectError.rate = "Rate is required";
+        //     setProjectError(newProjectError);
+        //     valid = false;
+        // }
+        // else{
+        //     newProjectError.rate = "";
+        //     setProjectError(newProjectError);
+        // }
 
         if(!project.invoice.length > 0){
             newProjectError.invoice = "Invoice Duration is required";
@@ -108,7 +125,8 @@ export default function AddProjects(){
         }
 
         if(valid === true){
-            Redirect("/projects");
+            projectsServices.add(project).then(res => res);
+            history.push('/projects');
         }
         return valid;
     };
@@ -138,10 +156,9 @@ export default function AddProjects(){
                         <select title="Client Name" onChange={(e) => handleChange(e)}
                                                       className={projectError.client.length > 0 ? "is-invalid form-control" : "form-control"} title="client" name="client" className="form-control">
                             <option value="">Select Client</option>
-                            <option value="client1">Client1</option>
-                            <option value="client2">Client2</option>
-                            <option value="client3">Client3</option>
-                            <option value="client4">Client4</option>
+                            {clients.length > 0 && clients.map(function(client,index){
+                                return <option value={client.ClientName}>{client.ClientName}</option>
+                            })}
                         </select>
                         <p className="text-danger">{projectError.client}</p>
                     </div>

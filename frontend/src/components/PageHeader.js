@@ -1,3 +1,5 @@
+/* Author: Vishal Sancheti */
+
 import React from 'react';
 import "../styles/PageHeader.scss"
 const PageHeader =(props) =>{
