@@ -10,6 +10,9 @@ import { useParams, Redirect, useHistory } from 'react-router-dom';
 import projectsServices from '../services/projectsServices';
 import clientsServices from '../services/clientsServices';
 
+/**
+ *  Functionality for editing the project
+ */
 const EditProjects = (prop) => {
 
     const param = useParams();

@@ -7,7 +7,9 @@
 const Mongoose = require("mongoose");
 const Schema = Mongoose.Schema;
 
-
+/**
+ * Model Schema for Projects
+ */
 const projectsSchema = {
     title: {
         type: String
