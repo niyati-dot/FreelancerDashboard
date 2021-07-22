@@ -8,52 +8,123 @@ import { Button, Col, Row } from "react-bootstrap";
 import "../styles/Clients.scss";
 import './AddClient'
 import { Component } from "react";
+import axios from 'axios';
+import clientService from "../services/clientService"
 
 export class Clients extends Component {
   //constructor for props
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      data : [],
+      ClientName: "",
+      Organization: "",
+      ContactNo: "",
+      Emailid: ""
+    }
     this.handleNewClient = this.handleNewClient.bind(this);
 
     this.columns = [
       { Header: 'Client Name', accessor: 'ClientName' },
-      { Header: 'Organization', accessor: 'organization' },
       { Header: 'Contact No', accessor: 'ContactNo' },
       { Header: 'Email', accessor: 'Emailid' },
+      { Header: 'Website', accessor: 'Website' },
       {
         Header: 'Action', accessor: 'row',
         Cell: ({ row }) => (
+          
           <div className="generate-button-container">
-            <Button className="secondary-button" align="right">View</Button>
-            <Button className="secondary-button" align="right">Edit</Button>
-            <Button className="delete-button" align="right">Delete</Button>
+            <Button className="secondary-button" align="right" onClick={() => this.viewDetails(row)} >View</Button>
+            <Button className="secondary-button" align="right"  onClick={() => this.editDetails(row)} >Edit</Button>
+            <Button className="delete-button" align="right"  onClick={() => this.deleteDetails(row)} >Delete</Button>
           </div>
         )
       }];
-    this.setData();
+      
   }
 
-  setData = () => {
-    this.data = [{
-      ClientName: "Jill Dupre",
-      organization: "Elegant Microweb",
-      ContactNo: "(+1)902-412-7654",
-      Emailid: "JillDupre@gmail.com"
-    },
-    {
-      ClientName: "Herry Chopra",
-      organization: "Meditab",
-      ContactNo: "(+1) 777-987-2345",
-      Emailid: "hhs12@yahoo.co.in"
-    },
-    {
-      ClientName: "Nayan Patel",
-      organization: "IBM",
-      ContactNo: "(+91) 9601739976",
-      Emailid: "nayan007@gmail.com"
-    }];
+  componentDidMount() {
+    
+    clientService.getAllClients().then((response) => {
+        if (response.status == 200) {
+            this.setData(response.data);
+            let newDetails = [];
+            response.data.forEach(element => {
+              let row = {}
+              row.ClientName = element.ClientName;
+              row.ContactNo = element.ContactNo;
+              row.Emailid = element.Email;
+              row.Website = element.Website;
+              newDetails.push(row)
+            });
+            this.setState({
+              data: newDetails
+            })
+        }
+    }).catch((error) => {
+        console.log("Eroor")
+    })
+
   }
+
+
+  viewDetails = (row) => {
+
+    clientService.viewOneClient(row.original).then((response) => {  
+        this.props.history.push({ pathname: '/ViewClient' }, {
+          state: response.data
+        })
+    }).catch((error) => {
+        console.log("Error")
+    })
+  }
+
+  handleEditClient = (e) => {
+    e.preventDefault();
+    this.props.history.push({ pathname: '/Editclient' });
+  };
+
+  editDetails = (row) => {
+    clientService.viewOneClient(row.original).then((response) => {  
+        this.props.history.push({ pathname: '/EditClient' }, {
+          state: response.data
+        })
+    }).catch((error) => {
+        console.log("Error")
+    })
+  };
+
+  deleteDetails = (row) => {
+
+    
+    clientService.deleteClient(row.original).then((response) => {
+          alert("Successfully deleted entry!!");
+          clientService.getAllClients().then((response) => {
+              if (response.status == 200) {
+                  this.setData(response.data);
+                  let newdetails = [];
+                  response.data.forEach(element => {
+                    let row = {}
+                    row.ClientName = element.ClientName;
+                    row.ContactNo = element.ContactNo;
+                    row.Emailid = element.Email;
+                    row.Website = element.Website;
+                    newdetails.push(row)
+                  });
+                  this.setState({data: newdetails})
+                }
+          }).catch((error) => {
+              console.log("Eroor")
+          })
+      }).catch((error) => {
+          console.log("Eroor")
+      })
+  }
+
+  setData = (response) => {
+    this.data = []
+  }
+
   handleNewClient = (e) => {
     e.preventDefault();
     this.props.history.push({ pathname: '/Addclient' });
@@ -75,7 +146,7 @@ export class Clients extends Component {
               </Row>
               <Row className="data-table-container">
                 <Col>
-                  <Datatable columns={this.columns} data={this.data} />
+                  <Datatable columns={this.columns} data={this.state.data} />
                 </Col>
               </Row>
             </div>
