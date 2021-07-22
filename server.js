@@ -2,6 +2,7 @@
 
 const express = require('express');
 const mongoose = require("mongoose");
+
 const path = require('path');
 
 const app = express();
@@ -33,6 +34,7 @@ mongoose.connection.on("error", err => {
 });
 
 mongoose.connection.on("connected", (err, res) => {
+
     console.log("Mongoose connected");
 
     //App Listen

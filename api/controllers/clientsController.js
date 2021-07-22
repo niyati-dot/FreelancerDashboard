@@ -15,6 +15,23 @@ const clientsModel = require('../models/clientsModel');
  * If client already exist for the same Client Name and Contact No then the client will not be added to list
  * If having error returns false.
  */
+module.exports.list = (req, res) => {
+    clientsModel.find({}, function (err, docs) {
+        if (err){
+            return res.status(404).json({
+                success: false,
+                message: 'Clients not found!',
+                data: null
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: 'Clients found!',
+            data: docs
+        })
+    });
+};
+
 module.exports.add = (req, res) => {
     
     const addclient = new clientsModel();

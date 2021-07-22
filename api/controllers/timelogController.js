@@ -1,7 +1,7 @@
 /* Author: Vishal Sancheti */
 
 const timelogModel = require('../models/timelogModel');
-const projectModel = require('../models/projectModel');
+const projectsModel = require('../models/projectsModel');
 
 //List all documents
 const list = (req, res) => {
@@ -73,7 +73,7 @@ const add = async (req, res) => {
 
     if (req.body && req.body.projectId) {
         try {
-            project = await projectModel.findById(req.body.projectId).exec();
+            project = await projectsModel.findById(req.body.projectId).exec();
         } catch (e) {
             return res.status(404).json({
                 success: false,

@@ -21,7 +21,7 @@ import Testimonials from "./pages/Testimonials";
 import InvoiceManagement from "./pages/InvoiceManagement"
 import TodoList from "./pages/TodoList"
 import Calendar from "./pages/Calendar";
-
+import EditInvoice from "./pages/EditInvoice"
 export default function App() {
     return (
         <Router>
@@ -102,6 +102,11 @@ export default function App() {
                 <Route path="/invoicemanagement">
                     <DashboardLayout>
                         <InvoiceManagement />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/editinvoice">
+                    <DashboardLayout>
+                        <EditInvoice />
                     </DashboardLayout>
                 </Route>
                 <Route path="/todolist">
