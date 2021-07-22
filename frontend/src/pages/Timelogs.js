@@ -8,11 +8,12 @@ import { Button, Card, Col, Container, Form, Modal, Row } from "react-bootstrap"
 
 import timelogServices from '../services/timelogServices.js'
 import projectServices from '../services/projectServices.js'
+import clientService from "../services/clientService";
 
 export default function Timelogs() {
     //Init
     const columns = [
-        { Header: 'Project', accessor: 'project.name' },
+        { Header: 'Project', accessor: 'project.title' },
         { Header: 'Client', accessor: 'project.client' },
         { Header: 'Task', accessor: 'task' },
         { Header: 'Start At', accessor: row => moment(row.startAt).format("DD-MM-YYYY hh:mm:ss")},
@@ -80,6 +81,10 @@ export default function Timelogs() {
 
     // New Task States
     const [projects, setProjects] = useState([]);
+    const [clients, setClients] = useState([]);
+    useEffect(() => {
+        clientService.getAllClients().then(res => setClients(res.data));
+    },[]);
     useEffect(() => {
         projectServices.list().then(res => setProjects(res.data));
     },[]);
@@ -184,13 +189,13 @@ export default function Timelogs() {
                                 <Card.Body className="text-center">
                                     <Card.Title style={{ fontSize: "2.5rem" }}>{timerString}</Card.Title>
                                     {timer <= 0 &&
-                                        <Button className="primary-button btn" onClick={handleModalShow}>Start</Button>
+                                    <Button className="primary-button btn" onClick={handleModalShow}>Start</Button>
                                     }
                                     {timer > 0 &&
-                                        <>
-                                            <Card.Subtitle className="mb-2 text-muted">Task: {task.task}</Card.Subtitle>
-                                            <Button className="delete-button btn" onClick={stopTask}>Stop</Button>
-                                        </>
+                                    <>
+                                        <Card.Subtitle className="mb-2 text-muted">Task: {task.task}</Card.Subtitle>
+                                        <Button className="delete-button btn" onClick={stopTask}>Stop</Button>
+                                    </>
                                     }
                                 </Card.Body>
                             </Card>
@@ -208,12 +213,12 @@ export default function Timelogs() {
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Client</Form.Label>
                                                 <Form.Control as="select" name="client"
-                                                    onChange={(e) => handleChange(e)}
-                                                    className={taskError.client.length > 0 ? "is-invalid" : ""}>
+                                                              onChange={(e) => handleChange(e)}
+                                                              className={taskError.client.length > 0 ? "is-invalid" : ""}>
                                                     <option value="">Select Client</option>
-                                                    <option value="Marco Botton">Marco Botton</option>
-                                                    <option value="Giacomo Guilizzoni">Giacomo Guilizzoni</option>
-                                                    <option value="Mariah Guilizzoni">Mariah Guilizzoni</option>
+                                                    {clients.length && clients.map(function(client,index){
+                                                        return <option key={index} value={client.ClientName}>{client.ClientName}</option>
+                                                    })}
                                                 </Form.Control>
                                                 <Form.Text className="text-danger">{taskError.client}</Form.Text>
                                             </Form.Group>
@@ -222,12 +227,13 @@ export default function Timelogs() {
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Project</Form.Label>
                                                 <Form.Control as="select" name="project"
-                                                    onChange={(e) => handleChange(e)}
-                                                    className={taskError.project.length > 0 ? "is-invalid" : ""}>
+                                                              onChange={(e) => handleChange(e)}
+                                                              className={taskError.project.length > 0 ? "is-invalid" : ""}>
                                                     <option value="">Select Project</option>
-                                                    {projects.filter(project => project.client.includes(task.client)).map(function(project,index){
-                                                        return <option key={index} value={project._id}>{project.name}</option>
-                                                    })}
+                                                    {projects.length && projects.filter(project => project.client && project.client.includes(task.client))
+                                                        .map(function(project,index){
+                                                            return <option key={index} value={project._id}>{project.title}</option>
+                                                        })}
                                                 </Form.Control>
                                                 <Form.Text className="text-danger">{taskError.project}</Form.Text>
                                             </Form.Group>
@@ -238,8 +244,8 @@ export default function Timelogs() {
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Task</Form.Label>
                                                 <Form.Control type="text" name="task" placeholder="Task Description..."
-                                                    onChange={(e) => handleChange(e)}
-                                                    className={taskError.task.length > 0 ? "is-invalid" : ""} />
+                                                              onChange={(e) => handleChange(e)}
+                                                              className={taskError.task.length > 0 ? "is-invalid" : ""} />
                                                 <Form.Text className="text-danger">{taskError.task}</Form.Text>
                                             </Form.Group>
                                         </Col>
