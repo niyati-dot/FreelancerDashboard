@@ -1,7 +1,7 @@
 /**
  * Author: Deep Patel.
  * Created On: 2021-07-20
- *  Frontend Page for Request Testimonials.
+ * Frontend Page for Request Testimonials.
  */
 
 import React from 'react'
