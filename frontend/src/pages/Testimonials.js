@@ -1,7 +1,7 @@
 /**
  * Author: Deep Patel.
  * Created On: 2021-07-20
- *  Frontend Page for Testimonials.
+ * Frontend Page for Testimonials.
  */
 
 import React from 'react';
@@ -14,12 +14,15 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import "../styles/Testimonials.scss";
 import projectServices from '../services/projectsServices.js';
-import clientServices from '../services/clientServices.js';
+import clientServices from '../services/clientService.js';
 import testimonialServices from '../services/testimonialServices.js';
 var dateFormat = require("dateformat");
 
 const Testimonials = () => {
 
+    /**
+     * creting a column for a datatable to display testimonials
+    */
     const columns = [
         { Header: '#', accessor: row => 1 },
         { Header: 'Project', accessor: 'project' },
@@ -28,38 +31,47 @@ const Testimonials = () => {
         { Header: 'Requested on', accessor: row => dateFormat(row.requestedOn, "dd-mm-yyyy, HH:MM:ss") },
         
         {
+            // creating an action button containig entire row details
             Header: 'Actions', accessor: 'row',
             Cell: ({ row }) => (
                 <div className="action">
                     <div className="button-container">
-                        <Button className="secondary-button" onClick={() => setLgShow(true)}>View</Button>
-                        {/* <a href="#">Re-Request</a> */}
-                        <Button className="delete-button" align="right"  onClick= {() => deleteTestimonial(row)} >Delete</Button>
+                        <Button className="delete-button"  onClick= {() => deleteTestimonial(row)} >Delete</Button>
                     </div>
                 </div>
             )
         }
     ];
 
-    // project details
+    /**
+     * fatching list of project details through an api call 
+     * using project services's list functionality  
+     */
     const [project, setProjects] = useState([]);
     useEffect(() => {
         projectServices.list().then(res => setProjects(res.data));
     },[]); 
 
-    // client details
+    /**
+     * fatching list of clients details through api call 
+     * using clientServices's list functionality  
+     */
     const [client, setClient] = useState([]);
     useEffect(() => {
-        clientServices.list().then(res => setClient(res.data));
+        clientServices.getAllClients().then(res => setClient(res.data));
     },[]); 
 
-    // Testimonial Details
-    const [testimonial, setTestimonial] = useState([]);
+    /**
+     * fatching list of Testimonials details through api call 
+     * using testimonialService's list functionality  
+     */    const [testimonial, setTestimonial] = useState([]);
     useEffect(() => {
         testimonialServices.list().then(res => setTestimonial(res.data));
     },[]);
 
-    // Mailing Details
+    /**
+     * Constant containing mailing information to send to 
+     */
     const [mailInfo, setMailInfo] = useState({
         project: "",
         client: "",
@@ -67,22 +79,31 @@ const Testimonials = () => {
         id: ""
     });
 
+    /**
+     * Storing the values into the database using testimonialService's add functionality
+     * @param {*} e 
+     * the response containig automated genrated id is fatched and stored into mailInfo's id parameter
+     */
     const storeData = (e) => {
         e.preventDefault();
-        console.log(mailInfo);
+        setLgShow(false);
         testimonialServices.add(mailInfo).then(response => {
             mailInfo.id = response.result._id
         })
 
-        sendEmail(testimonialServices.add(mailInfo));
+        sendEmail();
     }
 
-    // Send Mail Module
-    function sendEmail(data) {
-        console.log('hello',mailInfo)
-        console.log(mailInfo);
+    /**
+     * Method to send email on click event. 
+     * @param {*} data 
+     * The emails can be sent on specif id's using this functionalities.
+     */
+    function sendEmail() {
+
         const Form_Link = "https://csci5709-group5-s21.herokuapp.com/testimonials/requestTestimonials/" + mailInfo.id;
 
+        // Mailing details
         var mailParams = {
             //Mail Sender Details
             freelancerName: 'Freelancer_Deep',
@@ -92,13 +113,12 @@ const Testimonials = () => {
             clientName: 'Client_Deep',
             clientMail: 'dee16798ppatel@gmail.com',
 
-            
             //Attachment Messages
             message: mailInfo.message,
             link: Form_Link
         };
 
-        // calling emailJS functionality
+        // calling emailJS functionality with emailJS Credentials
         emailjs.send('testimonial_request', 'template_fmwc5oo', mailParams, 'user_INB1ILGAt4GVje2eeyj2V')
             .then(function (response) {
                 alert("Email Sent");
@@ -110,22 +130,29 @@ const Testimonials = () => {
             });
     }
 
-    // Delete testimonials
-    const deleteTestimonial = (task) => {
+    /**
+     * Functionality to delete testimonials with a specific id of testimonial
+     * @param {*} testID 
+     */
+    const deleteTestimonial = (testID) => {
         if (window.confirm("Are you sure?")) {
             let newData = [...testimonial];
             newData.splice(testimonial.index, 1);
-            console.log(newData);
             setTestimonial(newData);
         }
     };
 
-    // handling changes
+    /**
+     * onChange of the values store the values into mailInfo Parameters
+     * @param {*} e 
+     * parameter e containig the values is used to fatch form element on change
+     */
     const handleChange = (e) => {
         let newRequest = {...mailInfo, [e.target.name]: e.target.value};
         setMailInfo(newRequest);
     };
 
+    // Model display constant to display model when true
     const [lgShow, setLgShow] = useState(false);
 
     return (
@@ -198,9 +225,7 @@ const Testimonials = () => {
                                                                 onChange={(e) => handleChange(e)} 
                                                             />
                                                     </Form.Group>
-
-                                                    {/* <Button variant="primary" type="submit" id="button" value="Send" onClick={() => sendEmail(mailInfo)}> */}
-                                                    <Button variant="primary" type="submit" id="button" value="Send" onClick={storeData}>   
+                                                    <Button variant="primary" type="submit" id="button" value="Send" onClick={storeData} >   
                                                         Send
                                                     </Button>
                                                 </Form>

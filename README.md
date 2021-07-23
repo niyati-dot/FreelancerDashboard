@@ -210,7 +210,7 @@ export default App;
 | Author  |  Feature 1 |  Status |  Feature 2 |  Status |
 |---|---|---|---|---|
 |  [Bansi Mehta(B00875640)](bn955101@dal.ca) |  ToDo List | Done  | V-Card  | Pending  |
-|  [Deep Patel(B00865413)](dp889845@dal.ca) |  |   | |  |
+|  [Deep Patel(B00865413)](dp889845@dal.ca) |  Testimonials | Done  | Authentication/Profile |  Pending |
 |  [Janvi Patel (B00863421)](jn410076@dal.ca) |   |   |   |   |
 | [Sanket Shah(B00862499)](sn488207@dal.ca) |   |   |   |   |
 | [Tejaswi Chaudhary(B00858613)](tj754396@dal.ca) |  Invoice Management  |   Done| Email Invoice   | Pending   |
