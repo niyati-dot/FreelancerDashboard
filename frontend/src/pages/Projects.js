@@ -7,7 +7,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import PageHeader from "../components/PageHeader";
-import AddProject from './AddProject';
+import AddProject from './Projects/AddProject';
 import Datatable from "../components/Datatable";
 import '../styles/style.scss';
 import { Button, Card, Col, Container, Form, Modal, Row } from "react-bootstrap";
@@ -64,10 +64,9 @@ export default function Projects() {
             </div>
             <div className="page-content-container">
             <div className="page-content">
-
                 <Row className="button-container">
-                    <Col>
-                        <a href="/projects/add" title="Add Project" className="primary-button">Add Project</a>
+                    <Col className="text-right">
+                        <a href="/projects/add" title="Add Project" className="btn primary-button">Add Project</a>
                     </Col>
                 </Row>
                 <Row className="data-table-container">
