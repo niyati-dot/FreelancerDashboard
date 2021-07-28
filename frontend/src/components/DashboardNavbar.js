@@ -12,7 +12,7 @@ export default function DashboardNavbar(){
                     <Nav.Link title="Notification" className="nav-bar-link" href="#notification">
                         <i className="fas fa-bell"/>
                     </Nav.Link>
-                    <Nav.Link title="Profile" className="nav-bar-link" href="#profile">
+                    <Nav.Link title="Profile" className="nav-bar-link" href="profile">
                         <i className="fas fa-user"/>
                     </Nav.Link>
                     <Nav.Link title="Log Out" className="nav-bar-link" href="/">

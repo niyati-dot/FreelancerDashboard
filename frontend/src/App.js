@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
 import InvoiceGeneration from "./pages/Invoices/GenerateInvoice";
 import Timelogs from "./pages/Timelogs";
 import Projects from "./pages/Projects";
@@ -45,6 +46,11 @@ export default function App() {
                 <Route path="/dashboard">
                     <DashboardLayout>
                         <Dashboard />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/profile">
+                    <DashboardLayout>
+                        <Profile />
                     </DashboardLayout>
                 </Route>
                 <Route exact path="/clients">
