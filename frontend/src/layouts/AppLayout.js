@@ -12,10 +12,12 @@ const AppLayout =({children}) =>{
                 <AppNavbar/>
             </header>
             <main>
-                <Container>
-                    {children}
-                </Container>
+                {children}
             </main>
+            <hr/>
+            <footer className="container">
+                <p>All rights reserved.</p>
+            </footer>
         </>
     )
 }

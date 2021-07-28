@@ -38,14 +38,16 @@ const Datatable = (props) => {
         <div>
             <Row>
                 {/*Conditional Display Export CSV Button*/}
+                <Col md={{ span: 2 }} className="my-2">
                 {allowCSV ?
-                    (<Col md={{ span: 2 }} className="my-2">
+                    (
                         <CSVLink data={data} filename={"export.csv"} className="secondary-button btn btn-secondary" target="_blank">
                             Export CSV
                         </CSVLink>
-                    </Col>)
+                   )
                     : (<></>)
                 }
+                </Col>
 
                 {/*Conditional Display Search Form*/}
                 {allowSearch ?
