@@ -4,16 +4,16 @@
  * Invoice Edit component.
  */
 import React, { Component } from 'react';
-import PageHeader from "../components/PageHeader";
-import Datatable from "../components/Datatable";
+import PageHeader from "../../components/PageHeader";
+import Datatable from "../../components/Datatable";
 import { withRouter } from 'react-router-dom';
-import "./EditInvoice.scss";
+import "../../styles/EditInvoice.scss";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios'
-import invoiceServices from "../services/invoiceServices";
+import invoiceServices from "../../services/invoiceServices";
 
 export class EditInvoice extends Component {
 
@@ -21,7 +21,6 @@ export class EditInvoice extends Component {
         super(props)
         this.state={
             projectId: props && props.history && props.history.location&&props.history.location.state &&props.history.location.state.state?props.history.location.state.state:0,
-            paymentstatus:"",
             invoiceNumber:"",
             projects:"",
             clientName:"",

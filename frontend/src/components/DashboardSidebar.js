@@ -41,13 +41,10 @@ export default function Sidebar(props) {
                                     <i className="fas fa-stopwatch"></i> Time Logs
                                 </span>
                             </Drawer.Item>
-                            <Drawer.Item href="/invoicemanagement">
-                                <span className={location.pathname === "/invoicemanagement" ? 'nav-item-active' : ''}>
+                            <Drawer.Item href="/invoices">
+                                <span className={location.pathname === "/invoices" ? 'nav-item-active' : ''}>
                                     <i className="fas fa-file-invoice"></i> Invoices
                                 </span>
-                            </Drawer.Item>
-                            <Drawer.Item href="/invoice-generation">
-                                <span className={location.pathname === "/invoice-generation" ? 'nav-item-active' : ''}>Invoice Generation</span>
                             </Drawer.Item>
                             <Drawer.Item href="/testimonials">
                                 <span className={location.pathname === "/testimonials" ? 'nav-item-active' : ''}>
