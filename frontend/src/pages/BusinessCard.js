@@ -11,6 +11,11 @@ import testimonialServices from ".././services/testimonialServices"
 import registerServices from ".././services/registerServices"
 import ".././styles/BusinessCard.scss";
 
+/**
+ * Author: Bansi Mehta.
+ * Created On: 2021-07-06
+ * BusinessCard Front component.
+ */
 class BusinessCardFront extends Component {
     constructor(props) {
         super(props)
@@ -71,7 +76,11 @@ class BusinessCardFront extends Component {
     }
 }
 
-
+/**
+ * Author: Bansi Mehta.
+ * Created On: 2021-07-06
+ * BusinessCard Back component.
+ */
 class BusinessCardBack extends Component {
     constructor(props) {
         super(props)
@@ -110,6 +119,11 @@ class BusinessCardBack extends Component {
     }
 }
 
+/**
+ * Author: Bansi Mehta.
+ * Created On: 2021-07-06
+ * BusinessCard Combined display of front and back.
+ */
 class BusinessClassDisplay extends Component {
     constructor(props) {
         super(props)
@@ -135,20 +149,19 @@ class BusinessClassDisplay extends Component {
 
     }
 }
+
+/**
+ * Author: Bansi Mehta.
+ * Created On: 2021-07-06
+ * BusinessCard Screen for displaying and printing.
+ */
 export class BusinessCard extends Component {
     constructor(props) {
         super(props);
         this.componentRef = React.createRef();
         this.state = {
-            profileData: {
-                // Name: "Bansi Mehta",
-                // Email: "flute.bansi@gmail.com",
-                // ContactNo: "902 989 4001",
-                // LinkedInProfile: "somethingsomethingsomething",
-                // Website: "somethingsomthingsomething"
-            },
-            testimonialData: [
-            ],
+            profileData: {},
+            testimonialData: [],
             exportSide: 'Front'
         }
     }
@@ -158,7 +171,6 @@ export class BusinessCard extends Component {
     }
 
     componentDidMount() {
-        // fetch data and set it into state
         let id = localStorage.getItem('user_id')
         registerServices.fatchUserById(id).then(response => {
             if (response) {
@@ -209,14 +221,9 @@ export class BusinessCard extends Component {
                                         <div className="export-button">
                                             <Button className="primary-button" onClick={() => exportComponentAsJPEG(this.componentRef)}>Export As JPEG</Button>
                                         </div>
-
                                     </React.Fragment>
                                 </Col>
                             </Row>
-
-
-
-
                         </div>
                     </div>
                 </div>
