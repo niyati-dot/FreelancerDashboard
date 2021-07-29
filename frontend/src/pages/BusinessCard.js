@@ -8,6 +8,7 @@ import Flippy, { FrontSide, BackSide } from 'react-flippy';
 import Button from 'react-bootstrap/Button';
 import { ButtonGroup } from 'react-bootstrap';
 import testimonialServices from ".././services/testimonialServices"
+import registerServices from ".././services/registerServices"
 import ".././styles/BusinessCard.scss";
 
 class BusinessCardFront extends Component {
@@ -140,11 +141,11 @@ export class BusinessCard extends Component {
         this.componentRef = React.createRef();
         this.state = {
             profileData: {
-                Name: "Bansi Mehta",
-                Email: "flute.bansi@gmail.com",
-                ContactNo: "902 989 4001",
-                LinkedInProfile: "somethingsomethingsomething",
-                Website: "somethingsomthingsomething"
+                // Name: "Bansi Mehta",
+                // Email: "flute.bansi@gmail.com",
+                // ContactNo: "902 989 4001",
+                // LinkedInProfile: "somethingsomethingsomething",
+                // Website: "somethingsomthingsomething"
             },
             testimonialData: [
             ],
@@ -158,6 +159,13 @@ export class BusinessCard extends Component {
 
     componentDidMount() {
         // fetch data and set it into state
+        let id = localStorage.getItem('user_id')
+        registerServices.fatchUserById(id).then(response => {
+            if (response) {
+                this.setState({profileData: response})
+            }
+        })
+
         testimonialServices.list().then(response => {
             if (response.data && response.data.length) {
                 this.setState({testimonialData: response.data.splice(0,2)})

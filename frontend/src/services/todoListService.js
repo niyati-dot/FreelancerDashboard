@@ -5,8 +5,11 @@
  */
 import axios from "axios"
 export class todoListService {
-    async getAllTasks(date) {
-        const result = await axios.post("/api/todoLists/getList", { "currentDate": date });
+    async getAllTasks(data) {
+        let object = {}
+        object['currentDate'] = data.currentDate
+        object['userId'] = data.userId
+        const result = await axios.post("/api/todoLists/getList", object);
         return result;
     }
 

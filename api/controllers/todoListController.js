@@ -18,7 +18,7 @@ const todoListModel = require('../models/todoListModel');
 module.exports.getList = (request, response) => {
     let data = request['body']
     let currentDate = new Date(data.currentDate)
-    return todoListModel.find({ 'date': currentDate }, function (error, document) {
+    return todoListModel.find({ 'date': currentDate, 'userId': data.userId }, function (error, document) {
         if (error) {
             return response.status(400).json({
                 result: [],
@@ -117,6 +117,7 @@ module.exports.saveItem = (request, response) => {
     model.title = data.title
     model.status = false
     model.date = data.date
+    model.userId = data.userId
     model.save(function (error, document) {
         if (error) {
             return response.status(400).json({
