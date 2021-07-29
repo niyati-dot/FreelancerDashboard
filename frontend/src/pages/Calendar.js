@@ -12,7 +12,7 @@ export default function Calendar(){
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
-        calendarServices.list().then(res => {
+        calendarServices.list({"userId": localStorage.getItem("user_id")}).then(res => {
             let newEvents = [...events]
             for (let i = 0; i < res.data.length; i++) {
                 const dateTime = moment(`${res.data[i].date} ${res.data[i].time}`, 'YYYY-MM-DD HH:mm:ss').format();

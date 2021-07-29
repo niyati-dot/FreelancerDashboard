@@ -15,7 +15,8 @@
  * Else returns empty array.
  */
 const list = (req, res) => {
-    calendarModel.find({}, function (err, docs) {
+    let data = req['body']
+    calendarModel.find({ 'userId': data.userId }, function (err, docs) {
         if (err){
             return res.status(404).json({
                 success: false,

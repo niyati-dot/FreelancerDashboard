@@ -11,7 +11,7 @@
   * APIs for CRUD operations
   */
  const calendarRouter = express.Router();
- calendarRouter.get('/', calendarController.list);
+ calendarRouter.post('/', calendarController.list);
  calendarRouter.post('/add', calendarController.add);
  
  
