@@ -11,7 +11,7 @@
  clientsRoutes.post('/add', clientsController.add);
  clientsRoutes.post('/edit', clientsController.edit);
  clientsRoutes.post('/viewOne', clientsController.viewOne);
- clientsRoutes.get('/getAll', clientsController.getAll);
+ clientsRoutes.post('/getAll', clientsController.getAll);
  clientsRoutes.post('/delete', clientsController.delete);
  clientsRoutes.get('/', clientsController.list);
   

@@ -66,12 +66,17 @@
      {
          addclient.Region = req.body.region;
      }
- 
+     if(req.body && req.body.userId)
+     {
+         addclient.userId = req.body.userId;
+     }
+     console.log('User ID:',req.body.userId);
+     console.log('User ID:',addclient.userId);
      clientsModel.count({}, function(error, numOfDocs){
          if(error) return callback(error);
          const ClientId = numOfDocs + 1;
          addclient.ClientId = Number(ClientId);
-         clientsModel.findOne({'ClientName': addclient.ClientName, 'ContactNo': addclient.ContactNo}, function(error, result)
+         clientsModel.findOne({'ClientName': addclient.ClientName, 'ContactNo': addclient.ContactNo, 'userId': addclient.userId}, function(error, result)
          {
              if(!result){
                  addclient.save(function(error, document) {
@@ -212,8 +217,10 @@
   * find the all clients details and returns result as response
   */
  module.exports.getAll = (req, response) => {
-     clientsModel.find({}, function(error, result)
-     {
+
+    console.log('userId from getALL', req.body.userId); 
+    clientsModel.find({'userId': req.body.userId }, function(error, result)
+    {
          if (error) {
               return response.status(400).json({
                   result: [],

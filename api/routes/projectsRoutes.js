@@ -11,7 +11,7 @@ const projectsController = require('../controllers/projectsController');
  * APIs for CRUD operations
  */
 const projectsRouter = express.Router();
-projectsRouter.get('/', projectsController.list);
+projectsRouter.post('/', projectsController.list);
 projectsRouter.get('/:id', projectsController.get);
 projectsRouter.put('/update/:id', projectsController.update);
 projectsRouter.post('/add', projectsController.add);

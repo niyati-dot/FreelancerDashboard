@@ -1,8 +1,14 @@
 import axios from "axios";
 
 export class notificationService {
-    async getAllNotifications() {
-        const result = await axios.get("/api/notification/getAll" );
+    async getAllNotifications(userId) {
+        const result = await axios.post("/api/notification/getAll" ,{userId: userId} );
+        return result;
+    }
+
+    async setStatus(value) {
+        console.log(value);
+        const result = await axios.post("/api/notification/setStatus" ,value);
         return result;
     }
 }
