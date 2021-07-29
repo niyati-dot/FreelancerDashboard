@@ -24,7 +24,7 @@ const invoiceSchema = {
         hours:{type:Number, required:true},
         total:{type:Number, required:true},
     }]
-}
+};
 
 //create model accoridng to collection : "invoices"
 const invoices = mongoose.model('invoices', invoiceSchema);

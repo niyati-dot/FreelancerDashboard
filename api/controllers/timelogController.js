@@ -5,7 +5,7 @@ const projectsModel = require('../models/projectsModel');
 
 //List all documents
 const list = (req, res) => {
-    timelogModel.find({}).sort({'_id': -1}).populate("project").exec(function (err, timelogs) {
+    timelogModel.find({ 'userId': req.query.userId }).sort({'_id': -1}).populate("project").exec(function (err, timelogs) {
         if (err){
             return res.status(404).json({
                 success: false,
@@ -93,6 +93,10 @@ const add = async (req, res) => {
         const timelog = new timelogModel();
 
         timelog.project = project;
+
+        if(req.body && req.body.userId){
+            timelog.userId = req.body.userId;
+        }
 
         if(req.body && req.body.task){
             timelog.task = req.body.task;

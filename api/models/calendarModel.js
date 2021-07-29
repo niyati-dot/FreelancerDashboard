@@ -26,7 +26,11 @@
      viewStatus: {
          type: Boolean,
          default: false
-     }
- }
+     },
+     userId:{
+         type: Schema.Types.ObjectID,
+         ref: "users"
+     },
+ };
  
  module.exports = Mongoose.model("calendars", calendarSchema);

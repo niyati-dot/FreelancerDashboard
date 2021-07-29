@@ -9,8 +9,10 @@ import axios from "axios";
 export class testimonialServices{
 
     // list of all testimonials
-    async list(){
-        const result = await axios.get("/api/testimonials");
+    async list(data){
+        let object = {}
+        object['userId'] = data.userId
+        const result = await axios.post("/api/testimonials",object);
         return result.data;
     };
 
@@ -28,10 +30,11 @@ export class testimonialServices{
     };
 
     // remove data by id
-    async remove(data){
-        const result = await axios.delete("/api/testimonials/remove/"+data._id,data);
+    async delete(deleteData) {
+        console.log("delete data:",deleteData)
+        const result = await axios.post("/api/testimonials/remove", deleteData);
         return result.data;
-    };
+     }
 }
 
 export default new testimonialServices()

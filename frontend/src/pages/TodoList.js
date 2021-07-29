@@ -30,6 +30,7 @@ export class TodoList extends Component {
             status: false,
             date: currentDate
         }
+        this.userId = localStorage.getItem("user_id")
     }
 
     componentDidMount() {
@@ -53,7 +54,7 @@ export class TodoList extends Component {
      * @param {*} date 
      */
     getAllData(date) {
-        todoListService.getAllTasks(date).then(response => {
+        todoListService.getAllTasks({"currentDate": date, "userId": this.userId}).then(response => {
             if (response.status === 200) {
                 if (response.data && response.data.result && response.data.result.length) {
                     let completeTask = []
@@ -113,7 +114,8 @@ export class TodoList extends Component {
         if (this.state.newTask) {
             let saveData = {
                 title: this.state.newTask,
-                date: this.state.date
+                date: this.state.date,
+                userId: this.userId
             }
             todoListService.saveTask(saveData).then(response => {
                 if (response.status == 200) {

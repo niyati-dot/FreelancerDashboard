@@ -15,7 +15,8 @@
  * Else returns empty array.
  */
 const list = (req, res) => {
-    calendarModel.find({}, function (err, docs) {
+    let data = req['body']
+    calendarModel.find({ 'userId': data.userId }, function (err, docs) {
         if (err){
             return res.status(404).json({
                 success: false,
@@ -54,6 +55,9 @@ const list = (req, res) => {
          }
          if(req.body && req.body.time){
             calendar.time = req.body.time;
+        }
+        if(req.body && req.body.userId){
+            calendar.userId = req.body.userId;
         }
          calendar.save();
  

@@ -20,7 +20,11 @@ const todoListSchema = new schema({
     date: {
         type: Date,
         default: Date.now()
-    }
+    },
+    userId:{
+        type: Schema.Types.ObjectID,
+        ref: "users"
+    },
 });
 
 // Model according to collection: "to_do_list"

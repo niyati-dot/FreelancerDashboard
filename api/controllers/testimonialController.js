@@ -14,21 +14,24 @@ const testimonialModel = require('../models/testimonialModel');
  * The List is returned containing all the testimonials details 
  * If having error returns error status.
  */
+
 const list = (req, res) => {
-    testimonialModel.find({}, function (err, docs) {
-        if (err){
-            return res.status(404).json({
-                success: false,
-                message: 'Testimonial not found!',
-                data: null
+    let data = req['body']
+    return testimonialModel.find({ 'userId': data.userId }, function (error, document) {
+        if (error) {
+            return res.status(400).json({
+                result: [],
+                message: error,
+                success: false
+            })
+        } else {
+            return res.status(200).json({
+                data: document,
+                message: "",
+                success: true
             })
         }
-        return res.status(200).json({
-            success: true,
-            message: 'Testimonial found!',
-            data: docs
-        })
-    });
+    })
 };
 
 /**
@@ -104,21 +107,25 @@ const update = (req, res) => {
  * If having error returns false with error status.
  */
 const remove = (req, res) => {
-    testimonialModel.findOneAndRemove({_id: req.params.id},function (err, docs) {
-        if (err){
-            return res.status(404).json({
-                success: false,
-                message: err,
-                data: null
-            });
+    console.log("Iam HERE IN COntroller",req.body)
+    if(req.body && req.body._id){
+        testimonialModel.findOneAndRemove({'_id': req.body._id}, function(error, result)
+        {
+            if (error) {
+                return res.status(400).json({
+                    result: [],
+                    message: error,
+                    success: false
+                })
+            } 
+            else {
+                return res.status(200).json({
+                    message: "Success",
+                    success: true
+                })  
         }
-        else{
-            return res.status(200).json({
-                success: true,
-                message: 'Testimonial removed!'
-            })
-        }
-    });
+        });
+    }
 };
 
 /**
@@ -142,6 +149,9 @@ const add = async (req, res) => {
     }
     if(req.body && req.body.feedback){
         testimonials.feedback = req.body.feedback;
+    }
+    if(req.body && req.body.userId){
+        testimonials.userId = req.body.userId;
     }
     
     console.log(testimonials)
