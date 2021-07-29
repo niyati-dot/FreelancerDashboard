@@ -4,7 +4,7 @@
  * Controller for ToDo list.
  */
 
-const todoListModel = require('../models/TodoListModel');
+const todoListModel = require('../models/todoListModel');
 
 /**
  * Method to fetch all the task of the to-do list based on date.

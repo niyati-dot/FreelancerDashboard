@@ -7,8 +7,10 @@ const testimonialRouter = require('./routes/testimonialRoutes');
 const clientsRouter = require('./routes/clientsRoutes');
 const projectsRouter = require('./routes/projectsRoutes');
 const timelogRouter = require('./routes/timelogRoutes');
-const todoListRouter = require('./routes/TodoListRoutes')
+const todoListRouter = require('./routes/todoListRoutes');
 const invoiceRouter = require('./routes/invoices');
+const calendarRouter = require('./routes/calendarRoutes');
+const dashboardRouter = require('./routes/dashboardRoutes');
 
 //Main API Endpoint
 router.get('/', (req,res) => {
@@ -18,13 +20,15 @@ router.get('/', (req,res) => {
     });
 });
 
-//Models API Endpoint
+//Models API Endpointss
 router.use('/clients',clientsRouter);
 router.use('/timelogs',timelogRouter);
 router.use('/testimonials',testimonialRouter);
 router.use('/projects',projectsRouter);
-router.use('/todoLists', todoListRouter)
+router.use('/todoLists', todoListRouter);
 router.use('/invoices',invoiceRouter);
+router.use('/calendar',calendarRouter);
+router.use('/dashboard',dashboardRouter);
 
 //404 Error Handling
 router.use(function(req, res, next) {
