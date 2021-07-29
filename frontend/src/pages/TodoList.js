@@ -11,7 +11,7 @@ import moment from "moment";
 import axios from 'axios'
 import "../styles/TodoList.scss";
 import PageHeader from "../components/PageHeader";
-import todoListService from "../services/TodoListService";
+import todoListService from "../services/todoListService";
 export class TodoList extends Component {
 
     constructor(props) {

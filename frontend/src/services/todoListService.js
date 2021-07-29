@@ -4,7 +4,7 @@
  * Service containing api calls for TO-DO List.
  */
 import axios from "axios"
-export class TodoListService {
+export class todoListService {
     async getAllTasks(date) {
         const result = await axios.post("/api/todoLists/getList", { "currentDate": date });
         return result;
@@ -26,4 +26,4 @@ export class TodoListService {
     }
 }
 
-export default new TodoListService()
+export default new todoListService()
