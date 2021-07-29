@@ -10,7 +10,7 @@ const Schema = Mongoose.Schema;
 /**
  * Model Schema for Projects
  */
-const projectsSchema = {
+const projectsSchema =  new Mongoose.Schema({
     title: {
         type: String
     },
@@ -33,6 +33,6 @@ const projectsSchema = {
         type: Schema.Types.ObjectID,
         ref: "users"
     },
-};
+});
 
 module.exports = Mongoose.model("projects", projectsSchema);
