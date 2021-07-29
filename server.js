@@ -4,8 +4,9 @@ const mongoose = require("mongoose");
 const path = require('path');
 
 const app = express();
-const cors = require('cors')
-app.use(cors())
+const cors = require('cors');
+app.use(cors());
+
 //Configurations
 const port = process.env.PORT || 3000;
 const mongodb_url = "mongodb://ass3:2020@assignment3-shard-00-00.3zfwi.mongodb.net:27017,assignment3-shard-00-01.3zfwi.mongodb.net:27017,assignment3-shard-00-02.3zfwi.mongodb.net:27017/freelancer?ssl=true&replicaSet=atlas-7i888h-shard-0&authSource=admin&retryWrites=true&w=majority";
