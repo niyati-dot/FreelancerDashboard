@@ -12,7 +12,7 @@ import {
 } from "react-router-dom";
 import { Button, Col, Row } from "react-bootstrap";
 import "../styles/Clients.scss";
-import './AddClient'
+import './Clients/AddClient'
 import { Component } from "react";
 import axios from 'axios';
 import clientService from "../services/clientService"
@@ -146,7 +146,7 @@ export class Clients extends Component {
   */
   handleNewClient = (e) => {
     e.preventDefault();
-    this.props.history.push({ pathname: '/Addclient' });
+    this.props.history.push({ pathname: '/clients/add' });
   };
 
   render() {

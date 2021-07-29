@@ -1,51 +1,50 @@
 /**
  * Author: Janvi Patel.
  * Created On: 2021-06-07
- * Add Client details.
+ * Edit Client details.
  */
 import React, { Component } from 'react';
-import PageHeader from "../components/PageHeader";
+import PageHeader from "../../components/PageHeader";
 import { withRouter } from 'react-router-dom';
-import "../styles/AddClient.scss";
+import "../../styles/AddClient.scss";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { curl_init } from 'react';
-import { curl_getinfo } from 'react';
-import { CURLINFO_HTTP_CODE } from 'react';
+import axios from 'axios';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
-import clientService from "../services/clientService"
+import clientService from "../../services/clientService";
 
-export class AddClient extends Component {
-
+export class EditClient extends Component
+{
     //constructor for props
     constructor(props) {
         super(props)
 
         this.state = {
-            clientName: "",
+            clientId: props.history.location.state.state.ClientId,
+            clientName: props.history.location.state.state.ClientName,
             clientNameError: "",
-            organizationName: "",
+            organizationName: props.history.location.state.state.Organization,
             organizationNameError: "",
-            contactNo: "",
+            contactNo: props.history.location.state.state.ContactNo,
             contactNoError: "",
-            websiteName: "",
+            websiteName: props.history.location.state.state.Website,
             websiteNameError: "",
-            linkedInProfile: "",
-            linkedInProfileError: "",
-            emailId: "",
+            emailId: props.history.location.state.state.Email,
             emailIdError: "",
-            street: "",
+            linkedInProfile: props.history.location.state.state.LinkedInProfile,
+            linkedInProfileError: "",
+            street: props.history.location.state.state.Street,
             streetError: "",
-            businessDescription: "",
-            postalCode: "",
+            businessDescription: props.history.location.state.state.BusinessDescription,
+            postalCode: props.history.location.state.state.PostalCode,
             PostalCodeError: "",
-            meetingPlatform: "",
+            meetingPlatform: props.history.location.state.state.MeetingPlatform,
             meetingPlatformError: "",
-            country: "",
-            region: ""
-        }
+            country: props.history.location.state.state.Country,
+            region: props.history.location.state.state.Region
+        }       
     }
 
     /**
@@ -62,16 +61,16 @@ export class AddClient extends Component {
      * On mount, set the values of table.
      * @param {*} event 
     */
-    selectCountry(val) {
-        this.setState({ country: val });
+    selectCountry (name, val) {
+      this.setState({  name: val });
     }
-
+  
     /**
      * On mount, set the values of table.
      * @param {*} event 
     */
-    selectRegion(val) {
-        this.setState({ region: val });
+    selectRegion (val) {
+      this.setState({ name: val });
     }
 
     /**
@@ -90,7 +89,7 @@ export class AddClient extends Component {
         return isValid;
     }
 
-    /**
+     /**
      * Validate organization is null or not
      * @param {*} event 
     */
@@ -109,7 +108,7 @@ export class AddClient extends Component {
     /**
      * Validate contactNo with numbers and contact no is null or not
      * @param {*} event 
-    */    
+    */
     validateContactNo = (event) => {
         let isValid = true;
         if (!this.state.contactNo) {
@@ -130,7 +129,7 @@ export class AddClient extends Component {
         return isValid;
     }
 
-    /**
+     /**
      * Validate website name with pattern and website is null or not
      * @param {*} event 
     */
@@ -176,7 +175,7 @@ export class AddClient extends Component {
         return isValid;
     }
 
-    /**
+      /**
      * Validate linkedin profile with pattern 
      * @param {*} event 
     */
@@ -199,7 +198,7 @@ export class AddClient extends Component {
         return isValid;
     }
 
-    /**
+     /**
      * Validate street with pattern 
      * @param {*} event 
     */
@@ -297,20 +296,19 @@ export class AddClient extends Component {
     }
 
     /**
-     * On submit new client will be added and the api call will be made
+     * On Update client will be updated and the api call will be made
      * @param {*} event 
     */
-    onSubmit = (event) => {
+    onUpdate = (event) => {
         event.preventDefault();
-        clientService.addNewClient(this.state).then((response) => {
-            if (this.validateForm()) {
-                alert("Details Successfully Saved!!");
-            }
+        if (this.validateForm()) {
+            clientService.editClient(this.state).then((response) => {
+            }).catch((error) => {
+                console.log("Error")
+            })
+            alert('Successfully updated details!!');
             this.props.history.push({ pathname: '/clients' });
-        }).catch((error) => {
-            alert("Duplicate details found!!");
-            console.log("Eroor")
-        })
+        }
     }
 
     /**
@@ -326,7 +324,7 @@ export class AddClient extends Component {
         return (
             <div className="page-container add-client-container">
                 <div className="page-header-container">
-                    <PageHeader title="New Client" subtitle="" />
+                   <PageHeader title="Edit Client" subtitle="" />
                 </div>
                 <div className="page-content-container">
                     <div className="page-content">
@@ -337,9 +335,9 @@ export class AddClient extends Component {
                                         <Col>
                                             <Form.Group>
                                                 <Form.Label className="required">Client Name</Form.Label>
-                                                <Form.Control type="name" name="clientName" placeholder="Enter Client Name" value={this.state.ClientName} onChange={this.onValueChange}
+                                                <Form.Control type="name" name="clientName" placeholder="Enter Client Name" value={this.state.clientName} onChange={this.onValueChange}
                                                     onBlur={this.validateClientName}
-                                                    isInvalid={this.state.clientNameError} />
+                                                    isInvalid = {this.state.clientNameError}/>
                                                 <Form.Control.Feedback type="invalid">
                                                     {this.state.clientNameError}
                                                 </Form.Control.Feedback>
@@ -349,12 +347,12 @@ export class AddClient extends Component {
                                         <Col>
                                             <Form.Group>
                                                 <Form.Label className="required">Organization</Form.Label>
-                                                <Form.Control type="name" name="organizationName" placeholder="Enter Organization Name" value={this.state.OrganizationName} onChange={this.onValueChange}
+                                                <Form.Control type="name" name="organizationName" placeholder="Enter Organization Name" value={this.state.organizationName} onChange={this.onValueChange}
                                                     onBlur={this.validateOrganization}
-                                                    isInvalid={this.state.organizationNameError} />
+                                                    isInvalid = {this.state.organizationNameError} />
                                                 <Form.Control.Feedback type="invalid">
                                                     {this.state.organizationNameError}
-                                                </Form.Control.Feedback>
+                                                </Form.Control.Feedback>        
                                             </Form.Group>
                                         </Col>
                                     </Row>
@@ -362,7 +360,7 @@ export class AddClient extends Component {
                                         <Col>
                                             <Form.Group>
                                                 <Form.Label className="required">Contact No</Form.Label>
-                                                <Form.Control type="name" name="contactNo" placeholder="Enter Contact No" value={this.state.ContactNo} onChange={this.onValueChange}
+                                                <Form.Control type="name" name="contactNo" placeholder="Enter Contact No" value={this.state.contactNo} onChange={this.onValueChange}
                                                     onBlur={this.validateContactNo}
                                                     isInvalid={this.state.contactNoError} />
                                                 <Form.Control.Feedback type="invalid">
@@ -374,7 +372,7 @@ export class AddClient extends Component {
                                         <Col>
                                             <Form.Group>
                                                 <Form.Label>Website</Form.Label>
-                                                <Form.Control type="name" name="websiteName" placeholder="Enter Website Name" value={this.state.WebsiteName} onChange={this.onValueChange}
+                                                <Form.Control type="name" name="websiteName" placeholder="Enter Website Name" value={this.state.websiteName} onChange={this.onValueChange}
                                                     onBlur={this.validateWebsiteName}
                                                     isInvalid={this.state.websiteNameError} />
                                                 <Form.Control.Feedback type="invalid">
@@ -382,13 +380,13 @@ export class AddClient extends Component {
                                                 </Form.Control.Feedback>
                                             </Form.Group>
                                         </Col>
-
+                                      
                                     </Row>
                                     <Row>
                                         <Col>
                                             <Form.Group>
                                                 <Form.Label className="required">Email</Form.Label>
-                                                <Form.Control type="name" name="emailId" placeholder="Enter Email Id" value={this.state.EmailId} onChange={this.onValueChange}
+                                                <Form.Control type="name" name="emailId" placeholder="Enter Email Id" value={this.state.emailId} onChange={this.onValueChange}
                                                     onBlur={this.validateEmailId}
                                                     isInvalid={this.state.emailIdError} />
                                                 <Form.Control.Feedback type="invalid">
@@ -400,7 +398,7 @@ export class AddClient extends Component {
                                         <Col>
                                             <Form.Group>
                                                 <Form.Label>LinkedIn Profile</Form.Label>
-                                                <Form.Control type="name" name="linkedInProfile" placeholder="Enter Linkedin Profile" value={this.state.linkedInProfile} onChange={this.onValueChange}
+                                                <Form.Control type="name" name="linkedInProfile" placeholder="Enter LinkedIn Profile" value={this.state.linkedInProfile} onChange={this.onValueChange}
                                                     onBlur={this.validateLinkedInProfile}
                                                     isInvalid={this.state.linkedInProfileError} />
                                                 <Form.Control.Feedback type="invalid">
@@ -408,13 +406,13 @@ export class AddClient extends Component {
                                                 </Form.Control.Feedback>
                                             </Form.Group>
                                         </Col>
-
+                                      
                                     </Row>
                                     <Row>
                                         <Col>
                                             <Form.Group>
                                                 <Form.Label>Street</Form.Label>
-                                                <Form.Control type="name" name="street" placeholder="Enter Street Name" value={this.state.Street} onChange={this.onValueChange}
+                                                <Form.Control type="name" name="street" placeholder="Enter Street Name" value={this.state.street} onChange={this.onValueChange}
                                                     onBlur={this.validateStreet}
                                                     isInvalid={this.state.streetError} />
                                                 <Form.Control.Feedback type="invalid">
@@ -426,20 +424,20 @@ export class AddClient extends Component {
                                         <Col>
                                             <Form.Group>
                                                 <Form.Label>Business Description</Form.Label>
-                                                <Form.Control type="name" name="businessDescription" placeholder="Enter Business Description" value={this.state.BusinessDescription} onChange={this.onValueChange}
+                                                <Form.Control type="name" name="businessDescription" placeholder="Enter Business Description" value={this.state.businessDescription} onChange={this.onValueChange}
                                                     onBlur={this.validatebusinessDescription}
-                                                />
-
+                                                     />
+                                               
                                             </Form.Group>
                                         </Col>
-
+                                      
                                     </Row>
 
                                     <Row>
                                         <Col>
                                             <Form.Group>
                                                 <Form.Label>Postal Code</Form.Label>
-                                                <Form.Control type="name" name="postalCode" placeholder="Enter Postal code" value={this.state.PostalCode} onChange={this.onValueChange}
+                                                <Form.Control type="name" name="postalCode" placeholder="Enter Postal code" value={this.state.postalCode} onChange={this.onValueChange}
                                                     onBlur={this.validatePostalcode}
                                                     isInvalid={this.state.PostalCodeError} />
                                                 <Form.Control.Feedback type="invalid">
@@ -450,26 +448,26 @@ export class AddClient extends Component {
                                         <Col>
                                             <Form.Group>
                                                 <Form.Label className="required">Meeting Platform</Form.Label>
-                                                <Form.Control as="select" name="meetingPlatform" placeholder="Enter meeting platform" value={this.state.MeetingPlatform} onChange={this.onValueChange}
+                                                <Form.Control as="select" name="meetingPlatform" placeholder="Enter meeting platform" value={this.state.meetingPlatform} onChange={this.onValueChange}
                                                     onBlur={this.validateMeetingPlatform}
                                                     isInvalid={this.state.meetingPlatformError}>
-                                                    <option>Select Project</option>
+                                                      <option>Select Project</option>
                                                     <option value="Google Meet">Google Meet</option>
                                                     <option value="Skype">Skype</option>
                                                     <option value="Zoom">Zoom</option>
-                                                    <option value="In Person">In person</option>
-                                                </Form.Control>
+                                                    <option value="In person">In person</option>
+                                                  </Form.Control>
                                                 <Form.Control.Feedback type="invalid">
                                                     {this.state.meetingPlatformError}
                                                 </Form.Control.Feedback>
-
+                                              
 
                                             </Form.Group>
                                         </Col>
 
                                     </Row>
                                     <Row>
-                                        <Col xs={6}>
+                                    <Col xs={6}>
                                             <Form.Group>
                                                 <div className="country">
                                                     <Form.Label className="required">Country </Form.Label>
@@ -487,20 +485,20 @@ export class AddClient extends Component {
                                             </Form.Group>
                                         </Col>
 
-                                    </Row>
-
+                                    </Row> 
+                                    
                                     <Row className="generate-button-container">
-                                        <Button className="primary-button" onClick={this.onSubmit}>
-                                            Submit
-                                        </Button>
                                         <Button className="primary-button" onClick={this.onClickBack}>
-                                            Back
+                                              Back
+                                        </Button>
+                                        <Button className="primary-button" onClick={this.onUpdate}>
+                                            Update
                                         </Button>
                                     </Row>
                                 </Form>
                             </Col>
                         </Row>
-
+                        
                     </div>
                 </div>
             </div>
@@ -508,4 +506,4 @@ export class AddClient extends Component {
     }
 }
 
-export default withRouter(AddClient);
+export default withRouter(EditClient);

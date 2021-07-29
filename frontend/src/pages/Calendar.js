@@ -8,7 +8,6 @@ import calendarServices from "../services/calendarServices";
 import moment from 'moment';
 
 export default function Calendar(){
-    
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
