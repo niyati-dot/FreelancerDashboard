@@ -48,7 +48,7 @@ const Testimonials = () => {
      */
     const [project, setProjects] = useState([]);
     useEffect(() => {
-        projectServices.list().then(res => setProjects(res.data));
+        projectServices.list({"userId": localStorage.getItem("user_id")}).then(res => setProjects(res.data));
     },[]); 
 
     /**
@@ -57,7 +57,7 @@ const Testimonials = () => {
      */
     const [client, setClient] = useState([]);
     useEffect(() => {
-        clientServices.getAllClients().then(res => setClient(res.data));
+        clientServices.getAllClients(localStorage.getItem("user_id")).then(res => setClient(res.data));
     },[]); 
 
     /**
@@ -107,11 +107,11 @@ const Testimonials = () => {
         var mailParams = {
             
             //Mail Sender Details
-            freelancerName: 'Freelancer_Deep',
+            freelancerName: 'Freelancer',
             freelancerMail: 'deepatel1607@gmail.com',
 
             //Mail Reciver Details
-            clientName: 'Client_Deep',
+            clientName: 'Client',
             clientMail: 'dee16798ppatel@gmail.com',
 
             //Attachment Messages
@@ -119,16 +119,16 @@ const Testimonials = () => {
             link: Form_Link
         };
 
-        // // calling emailJS functionality with emailJS Credentials
-        // emailjs.send('testimonial_request', 'template_fmwc5oo', mailParams, 'user_INB1ILGAt4GVje2eeyj2V')
-        //     .then(function (response) {
-        //         alert("Email Sent");
-        //         console.log('SUCCESS!', response.status, response.text);
+        // calling emailJS functionality with emailJS Credentials
+        emailjs.send('testimonial_request', 'template_fmwc5oo', mailParams, 'user_INB1ILGAt4GVje2eeyj2V')
+            .then(function (response) {
+                alert("Email Sent");
+                console.log('SUCCESS!', response.status, response.text);
 
-        //     }, function (error) {
-        //         alert("Error: " + error);
-        //         console.log('FAILED...', error);
-        //     });
+            }, function (error) {
+                alert("Error: " + error);
+                console.log('FAILED...', error);
+            });
     }
 
     /**
