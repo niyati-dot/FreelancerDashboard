@@ -29,6 +29,10 @@ const projectsSchema = {
     status: {
         type: String
     },
+    userId: {
+        type: String
+    }
+
 }
 
 module.exports = Mongoose.model("projects", projectsSchema);

@@ -8,8 +8,8 @@ const express = require("express");
 const project = require("../models/projectsModel");
 const timelogs = require("../models/timelogModel");
 const invoices = require("../models/invoiceGenerate");
-
-
+const users = require("../models/registerModel");
+const clients = require("../models/clientsModel");
 /**
  * Fetch data to generate based on task end date, delete or update invoices.
  * Date is received in the format: "YYYY-MM-DD"
@@ -20,45 +20,12 @@ const invoices = require("../models/invoiceGenerate");
 
 //Get list of all the projects
 module.exports.getAllProject = async(req, res) => {
-    await project.find().exec().then((m) => (res.send(m)))
+  console.log("data",req.body)
+    await project.find({"userId":req.body.user}).exec().then((m) => (res.send(m)))
         .catch((err) => (console.log(err)));
 
 };
-async function checktags(data){
-  
-  return new Promise((resolve, reject) => {
-    var newlist= []
-    data.forEach(row =>{
-      invoices.find({"tags.tagId":row._id},function(err,result){
-        if(result.length == 0){
-          newlist.push(row)
-          
-          
-        }
-    })
-    console.log(newlist)
-  })
-  console.log(newlist)
-  if(newlist.length !=0){
-    resolve(newlist)
-  }
-  else{
-    resolve (0)
-  }
-})
-  //   invoices.find({"tags.tagId":data._id},function(err,result){
-  //   if(result.length >0){
-  //     resolve(1)
-  //   }
-  //   else{
-  //     resolve(0)
-  //   }
-  //   })
-  // });
-  // let result = await promise;
-  // console.log(result)
-  // return result
-}
+
 //get list of all the tags based on task end end date
 module.exports.getTags = async (req, res) => {
    
@@ -90,13 +57,13 @@ module.exports.addInvoice = async (req, res) => {
   }
   startdate = new Date(req.body.startAt)
   enddate= new Date(req.body.endDate)
-  console.log(id,startdate,enddate)
+  
   const resule = await invoices.find({$and:[{"startDate":startdate},{"taskendDate":enddate},{"projectId":id}]}).exec()
-  console.log(resule)
+ 
  
     
     if(resule.length ==0){
-      console.log("generate")
+      
       generateDate = new Date(req.body.generateDate)
         if(req.body && req.body.generateDate)
         {
@@ -126,9 +93,13 @@ module.exports.addInvoice = async (req, res) => {
         {
           addInvoice.paymentStatus =  req.body.paymentStatus;
         }
+        if(req.body && req.body.user)
+        {
+          addInvoice.userId =  req.body.user;
+        }
         
         
-        console.log(req.body.invoiceDetails)
+        
         req.body.invoiceDetails.forEach(result =>{
           datades = {}
           datades.tagId=result.id,
@@ -147,14 +118,14 @@ module.exports.addInvoice = async (req, res) => {
           addInvoice.invId = Number(invoiceId);
           addInvoice.save(function(error, document){
             if (error) {
-              console.log(error)
+             
               return res.status(400).json({
                   result: [],
                   message: error,
                   success: false
               })
             } else {
-              console.log("Added")
+              
               return res.status(200).json({
                   result: addInvoice,
                   success: true
@@ -164,7 +135,7 @@ module.exports.addInvoice = async (req, res) => {
           })
         })
      }else{
-      console.log("not generate")
+      
       return res.status(400).json({
         result: [],
         message: "Invoice is alredy generated",
@@ -177,7 +148,8 @@ module.exports.addInvoice = async (req, res) => {
 
 //fetch list of all the generated invoices
 module.exports.getAllInvoices = async(req, res) => {
-  invoices.find({}, function(error, result){
+  console.log(req.body.user)
+  invoices.find({"userId":req.body.user}, function(error, result){
     if (error) {
       return res.status(400).json({
           result: [],
@@ -185,6 +157,7 @@ module.exports.getAllInvoices = async(req, res) => {
           success: false
       })
     } else {
+      
       return res.send(result)
     }
     })
@@ -193,7 +166,7 @@ module.exports.getAllInvoices = async(req, res) => {
 
 //find invoice based on given invoice id
 module.exports.findInvoice = async(req, res) => {
-  console.log(req.body.projectId)
+  
   if(req.body && req.body.projectId){
     invoices.findOne({"_id":req.body.projectId}, function(err, result) {
       if (err) {
@@ -213,7 +186,7 @@ module.exports.findInvoice = async(req, res) => {
 
 //Delete invoice based on invoice id
 module.exports.deleteinvoice = (req, res) => {
-  console.log(req.body)
+ 
   if(req.body && req.body.invoicenumber){
     invoices.findOneAndRemove({"_id":req.body.invoicenumber},function(error, result){
       if (error) {
@@ -234,9 +207,34 @@ module.exports.deleteinvoice = (req, res) => {
   }
   
 };
+
+module.exports.getEmail = (req, res) => {
+  console.log("Mail",req.body.user)
+  users.find({"_id":req.body.user}, function(err, result) {
+    if (err) {
+      throw err;
+    }else{
+      res.send(result)
+    }
+  })
+
+}
+module.exports.getClientEmail = (req, res) => {
+  var clientData = req.body.projects[0]
+  console.log("Clent",req.body.projects[0])
+  clients.find({"ClientName":clientData.client}, function(err, result) {
+    if (err) {
+      throw err;
+    }else{
+      res.send(result)
+    }
+  })
+
+}
+
 //update invoice based on invoice id
 module.exports.updateInvoice = (req, res) => {
-  console.log(req.body)
+
   invoices.find({"_id":req.body.invoiceNumber}, function(err, result) {
       if (err) {
         throw err;
@@ -253,7 +251,7 @@ module.exports.updateInvoice = (req, res) => {
       
         data.save(function(error,result){
           if (error) {
-              console.log("update error")
+              
               return res.status(400).json({
                   result: [],
                   message: error,

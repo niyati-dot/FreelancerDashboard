@@ -11,39 +11,40 @@ import Datatable from "../components/Datatable";
 import { withRouter } from 'react-router-dom';
 import "../styles/InvoiceManagement.scss";
 import invoiceServices from "../services/invoiceServices";
-import Moment from 'moment';
+
 export class InvoiceManagement extends Component{
     
     constructor(props) {
         super(props)
         this.state={
-        checkbox : 'true',
-        delete:'false',
-        columns : [
-            { Header: 'Invoice Number', accessor: 'invoicenumber'},
-            { Header: 'Generated Date', accessor: 'generateddate'},
-            { Header: 'From Date', accessor: 'fromdate'},
-            { Header: 'To Date', accessor: 'todate'},
-            { Header: 'Due Date', accessor: 'duedate'},
-            { Header: 'Client Name', accessor: 'clientname'},
-            { Header: 'Project Name', accessor: 'projectname'},
-            { Header: 'Payment Status', accessor: 'paymentstatus'},
-            { Header: 'Action', accessor: 'button1',
-                Cell:({row}) =>  (
-                <div>
-                    <Button  className="secondary-button" onClick={() => this.editInvoice(row)}>Edit</Button>
-                    <Button  className="secondary-button" onClick={() => this.viewInvoice(row)}>View</Button> 
-                    <Button  className="delete-button" onClick={() => this.deleteInvoice(row)}>Delete</Button>
-                </div>)},
-        ],
-        data:[]
-        }
+            user: localStorage.getItem("user_id"),
+            checkbox : 'true',
+            delete:'false',
+            columns : [
+                { Header: 'Invoice Number', accessor: 'invoicenumber'},
+                { Header: 'Generated Date', accessor: 'generateddate'},
+                { Header: 'From Date', accessor: 'fromdate'},
+                { Header: 'To Date', accessor: 'todate'},
+                { Header: 'Due Date', accessor: 'duedate'},
+                { Header: 'Client Name', accessor: 'clientname'},
+                { Header: 'Project Name', accessor: 'projectname'},
+                { Header: 'Payment Status', accessor: 'paymentstatus'},
+                { Header: 'Action', accessor: 'button1',
+                    Cell:({row}) =>  (
+                    <div>
+                        <Button  className="secondary-button" onClick={() => this.editInvoice(row)}>Edit</Button>
+                        <Button  className="secondary-button" onClick={() => this.viewInvoice(row)}>View</Button> 
+                        <Button  className="delete-button" onClick={() => this.deleteInvoice(row)}>Delete</Button>
+                    </div>)},
+            ],
+            data:[]
+            }
     }
 
     //fetch list of all the generated invoices
     getAllInvoices() {
-        
-        invoiceServices.getAllInvoices().then((response) => {
+        console.log("User",this.state.user)
+        invoiceServices.getAllInvoices(this.state).then((response) => {
             if (response.status == 200) {
                let invoiceDetails = [];
                response.data.forEach(element => {
@@ -115,6 +116,13 @@ render() {
         <div className="page-content-container">
             <div className="page-content"></div>
             <Datatable columns={this.state.columns} data={this.state.data} allowCSV="false"/>
+            <Row className="button-container">
+                <Col>
+                    <a href="/invoices/generate" title="Add Project" className="primary-button">
+                        Generate Invoice
+                    </a>
+                </Col>
+            </Row>
         </div>
     </div>
 )

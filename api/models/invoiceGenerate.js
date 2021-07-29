@@ -7,7 +7,7 @@ const mongoose = require ('mongoose')
 const Schema = mongoose.Schema;
 
 const invoiceSchema = {
-    invId : {type:Number, required:true},
+    userId : {type: Schema.Types.ObjectID,ref: "users"},
     generatedDate:{type:Date, required:true},
     dueDate:{type:Date, required:true},
     startDate:{type:Date,required:true},

@@ -1,7 +1,7 @@
 /**
  * Author: Deep Patel.
  * Created On: 2021-07-20
- *  Frontend Page for Request Testimonials.
+ * Frontend Page for Request Testimonials.
  */
 
 import React from 'react'
@@ -12,12 +12,16 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import "../styles/Testimonials.scss";
 import testimonialServices from '../services/testimonialServices.js';
-import { useParams, Redirect, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
+/**
+ * Request testimonial page containing the id of specific testimonial send to client via mail
+ * @param {*} prop 
+ * @returns 
+ */
 const RequestTestimonial = (prop) => {
 
     const param = useParams();
-    const history = useHistory();
 
     // feedback Details
     const [feedback, setFeedback] = useState({
@@ -26,15 +30,23 @@ const RequestTestimonial = (prop) => {
         id : param.id
     });
 
+    /**
+     * On change stores new feedback details into the feedback variable
+     * @param {*} e 
+     * Form elements are stored into the feedback on change
+     */
     const handleChange = (e) => {
         let newFeedback = {...feedback, [e.target.name]: e.target.value};
         setFeedback(newFeedback);
     };
 
-    // Calling updating API
+    /**
+     * Storing the values into the database using testimonialService's update functionality
+     * @param {*} e 
+     * The data on specific id is updated using this functionality
+     */    
     const storeData = (e) => {
         e.preventDefault();
-        console.log(feedback);
         testimonialServices.update(feedback)
     }
 
