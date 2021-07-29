@@ -4,11 +4,13 @@ export default function Home(){
     return (
         <div>
             <div className="jumbotron">
-                <h1 className="display-4">Hello, Freelancer!</h1>
-                <p className="lead">This is the only tool you will be using, a one stop solution for all your freelacing needs.</p>
-                <hr className="my-4"/>
-                <p className="lead">Minimal UI with Powerful features.</p>
-                <a className="btn btn-primary btn-lg" href="#" role="button">Get Started</a>
+                <div className="container">
+                    <h1 className="display-4">Hello, Freelancer!</h1>
+                    <p className="lead">This is the only tool you will be using, a one stop solution for all your freelacing needs.</p>
+                    <hr className="my-4"/>
+                    <p className="lead">Minimal UI with Powerful features.</p>
+                    <a className="btn btn-primary btn-lg" href="#" role="button">Get Started</a>
+                </div>
             </div>
             <div className="container">
                 <div className="row">

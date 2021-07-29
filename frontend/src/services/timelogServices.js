@@ -5,7 +5,7 @@ import axios from "axios";
 export class timelogServices{
     // Get all Timelogs
     async list(data){
-        const result = await axios.get("/api/timelogs",data);
+        const result = await axios.get("/api/timelogs",{ params: data });
         return result.data;
     };
 
@@ -19,7 +19,6 @@ export class timelogServices{
     // Update Timelog
     async update(data){
         data.projectId = data.project;
-        console.log(data);
         const result = await axios.put("/api/timelogs/update/"+data._id,data);
         return result.data;
     };

@@ -1,14 +1,20 @@
 import axios from "axios";
 
 export class notificationService {
-    async getAllNotifications(userId) {
-        const result = await axios.post("/api/notification/getAll" ,{userId: userId} );
+    async fetchNotifications(data) {
+        let object = {}
+        object['currentDate'] = data.currentDate
+        object['userId'] = data.userId
+        const result = await axios.post("/api/notification/List", object );
         return result;
     }
 
-    async setStatus(value) {
-        console.log(value);
-        const result = await axios.post("/api/notification/setStatus" ,value);
+    async setStatus(data) {
+        let object = {}
+        object['currentDate'] = data.currentDate
+        object['eventName'] = data.value.eventName
+        object['category'] = data.value.category
+        const result = await axios.post("/api/notification/setStatus", object);
         return result;
     }
 }

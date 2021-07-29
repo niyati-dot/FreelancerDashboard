@@ -33,10 +33,11 @@ $containerHeight: 15rem;
     .end-date-control {
         display: inline-block;
         width: 48%;
+        margin-right: 1rem;
     }
 
     .generate-buttons {
-        display: inline-block;
-        float: right;
+        text-align: right;
+        margin-bottom: 1rem;
     }
 }

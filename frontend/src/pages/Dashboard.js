@@ -15,8 +15,8 @@ export default function Dashboard(){
     const [lineData,setLineData] = useState({});
     const [barData,setBarData] = useState({});
     useEffect(()=>{
-        dashboardService.stats().then(res => setStats(res.data));
-        dashboardService.clientProjects().then(res =>  setDoughnutData({
+        dashboardService.stats({"userId": localStorage.getItem("user_id")}).then(res => setStats(res.data));
+        dashboardService.clientProjects({"userId": localStorage.getItem("user_id")}).then(res =>  setDoughnutData({
             labels: res.data.clients,
             datasets: [
                 {
@@ -34,7 +34,7 @@ export default function Dashboard(){
                 },
             ],
         }));
-        dashboardService.clientInvoiceStats().then(res => setBarData({
+        dashboardService.clientInvoiceStats({"userId": localStorage.getItem("user_id")}).then(res => setBarData({
             labels: res.data.clients,
             datasets: [
                 {
@@ -49,7 +49,7 @@ export default function Dashboard(){
                 },
             ],
         }));
-        dashboardService.timelogStats().then(res => setLineData({
+        dashboardService.timelogStats({"userId": localStorage.getItem("user_id")}).then(res => setLineData({
             labels: res.data.dates,
             datasets: [
                 {
@@ -63,8 +63,6 @@ export default function Dashboard(){
         }));
 
     },[]);
-
-    console.log(localStorage.getItem('user_id'));
 
     return (
         <div className="page-container">

@@ -3,14 +3,14 @@
 const clientsModel = require('../models/clientsModel');
 const timelogModel = require('../models/timelogModel');
 const projectsModel = require('../models/projectsModel');
-const invoicesModel = require('../models/invoiceGenerate.js');
+const invoicesModel = require('../models/invoiceModel.js');
 const testimonialModel = require('../models/testimonialModel.js');
 
 const getStats = async (req, res) => {
-    let clients = await clientsModel.find({}).count();
-    let projects = await projectsModel.find({}).count();
-    let invoices = await invoicesModel.find({}).count();
-    let testimonials = await testimonialModel.find({}).count();
+    let clients = await clientsModel.find({ userId: req.query.userId }).count();
+    let projects = await projectsModel.find({ userId: req.query.userId }).count();
+    let invoices = await invoicesModel.find({ userId: req.query.userId }).count();
+    let testimonials = await testimonialModel.find({ userId: req.query.userId }).count();
 
     let data = {clients: clients, projects:projects, invoices: invoices, testimonials:testimonials};
 
@@ -25,13 +25,13 @@ const getClientProjects = async (req, res) => {
     let clients = [];
     let projects = [];
 
-    let clientList = await clientsModel.find({}).exec();
+    let clientList = await clientsModel.find({ userId: req.query.userId }).exec();
     clientList.forEach((client) => {
         clients.push(client.ClientName);
     });
 
     for (const client of clients) {
-        let projectCount = await projectsModel.find({client: client}).count();
+        let projectCount = await projectsModel.find({client: client,userId: req.query.userId }).count();
         projects.push(projectCount)
     }
 
@@ -48,14 +48,14 @@ const getClientInvoiceStats = async (req, res) => {
     let invoices_paid = [];
     let invoices_due = [];
 
-    let clientList = await clientsModel.find({}).exec();
+    let clientList = await clientsModel.find({userId: req.query.userId}).exec();
     clientList.forEach((client) => {
         clients.push(client.ClientName);
     });
 
     for (const client of clients) {
-        let invoice_paid = await invoicesModel.find({clientName: client, paymentStatus: "Paid"}).count();
-        let invoice_due = await invoicesModel.find({clientName: client, paymentStatus: "Unpaid"}).count();
+        let invoice_paid = await invoicesModel.find({userId: req.query.userId, clientName: client, paymentStatus: "Paid"}).count();
+        let invoice_due = await invoicesModel.find({userId: req.query.userId, clientName: client, paymentStatus: "Unpaid"}).count();
         invoices_paid.push(invoice_paid);
         invoices_due.push(invoice_due);
     }
@@ -84,7 +84,7 @@ const getTimelogStats = async (req, res) => {
     for (const date of dates) {
         let duration = 0;
 
-        let timelogList = await timelogModel.find({endAt: {
+        let timelogList = await timelogModel.find({userId: req.query.userId, endAt: {
                 $gte: date,
                 $lte: date
             }

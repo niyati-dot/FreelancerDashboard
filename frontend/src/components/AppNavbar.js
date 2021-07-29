@@ -5,7 +5,7 @@ import "../styles/AppNavbar.scss"
 
 export default function AppNavbar(){
     return (
-        <Navbar className="app-nav-bar-container">
+        <Navbar className="app-nav-bar-container fixed-top">
             <Container>
                 <Navbar.Brand className="app-nav-bar-text" href="/">Freelance Dashboard</Navbar.Brand>
                 <Nav className="ml-auto">

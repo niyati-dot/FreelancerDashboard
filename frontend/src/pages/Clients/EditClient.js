@@ -44,13 +44,13 @@ export class EditClient extends Component
             meetingPlatformError: "",
             country: props.history.location.state.state.Country,
             region: props.history.location.state.state.Region
-        }       
+        }
     }
 
     /**
      * On mount, set the values of table.
-     * @param {*} event 
-    */
+     * @param {*} event
+     */
     onValueChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
@@ -59,24 +59,24 @@ export class EditClient extends Component
 
     /**
      * On mount, set the values of table.
-     * @param {*} event 
-    */
+     * @param {*} event
+     */
     selectCountry (name, val) {
-      this.setState({  name: val });
+        this.setState({  name: val });
     }
-  
+
     /**
      * On mount, set the values of table.
-     * @param {*} event 
-    */
+     * @param {*} event
+     */
     selectRegion (val) {
-      this.setState({ name: val });
+        this.setState({ name: val });
     }
 
     /**
      * validate client name is null or not
-     * @param {*} event 
-    */
+     * @param {*} event
+     */
     validateClient = (event) => {
         let isValid = true;
         if (!this.state.clientName) {
@@ -89,10 +89,10 @@ export class EditClient extends Component
         return isValid;
     }
 
-     /**
+    /**
      * Validate organization is null or not
-     * @param {*} event 
-    */
+     * @param {*} event
+     */
     validateOrganization = (event) => {
         let isValid = true;
         if (!this.state.organizationName) {
@@ -107,8 +107,8 @@ export class EditClient extends Component
 
     /**
      * Validate contactNo with numbers and contact no is null or not
-     * @param {*} event 
-    */
+     * @param {*} event
+     */
     validateContactNo = (event) => {
         let isValid = true;
         if (!this.state.contactNo) {
@@ -129,10 +129,10 @@ export class EditClient extends Component
         return isValid;
     }
 
-     /**
+    /**
      * Validate website name with pattern and website is null or not
-     * @param {*} event 
-    */
+     * @param {*} event
+     */
     validateWebsiteName = (event) => {
         let isValid = true;
 
@@ -153,9 +153,9 @@ export class EditClient extends Component
     }
 
     /**
-     * Validate email id with pattern 
-     * @param {*} event 
-    */
+     * Validate email id with pattern
+     * @param {*} event
+     */
     validateEmailId = (event) => {
         let isValid = true;
         if (!this.state.emailId) {
@@ -175,10 +175,10 @@ export class EditClient extends Component
         return isValid;
     }
 
-      /**
-     * Validate linkedin profile with pattern 
-     * @param {*} event 
-    */
+    /**
+     * Validate linkedin profile with pattern
+     * @param {*} event
+     */
     validateLinkedInProfile = (event) => {
 
         let isValid = true;
@@ -198,10 +198,10 @@ export class EditClient extends Component
         return isValid;
     }
 
-     /**
-     * Validate street with pattern 
-     * @param {*} event 
-    */
+    /**
+     * Validate street with pattern
+     * @param {*} event
+     */
     validateStreet = (event) => {
         let isValid = true;
         if(this.state.street){
@@ -217,14 +217,14 @@ export class EditClient extends Component
             else {
                 this.setState({ streetError: "" })
             }
-        }   
+        }
         return isValid;
     }
 
     /**
-     * Validate postal code with pattern 
-     * @param {*} event 
-    */
+     * Validate postal code with pattern
+     * @param {*} event
+     */
     validatePostalcode = (event) => {
         let isValid = true;
         if(this.state.postalCode){
@@ -244,9 +244,9 @@ export class EditClient extends Component
     }
 
     /**
-     * Validate meeting platform with pattern 
-     * @param {*} event 
-    */
+     * Validate meeting platform with pattern
+     * @param {*} event
+     */
     validateMeetingPlatform = (event) => {
         let isValid = true;
         if (!this.state.meetingPlatform) {
@@ -260,9 +260,9 @@ export class EditClient extends Component
     }
 
     /**
-     * Validate form 
-     * @param {*} event 
-    */
+     * Validate form
+     * @param {*} event
+     */
     validateForm = (event) => {
         let isValid = true
         if (!this.validateClient()) {
@@ -297,14 +297,14 @@ export class EditClient extends Component
 
     /**
      * On Update client will be updated and the api call will be made
-     * @param {*} event 
-    */
+     * @param {*} event
+     */
     onUpdate = (event) => {
         event.preventDefault();
         if (this.validateForm()) {
             clientService.editClient(this.state).then((response) => {
             }).catch((error) => {
-                console.log("Error")
+                console.log(error)
             })
             alert('Successfully updated details!!');
             this.props.history.push({ pathname: '/clients' });
@@ -313,8 +313,8 @@ export class EditClient extends Component
 
     /**
      * On click back the clients page will be redirected
-     * @param {*} event 
-    */
+     * @param {*} event
+     */
     onClickBack = (event) => {
         event.preventDefault();
         this.props.history.push({ pathname: '/clients' });
@@ -324,7 +324,7 @@ export class EditClient extends Component
         return (
             <div className="page-container add-client-container">
                 <div className="page-header-container">
-                   <PageHeader title="Edit Client" subtitle="" />
+                    <PageHeader title="Edit Client" subtitle="" />
                 </div>
                 <div className="page-content-container">
                     <div className="page-content">
@@ -336,8 +336,8 @@ export class EditClient extends Component
                                             <Form.Group>
                                                 <Form.Label className="required">Client Name</Form.Label>
                                                 <Form.Control type="name" name="clientName" placeholder="Enter Client Name" value={this.state.clientName} onChange={this.onValueChange}
-                                                    onBlur={this.validateClientName}
-                                                    isInvalid = {this.state.clientNameError}/>
+                                                              onBlur={this.validateClientName}
+                                                              isInvalid = {this.state.clientNameError}/>
                                                 <Form.Control.Feedback type="invalid">
                                                     {this.state.clientNameError}
                                                 </Form.Control.Feedback>
@@ -348,11 +348,11 @@ export class EditClient extends Component
                                             <Form.Group>
                                                 <Form.Label className="required">Organization</Form.Label>
                                                 <Form.Control type="name" name="organizationName" placeholder="Enter Organization Name" value={this.state.organizationName} onChange={this.onValueChange}
-                                                    onBlur={this.validateOrganization}
-                                                    isInvalid = {this.state.organizationNameError} />
+                                                              onBlur={this.validateOrganization}
+                                                              isInvalid = {this.state.organizationNameError} />
                                                 <Form.Control.Feedback type="invalid">
                                                     {this.state.organizationNameError}
-                                                </Form.Control.Feedback>        
+                                                </Form.Control.Feedback>
                                             </Form.Group>
                                         </Col>
                                     </Row>
@@ -361,8 +361,8 @@ export class EditClient extends Component
                                             <Form.Group>
                                                 <Form.Label className="required">Contact No</Form.Label>
                                                 <Form.Control type="name" name="contactNo" placeholder="Enter Contact No" value={this.state.contactNo} onChange={this.onValueChange}
-                                                    onBlur={this.validateContactNo}
-                                                    isInvalid={this.state.contactNoError} />
+                                                              onBlur={this.validateContactNo}
+                                                              isInvalid={this.state.contactNoError} />
                                                 <Form.Control.Feedback type="invalid">
                                                     {this.state.contactNoError}
                                                 </Form.Control.Feedback>
@@ -373,22 +373,22 @@ export class EditClient extends Component
                                             <Form.Group>
                                                 <Form.Label>Website</Form.Label>
                                                 <Form.Control type="name" name="websiteName" placeholder="Enter Website Name" value={this.state.websiteName} onChange={this.onValueChange}
-                                                    onBlur={this.validateWebsiteName}
-                                                    isInvalid={this.state.websiteNameError} />
+                                                              onBlur={this.validateWebsiteName}
+                                                              isInvalid={this.state.websiteNameError} />
                                                 <Form.Control.Feedback type="invalid">
                                                     {this.state.websiteNameError}
                                                 </Form.Control.Feedback>
                                             </Form.Group>
                                         </Col>
-                                      
+
                                     </Row>
                                     <Row>
                                         <Col>
                                             <Form.Group>
                                                 <Form.Label className="required">Email</Form.Label>
                                                 <Form.Control type="name" name="emailId" placeholder="Enter Email Id" value={this.state.emailId} onChange={this.onValueChange}
-                                                    onBlur={this.validateEmailId}
-                                                    isInvalid={this.state.emailIdError} />
+                                                              onBlur={this.validateEmailId}
+                                                              isInvalid={this.state.emailIdError} />
                                                 <Form.Control.Feedback type="invalid">
                                                     {this.state.emailIdError}
                                                 </Form.Control.Feedback>
@@ -399,22 +399,22 @@ export class EditClient extends Component
                                             <Form.Group>
                                                 <Form.Label>LinkedIn Profile</Form.Label>
                                                 <Form.Control type="name" name="linkedInProfile" placeholder="Enter LinkedIn Profile" value={this.state.linkedInProfile} onChange={this.onValueChange}
-                                                    onBlur={this.validateLinkedInProfile}
-                                                    isInvalid={this.state.linkedInProfileError} />
+                                                              onBlur={this.validateLinkedInProfile}
+                                                              isInvalid={this.state.linkedInProfileError} />
                                                 <Form.Control.Feedback type="invalid">
                                                     {this.state.linkedInProfileError}
                                                 </Form.Control.Feedback>
                                             </Form.Group>
                                         </Col>
-                                      
+
                                     </Row>
                                     <Row>
                                         <Col>
                                             <Form.Group>
                                                 <Form.Label>Street</Form.Label>
                                                 <Form.Control type="name" name="street" placeholder="Enter Street Name" value={this.state.street} onChange={this.onValueChange}
-                                                    onBlur={this.validateStreet}
-                                                    isInvalid={this.state.streetError} />
+                                                              onBlur={this.validateStreet}
+                                                              isInvalid={this.state.streetError} />
                                                 <Form.Control.Feedback type="invalid">
                                                     {this.state.streetError}
                                                 </Form.Control.Feedback>
@@ -425,12 +425,12 @@ export class EditClient extends Component
                                             <Form.Group>
                                                 <Form.Label>Business Description</Form.Label>
                                                 <Form.Control type="name" name="businessDescription" placeholder="Enter Business Description" value={this.state.businessDescription} onChange={this.onValueChange}
-                                                    onBlur={this.validatebusinessDescription}
-                                                     />
-                                               
+                                                              onBlur={this.validatebusinessDescription}
+                                                />
+
                                             </Form.Group>
                                         </Col>
-                                      
+
                                     </Row>
 
                                     <Row>
@@ -438,8 +438,8 @@ export class EditClient extends Component
                                             <Form.Group>
                                                 <Form.Label>Postal Code</Form.Label>
                                                 <Form.Control type="name" name="postalCode" placeholder="Enter Postal code" value={this.state.postalCode} onChange={this.onValueChange}
-                                                    onBlur={this.validatePostalcode}
-                                                    isInvalid={this.state.PostalCodeError} />
+                                                              onBlur={this.validatePostalcode}
+                                                              isInvalid={this.state.PostalCodeError} />
                                                 <Form.Control.Feedback type="invalid">
                                                     {this.state.PostalCodeError}
                                                 </Form.Control.Feedback>
@@ -449,56 +449,62 @@ export class EditClient extends Component
                                             <Form.Group>
                                                 <Form.Label className="required">Meeting Platform</Form.Label>
                                                 <Form.Control as="select" name="meetingPlatform" placeholder="Enter meeting platform" value={this.state.meetingPlatform} onChange={this.onValueChange}
-                                                    onBlur={this.validateMeetingPlatform}
-                                                    isInvalid={this.state.meetingPlatformError}>
-                                                      <option>Select Project</option>
+                                                              onBlur={this.validateMeetingPlatform}
+                                                              isInvalid={this.state.meetingPlatformError}>
+                                                    <option>Select Project</option>
                                                     <option value="Google Meet">Google Meet</option>
                                                     <option value="Skype">Skype</option>
                                                     <option value="Zoom">Zoom</option>
                                                     <option value="In person">In person</option>
-                                                  </Form.Control>
+                                                </Form.Control>
                                                 <Form.Control.Feedback type="invalid">
                                                     {this.state.meetingPlatformError}
                                                 </Form.Control.Feedback>
-                                              
+
 
                                             </Form.Group>
                                         </Col>
 
                                     </Row>
                                     <Row>
-                                    <Col xs={6}>
+                                        <Col>
                                             <Form.Group>
-                                                <div className="country">
-                                                    <Form.Label className="required">Country </Form.Label>
-                                                    <CountryDropdown as="select" name="country" defaultOptionLabel="Select country" value={this.state.country}
-                                                        onChange={(value) => this.selectCountry(value)}
-                                                    />
-                                                </div>
-                                                <div className="region">
-                                                    <Form.Label>Region </Form.Label>
-                                                    <RegionDropdown
-                                                        country={this.state.country} blankOptionLabel="No Country Selected" defaultOptionLabel="Select region"
-                                                        as="select" name="region" value={this.state.region} onChange={(value) => this.selectRegion(value)}>
-                                                    </RegionDropdown>
-                                                </div>
+                                                <Row>
+                                                    <Col>
+                                                        <div className="country">
+                                                            <Form.Label className="required">Country </Form.Label>
+                                                            <CountryDropdown className="form-control" as="select" name="country" defaultOptionLabel="Select country" value={this.state.country}
+                                                                             onChange={(value) => this.selectCountry(value)}
+                                                            />
+                                                        </div>
+                                                    </Col>
+                                                    <Col>
+                                                        <div className="region">
+                                                            <Form.Label>Region </Form.Label>
+                                                            <RegionDropdown className="form-control"
+                                                                country={this.state.country} blankOptionLabel="No Country Selected" defaultOptionLabel="Select region"
+                                                                as="select" name="region" value={this.state.region} onChange={(value) => this.selectRegion(value)}>
+                                                            </RegionDropdown>
+                                                        </div>
+                                                    </Col>
+                                                </Row>
                                             </Form.Group>
                                         </Col>
+                                        <Col/>
+                                    </Row>
 
-                                    </Row> 
-                                    
                                     <Row className="generate-button-container">
-                                        <Button className="primary-button" onClick={this.onClickBack}>
-                                              Back
-                                        </Button>
-                                        <Button className="primary-button" onClick={this.onUpdate}>
+                                        <Button className="btn primary-button" onClick={this.onUpdate}>
                                             Update
+                                        </Button>
+                                        <Button className="btn secondary-button" onClick={this.onClickBack}>
+                                            Back
                                         </Button>
                                     </Row>
                                 </Form>
                             </Col>
                         </Row>
-                        
+
                     </div>
                 </div>
             </div>

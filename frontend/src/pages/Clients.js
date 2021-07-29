@@ -14,7 +14,6 @@ import { Button, Col, Row } from "react-bootstrap";
 import "../styles/Clients.scss";
 import './Clients/AddClient'
 import { Component } from "react";
-import axios from 'axios';
 import clientService from "../services/clientService"
 
 
@@ -50,7 +49,6 @@ export class Clients extends Component {
       }]; 
 
       this.userId = localStorage.getItem("user_id")
-      console.log('Inconstructor',this.userId);
   }
 
   /**
@@ -76,7 +74,7 @@ export class Clients extends Component {
             })
         }
     }).catch((error) => {
-        console.log("Eroor")
+        console.log(error)
     })
 
   }
@@ -92,7 +90,7 @@ export class Clients extends Component {
           state: response.data
         })
     }).catch((error) => {
-        console.log("Error")
+        console.log(error)
     })
   }
 
@@ -106,7 +104,7 @@ export class Clients extends Component {
           state: response.data
         })
     }).catch((error) => {
-        console.log("Error")
+        console.log(error)
     })
   };
 
@@ -117,7 +115,7 @@ export class Clients extends Component {
   deleteDetails = (row) => {
     clientService.deleteClient(row.original).then((response) => {
           alert("Successfully deleted entry!!");
-          clientService.getAllClients().then((response) => {
+          clientService.getAllClients(this.userId).then((response) => {
               if (response.status == 200) {
                   this.setData(response.data);
                   let newdetails = [];
@@ -132,10 +130,10 @@ export class Clients extends Component {
                   this.setState({data: newdetails})
                 }
           }).catch((error) => {
-              console.log("Eroor")
+              console.log(error)
           })
       }).catch((error) => {
-          console.log("Eroor")
+          console.log(error)
       })
   }
 
