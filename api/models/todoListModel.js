@@ -3,13 +3,13 @@
  * Created On: 2021-07-20.
  * Model for todo list.
  */
-const mongoose = require("mongoose");
-const schema = mongoose.Schema;
+const Mongoose = require("mongoose");
+const Schema = Mongoose.Schema;
 
 
-const todoListSchema = new schema({
+const todoListSchema = new Mongoose.Schema({
     id: {
-        type: schema.Types.ObjectID
+        type: Schema.Types.ObjectID
     },
     title: {
         type: String
