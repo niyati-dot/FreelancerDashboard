@@ -22,6 +22,10 @@ import RequestTestimonials from "./pages/RequestTestimonial";
 import InvoiceManagement from "./pages/Invoices"
 import TodoList from "./pages/TodoList"
 import Calendar from "./pages/Calendar";
+
+import Notification from "./components/Notification";
+import OpenNotification from "./components/OpenNotification";
+
 import EditInvoice from "./pages/Invoices/EditInvoice"
 import { BusinessCard } from "./pages/BusinessCard";
 export default function App() {
@@ -109,6 +113,16 @@ export default function App() {
                         <EditInvoice />
                     </DashboardLayout>
                 </Route>
+                <Route exact path="/notification">
+                    <DashboardLayout>
+                        <Notification />
+                    </DashboardLayout>
+                </Route>
+                <Route exact path="/openNotification">
+                    <DashboardLayout>
+                        <OpenNotification />
+                    </DashboardLayout>
+                </Route>  
                 <Route exact path="/testimonials">
                     <DashboardLayout>
                         <Testimonials />
