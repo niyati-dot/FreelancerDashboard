@@ -40,10 +40,6 @@ class Notification extends Component
         this.fetchNotifications();
     }
 
-    componentDidUpdate() {
-        this.fetchNotifications();
-    }
-
     handleNotificationClose(){
         this.setState({notificationShow:false});
     };
@@ -58,6 +54,7 @@ class Notification extends Component
         }).catch((error) => {
             console.log("Error")
         });
+        this.fetchNotifications();
         this.handleNotificationShow();
 
     };
