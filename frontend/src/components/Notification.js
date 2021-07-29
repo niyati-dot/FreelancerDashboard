@@ -39,12 +39,11 @@ class Notification extends Component
         })
     }
 
-    openNotification = (event) => {
-        event.preventDefault();
+    openNotification = (value) => {
         console.log('Here I am in viewInDetail function');
-
+        console.log( 'value one',this.state.value  );
         this.props.history.push({ pathname: '/openNotification',
-                                  notification: this.state.value  });
+                                  notification: value });
     }
 
     render() {
@@ -58,7 +57,7 @@ class Notification extends Component
 
                         <Dropdown.Menu>
                             {this.state.value.map((value,index) => {
-                                return <Dropdown.Item onClick = { (e) => this.openNotification(e)} value={value.eventName}>{value.category} <hr></hr></Dropdown.Item>
+                                return <Dropdown.Item onClick = { () => this.openNotification(value)} value={value.eventName}>{value.category} <hr></hr></Dropdown.Item>
                             })}
                         </Dropdown.Menu>
                 </Dropdown>
