@@ -10,7 +10,7 @@ const Schema = Mongoose.Schema;
 /**
  * Model Schema for Projects
  */
-const projectsSchema = {
+const projectsSchema =  new Mongoose.Schema({
     title: {
         type: String
     },
@@ -32,6 +32,6 @@ const projectsSchema = {
     userId:{
         type: Schema.Types.ObjectID,
     },
-};
+});
 
 module.exports = Mongoose.model("projects", projectsSchema);
