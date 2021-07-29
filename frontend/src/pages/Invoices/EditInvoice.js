@@ -39,17 +39,17 @@ export class EditInvoice extends Component {
         componentDidMount() {
           
             invoiceServices.findInvoice(this.state).then((response) =>{
-               
+              
                 if (response.status == 200){
-                    this.setState({project: response.data.projectName})
-                    this.setState({clientName:response.data.clientName})
-                    this.setState({generatedDate: response.data.generatedDate})
-                    this.setState({Total:response.data.totalCost})
-                    this.setState({invoiceNumber:response.data._id})
-                    this.setState({hourlyRate:response.data.hourlyRate})
-                    this.setState({paymentPreStatus:response.data.paymentStatus})
-                    this.setState({taskendDate:response.data.taskendDate})
-                    this.setState({taskstartDate:response.data.startDate})
+                    this.setState({project: response.data.result.projectName})
+                    this.setState({clientName:response.data.result.clientName})
+                    this.setState({generatedDate: response.data.result.generatedDate})
+                    this.setState({Total:response.data.result.totalCost})
+                    this.setState({invoiceNumber:response.data.result._id})
+                    this.setState({hourlyRate:response.data.result.hourlyRate})
+                    this.setState({paymentPreStatus:response.data.result.paymentStatus})
+                    this.setState({taskendDate:response.data.result.taskendDate})
+                    this.setState({taskstartDate:response.data.result.startDate})
                 } 
             }).catch((error) => {
                 console.log(error)

@@ -4,7 +4,7 @@
  * Service Containing API calls for Invoice management, Invoice generation and Edit invoice.
  */
  import axios from "axios"
- export class TodoListService {
+ export class invoiceServices {
      async getTags(date) {
          const result = await axios.post("/api/invoices/tags",  date );
          return result;
@@ -50,4 +50,4 @@
     getClentEmail
  }
  
- export default new TodoListService()
+ export default new invoiceServices()

@@ -50,7 +50,7 @@ export class Invoices extends Component {
         invoiceServices.getAllInvoices(this.state).then((response) => {
             if (response.status == 200) {
                 let invoiceDetails = [];
-                response.data.forEach(element => {
+                response.data.result.forEach(element => {
 
                     let row = {}
                     row.invoicenumber = element._id;
@@ -89,8 +89,7 @@ export class Invoices extends Component {
     }
     //open InvoiceGeneration.js in read-only mode to view generated invoice details.
     viewInvoice = (row) => {
-        console.log("enterd to view");
-        console.log(row.original)
+        
         this.props.history.push({ pathname: '/invoices/generate' }, {
             state: row.original.invoicenumber
         })

@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const express = require("express");
 const project = require("../models/projectsModel");
 const timelogs = require("../models/timelogModel");
-const invoices = require("../models/invoiceGenerate");
+const invoices = require("../models/invoiceModel");
 const users = require("../models/registerModel");
 const clients = require("../models/clientsModel");
 /**
@@ -20,9 +20,23 @@ const clients = require("../models/clientsModel");
 
 //Get list of all the projects
 module.exports.getAllProject = async(req, res) => {
-  console.log("data",req.body)
-    await project.find({"userId":req.body.user}).exec().then((m) => (res.send(m)))
-        .catch((err) => (console.log(err)));
+ 
+    await project.find({"userId":req.body.user},function(error, projectslist){
+      if (error){
+        return res.status(400).json({
+            result: [],
+            message: error,
+            success: false
+        })
+      }
+      else{
+        return res.status(200).json({
+            result: projectslist,
+            message: "",
+            success: true
+        })
+      }
+    })
 
 };
 
@@ -35,9 +49,22 @@ module.exports.getTags = async (req, res) => {
     taglist =[]
 
     const tags = await timelogs.find({"endAt":{$gte:sdate,$lte:edate},"project":_id}).exec()
-    if(tags){
-      res.send(tags)
+    
+    if (tags){
+      return res.status(200).json({
+          result: tags,
+          message: "",
+          success: true
+      })
     }
+    else{
+      return res.status(400).json({
+          result: [],
+          message: error,
+          success: false
+      })
+    }
+    
   };
 
 //Add generated invoice
@@ -58,11 +85,11 @@ module.exports.addInvoice = async (req, res) => {
   startdate = new Date(req.body.startAt)
   enddate= new Date(req.body.endDate)
   
-  const resule = await invoices.find({$and:[{"startDate":startdate},{"taskendDate":enddate},{"projectId":id}]}).exec()
+  const result = await invoices.find({$and:[{"startDate":startdate},{"taskendDate":enddate},{"projectId":id}]}).exec()
  
  
     
-    if(resule.length ==0){
+    if(result.length ==0){
       
       generateDate = new Date(req.body.generateDate)
         if(req.body && req.body.generateDate)
@@ -111,8 +138,6 @@ module.exports.addInvoice = async (req, res) => {
         })
         
         invoices.count({}, function(error, numOfInvoices){
-          if(error) return callback(error);
-          
           const invoiceId = numOfInvoices + 1;
           
           addInvoice.invId = Number(invoiceId);
@@ -141,15 +166,14 @@ module.exports.addInvoice = async (req, res) => {
         message: "Invoice is alredy generated",
         success: false
       })
-     }
-  // })
-  
+     } 
 };
 
 //fetch list of all the generated invoices
 module.exports.getAllInvoices = async(req, res) => {
-  console.log(req.body.user)
+
   invoices.find({"userId":req.body.user}, function(error, result){
+    
     if (error) {
       return res.status(400).json({
           result: [],
@@ -157,8 +181,11 @@ module.exports.getAllInvoices = async(req, res) => {
           success: false
       })
     } else {
-      
-      return res.send(result)
+      res.status(200).json({
+        result: result,
+        message: "",
+        success: true
+    })
     }
     })
 
@@ -177,7 +204,11 @@ module.exports.findInvoice = async(req, res) => {
             success: false
         })
       } else {
-        return res.send(result)
+        res.status(200).json({
+          result: result,
+          message: "",
+          success: true
+      })
       }
       })
   
@@ -207,26 +238,46 @@ module.exports.deleteinvoice = (req, res) => {
   }
   
 };
-
+//fetch current application user email id
 module.exports.getEmail = (req, res) => {
-  console.log("Mail",req.body.user)
+  
   users.find({"_id":req.body.user}, function(err, result) {
     if (err) {
-      throw err;
-    }else{
-      res.send(result)
+       
+      return res.status(400).json({
+          result: [],
+          message: "Eroor",
+          success: false
+      })
+    } else {
+      res.status(200).json({
+        result: result,
+        message: "",
+        success: true
+    })
     }
   })
 
 }
+
+//fetch client email id
 module.exports.getClientEmail = (req, res) => {
   var clientData = req.body.projects[0]
-  console.log("Clent",req.body.projects[0])
+
   clients.find({"ClientName":clientData.client}, function(err, result) {
     if (err) {
-      throw err;
-    }else{
-      res.send(result)
+      return res.status(400).json({
+          result: [],
+          message: "Eroor",
+          success: false
+      })
+    } else {
+      
+      res.status(200).json({
+        result: result,
+        message: "",
+        success: true
+    })
     }
   })
 
@@ -237,7 +288,11 @@ module.exports.updateInvoice = (req, res) => {
 
   invoices.find({"_id":req.body.invoiceNumber}, function(err, result) {
       if (err) {
-        throw err;
+        return res.status(400).json({
+          result: [],
+          message: "Eroor",
+          success: false
+      })
       }else{
         let data = result[0]
         if(req.body && req.body.paymentstatus){

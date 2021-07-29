@@ -6,7 +6,7 @@
 const express = require('express')
 const router= express.Router();
 
-const projectController = require("../controllers/invoiceContreller")
+const projectController = require("../controllers/invoiceController")
 
 //Invoice Routes
 router.post("/getproject",projectController.getAllProject)

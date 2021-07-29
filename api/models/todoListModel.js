@@ -22,7 +22,7 @@ const todoListSchema = new schema({
         default: Date.now()
     },
     userId:{
-        type: Schema.Types.ObjectID,
+        type: schema.Types.ObjectID,
         ref: "users"
     },
 });

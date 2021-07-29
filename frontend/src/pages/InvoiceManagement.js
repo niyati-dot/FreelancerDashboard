@@ -46,8 +46,9 @@ export class InvoiceManagement extends Component{
         console.log("User",this.state.user)
         invoiceServices.getAllInvoices(this.state).then((response) => {
             if (response.status == 200) {
+                console.log(response.data.result)
                let invoiceDetails = [];
-               response.data.forEach(element => {
+               response.data.result.forEach(element => {
                             
                 let row = {}
                 row.invoicenumber = element._id;

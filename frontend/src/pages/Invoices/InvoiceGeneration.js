@@ -74,20 +74,20 @@ export class InvoiceGeneration extends PureComponent {
         if(this.state.readonly){
             
             invoiceServices.findInvoice(this.state).then((response) =>{
-                console.log(response)
+                
                 if (response.status == 200){
-                    this.setState({ project: response.data.projectName})
-                    this.setState({clientName:response.data.clientName})
-                    this.setState({dueDate: response.data.dueDate})
-                    this.setState({generatedDate: response.data.generatedDate})
-                    this.setState({hourlyRate:response.data.hourlyRate})
-                    this.setState({Total:response.data.totalCost})
-                    this.setState({invoiceNumber:response.data._id})
-                    this.setState({paymentStatus:response.data.paymentStatus})
-                    this.setState({startAt:response.data.startDate})
-                    this.setState({endAt:response.data.taskendDate})
+                    this.setState({ project: response.data.result.projectName})
+                    this.setState({clientName:response.data.result.clientName})
+                    this.setState({dueDate: response.data.result.dueDate})
+                    this.setState({generatedDate: response.data.result.generatedDate})
+                    this.setState({hourlyRate:response.data.result.hourlyRate})
+                    this.setState({Total:response.data.result.totalCost})
+                    this.setState({invoiceNumber:response.data.result._id})
+                    this.setState({paymentStatus:response.data.result.paymentStatus})
+                    this.setState({startAt:response.data.result.startDate})
+                    this.setState({endAt:response.data.result.taskendDate})
                     let invoiceDetails=[]
-                    response.data.tags.forEach(row => {
+                    response.data.result.tags.forEach(row => {
                                           
                         let data = {} 
                         data.id = row.tagId;                      
@@ -98,7 +98,7 @@ export class InvoiceGeneration extends PureComponent {
                     })
                     if(invoiceDetails.length !=0 ){
                         this.setState({invoiceDetails: this.state.invoiceDetails.concat(invoiceDetails)})
-                        console.log(this.state.invoiceDetails)   
+                         
                     }
                 
                 } 
@@ -109,7 +109,8 @@ export class InvoiceGeneration extends PureComponent {
             //Executed when called from dashbord page
             invoiceServices.getAllProject(this.state).then((response) => {
             if (response.status == 200) {
-                this.setState({ projects: response.data})          
+               
+                this.setState({ projects: response.data.result})          
             }
         }).catch((error) => {
             console.log(error)
@@ -257,11 +258,11 @@ export class InvoiceGeneration extends PureComponent {
         if(this.validateForm()){
             invoiceServices.getTags(this.state).then((response) => {
                 if (response.status == 200) {
-                    console.log(response.data)
-                    this.setState({ tags: response.data })
+                    
+                    this.setState({ tags: response.data.result })
                     let invoiceDetails = []
                     let totalCost = 0
-                    response.data.forEach(row => {
+                    response.data.result.forEach(row => {
                                                 
                         let data = {}
                         var startdate = new Date(row.startAt);
@@ -308,22 +309,24 @@ export class InvoiceGeneration extends PureComponent {
             if(this.validateForm()){
             
                 invoiceServices.addInvoice(this.state).then((response) =>{
-                    console.log(response)
+                   
                     if (response.status == 200){
-                        console.log(response)
+                        
                         this.setState({save:true})
                         alert("Ïnvoice Added")
-                    }else if(response.status == 400){
+                    }else {
                         alert("Invoice is already generated")
                     }
                 }).catch((error) => {
-                    console.log(error)
+                    alert("Invoice is already generated")
                 })
             }
         }else{
             alert("Invoice is not generated. Please generate Invoice first.")
         }
     }
+
+    //this function store data in pdf file
     downloadInvoice =(event)=>{
         if(this.state.save){
             var client =""
@@ -370,45 +373,23 @@ export class InvoiceGeneration extends PureComponent {
         
     }
 
-    sendemail =(e) =>{
-        var fromEmail = ""
-        var freelancerName = ""
-        var clientName=""
-        var toEmail = ""
-        var projectNAme= ""
+    Emailsender = (freelancerName,fromEmail,projectNAme,toEmail,clientName) =>{
+       
         const date = Moment(Date.now()).format('YYYY-MM-DD')
-        this.state.projects.forEach(result =>{
-            if(result._id == this.state.project){
-                projectNAme=result.title
-            }
-            
-        })
-        
-        invoiceServices.getUserEmail(this.state).then((response) =>{
-            var freelancerdata = response.data[0]
-            fromEmail = freelancerdata.Email
-            freelancerName = freelancerdata.Name
-            invoiceServices.getClentEmail(this.state).then(result =>{
-                var clientdata = result.data[0]
-                toEmail = clientdata.Email
-                clientName=clientdata.ClientName
-                
-            })
-            
-        })
+        const message = "Hello \nPlease find attached below invoice \nProject Name  :"+projectNAme+"\nFrom Date  :"+this.state.startAt+
+            "\nTo Date  :"+this.state.endDate+"\nDue Date  :"+this.state.dueDate+"\nGenerated Date  :"+date+"\nHourly Rate  :"+this.state.hourlyRate+"\nTotal :"+this.state.totalcost
+           
         var mailParams = {
             //Mail Sender Details
-            from_name: freelancerName,
-            from_mail: fromEmail,
+            freelancerName: freelancerName,
+            freelancerMail: fromEmail,
          
             //Mail Reciver DetailstoEmail
-            to_name: clientName,
-            to_mail: "chaudharytejaswi17@gmail.com",
+            clientName: clientName,
+            clientMail: toEmail,
 
             //Attachment Messages
-            message: "Hello \nPlease find attached below invoice \nProject Name  :"+projectNAme+"\nFrom Date  :"+this.state.startAt+
-            "\nTo Date  :"+this.state.endDate+"\nDue Date  :"+this.state.dueDate+"\nGenerated Date  :"+date+"\nHourly Rate  :"+this.state.hourlyRate+"\nTotal :"+this.state.totalcost
-            
+            message: message
         };
 
         emailjs.send('testimonial_request', 'template_fmwc5oo', mailParams, 'user_INB1ILGAt4GVje2eeyj2V')
@@ -421,6 +402,36 @@ export class InvoiceGeneration extends PureComponent {
                 console.log('FAILED...', error);
             });
 
+    }
+    //this function sends invoice details to client through email using emailjs
+    sendemail =(e) =>{
+        var fromEmail = ""
+        var freelancerName = ""
+        var clientName=""
+        var toEmail = ""
+        var projectNAme= ""
+        
+        this.state.projects.forEach(result =>{
+            if(result._id == this.state.project){
+                projectNAme=result.title
+            }
+            
+        })
+        
+        invoiceServices.getUserEmail(this.state).then((response) =>{
+            var freelancerdata = response.data.result[0]
+            fromEmail = freelancerdata.Email
+            freelancerName = freelancerdata.Name
+            invoiceServices.getClentEmail(this.state).then(response =>{
+                var clientdata = response.data.result[0]
+                toEmail = clientdata.Email
+                clientName=clientdata.ClientName
+                this.Emailsender(freelancerName,fromEmail,projectNAme,toEmail,clientName)
+                
+            })
+            
+        })
+        
     }
 
     //called when component is called in read-only mode. This function redirect to invoicemanagement page
