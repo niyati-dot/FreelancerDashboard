@@ -2,7 +2,7 @@ import axios from "axios";
 
 export class notificationService {
     async getAllNotifications(userId) {
-        const result = await axios.post("/api/notification/getAll" ,{userId: userId} );
+        const result = await axios.post("/api/notification/List" ,{userId: userId} );
         return result;
     }
 

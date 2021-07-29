@@ -13,16 +13,14 @@ const notificationModel = require('../models/calendarModel');
  * @returns
  * find the all clients details and returns result as response
  */
-module.exports.getAll = (req, response) => {
+module.exports.List = (req, response) => {
 
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
-    console.log(today);
-    console.log('New data');
-    console.log(req.body.userId);
+    
     notificationModel.find({'date': today, 'userId': req.body.userId }, function(error, result)
     {
         if (error) {
