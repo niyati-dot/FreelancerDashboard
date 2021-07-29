@@ -24,95 +24,155 @@ module.exports.getAllProject = async(req, res) => {
         .catch((err) => (console.log(err)));
 
 };
-
+async function checktags(data){
+  
+  return new Promise((resolve, reject) => {
+    var newlist= []
+    data.forEach(row =>{
+      invoices.find({"tags.tagId":row._id},function(err,result){
+        if(result.length == 0){
+          newlist.push(row)
+          
+          
+        }
+    })
+    console.log(newlist)
+  })
+  console.log(newlist)
+  if(newlist.length !=0){
+    resolve(newlist)
+  }
+  else{
+    resolve (0)
+  }
+})
+  //   invoices.find({"tags.tagId":data._id},function(err,result){
+  //   if(result.length >0){
+  //     resolve(1)
+  //   }
+  //   else{
+  //     resolve(0)
+  //   }
+  //   })
+  // });
+  // let result = await promise;
+  // console.log(result)
+  // return result
+}
 //get list of all the tags based on task end end date
-module.exports.getTags = (req, res) => {
+module.exports.getTags = async (req, res) => {
    
     _id = req.body.project
     edate = new Date(req.body.endDate)
+    sdate = new Date(req.body.startAt)
+    taglist =[]
 
-    timelogs.find().populate("project").where({"project":_id}).exec((err, result) => {
-      if(err) {
-        return (err)}
-      else{
-        res.send(result)
-      }
-      
-    })
-    
-
-};
+    const tags = await timelogs.find({"endAt":{$gte:sdate,$lte:edate},"project":_id}).exec()
+    if(tags){
+      res.send(tags)
+    }
+  };
 
 //Add generated invoice
-module.exports.addInvoice = (req, res) => {
+module.exports.addInvoice = async (req, res) => {
+  id = 0
+  const addInvoice = new invoices()
+  if(req.body && req.body.projects){
+    req.body.projects.forEach(result =>{
+      if(result._id == req.body.project){
+        addInvoice.projectName = result.title,
+        addInvoice.clientName =  result.client,
+        addInvoice.projectId = result._id,
+        id = result._id
+      }
+    })
+    
+  }
+  startdate = new Date(req.body.startAt)
+  enddate= new Date(req.body.endDate)
+  console.log(id,startdate,enddate)
+  const resule = await invoices.find({$and:[{"startDate":startdate},{"taskendDate":enddate},{"projectId":id}]}).exec()
+  console.log(resule)
  
-  generateDate = new Date(req.body.generateDate)
-
-  const addInvoice = new invoices() 
-
-    if(req.body && req.body.project)
-    {
-      addInvoice.projectName = req.body.project;
-    }
-    if(req.body && req.body.generateDate)
-    {
-      addInvoice.generatedDate =  generateDate;
-    }
-    if(req.body && req.body.dueDate)
-    {
-      addInvoice.dueDate =  req.body.dueDate;
-    }
-    if(req.body && req.body.endDate)
-    {
-      addInvoice.taskendDate = req.body.endDate;
-    }
-    if(req.body && req.body.hourlyRate)
-    {
-      addInvoice.hourlyRate = req.body.hourlyRate;
-    }
-    if(req.body && req.body.totalcost)
-    {
-      addInvoice.totalCost= req.body.totalcost;
-    }
-    if(req.body && req.body.paymentStatus)
-    {
-      addInvoice.paymentStatus =  req.body.paymentStatus;
-    }
-    addInvoice.clientName =  "Mohan";
     
-    req.body.invoiceDetails.forEach(result =>{
-      datades = {}
-      datades.description=result.description,
-      datades.hours =result.hours,
-      datades.total =result.total
-      addInvoice.tags.push(datades)
+    if(resule.length ==0){
+      console.log("generate")
+      generateDate = new Date(req.body.generateDate)
+        if(req.body && req.body.generateDate)
+        {
+          addInvoice.generatedDate =  generateDate;
+        }
+        if(req.body && req.body.startAt)
+        {
+          addInvoice.startDate =  req.body.startAt;
+        }
+        if(req.body && req.body.dueDate)
+        {
+          addInvoice.dueDate =  req.body.dueDate;
+        }
+        if(req.body && req.body.endDate)
+        {
+          addInvoice.taskendDate = req.body.endDate;
+        }
+        if(req.body && req.body.hourlyRate)
+        {
+          addInvoice.hourlyRate = req.body.hourlyRate;
+        }
+        if(req.body && req.body.totalcost)
+        {
+          addInvoice.totalCost= req.body.totalcost;
+        }
+        if(req.body && req.body.paymentStatus)
+        {
+          addInvoice.paymentStatus =  req.body.paymentStatus;
+        }
+        
+        
+        console.log(req.body.invoiceDetails)
+        req.body.invoiceDetails.forEach(result =>{
+          datades = {}
+          datades.tagId=result.id,
+          datades.description=result.description,
+          datades.hours =result.hours,
+          datades.total =result.total
+          addInvoice.tags.push(datades)
+        
+        })
+        
+        invoices.count({}, function(error, numOfInvoices){
+          if(error) return callback(error);
+          
+          const invoiceId = numOfInvoices + 1;
+          
+          addInvoice.invId = Number(invoiceId);
+          addInvoice.save(function(error, document){
+            if (error) {
+              console.log(error)
+              return res.status(400).json({
+                  result: [],
+                  message: error,
+                  success: false
+              })
+            } else {
+              console.log("Added")
+              return res.status(200).json({
+                  result: addInvoice,
+                  success: true
+              })
+            } 
     
-    })
-    
-    invoices.count({}, function(error, numOfInvoices){
-      if(error) return callback(error);
-      
-      const invoiceId = numOfInvoices + 1;
-      
-      addInvoice.invId = Number(invoiceId);
-      addInvoice.save(function(error, document){
-        if (error) {
-          console.log(error)
-          return res.status(400).json({
-              result: [],
-              message: error,
-              success: false
           })
-        } else {
-          console.log("Added")
-          return res.status(200).json({
-              result: addInvoice,
-              success: true
-          })
-        } 
-
+        })
+     }else{
+      console.log("not generate")
+      return res.status(400).json({
+        result: [],
+        message: "Invoice is alredy generated",
+        success: false
       })
-    })
+     }
+  // })
+  
 };
 
 //fetch list of all the generated invoices
@@ -133,13 +193,14 @@ module.exports.getAllInvoices = async(req, res) => {
 
 //find invoice based on given invoice id
 module.exports.findInvoice = async(req, res) => {
+  console.log(req.body.projectId)
   if(req.body && req.body.projectId){
-    invoices.findOne({"invId":req.body.projectId}, function(err, result) {
+    invoices.findOne({"_id":req.body.projectId}, function(err, result) {
       if (err) {
        
         return res.status(400).json({
             result: [],
-            message: error,
+            message: "Eroor",
             success: false
         })
       } else {
@@ -152,9 +213,9 @@ module.exports.findInvoice = async(req, res) => {
 
 //Delete invoice based on invoice id
 module.exports.deleteinvoice = (req, res) => {
-  
-  if(req.body && req.body.invoicename){
-    invoices.findOneAndRemove({"invId":req.body.invoicename},function(error, result){
+  console.log(req.body)
+  if(req.body && req.body.invoicenumber){
+    invoices.findOneAndRemove({"_id":req.body.invoicenumber},function(error, result){
       if (error) {
         return res.status(400).json({
             result: [],
@@ -175,8 +236,8 @@ module.exports.deleteinvoice = (req, res) => {
 };
 //update invoice based on invoice id
 module.exports.updateInvoice = (req, res) => {
-  
-  invoices.find({"invId":req.body.invoiceNumber}, function(err, result) {
+  console.log(req.body)
+  invoices.find({"_id":req.body.invoiceNumber}, function(err, result) {
       if (err) {
         throw err;
       }else{

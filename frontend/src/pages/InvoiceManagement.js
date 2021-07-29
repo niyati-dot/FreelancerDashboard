@@ -4,12 +4,14 @@
  * Invoice Management component.
  */
 import React,{Component} from 'react';
+
 import PageHeader from "../components/PageHeader";
 import {Button,Col,Row} from "react-bootstrap";
 import Datatable from "../components/Datatable";
 import { withRouter } from 'react-router-dom';
 import "../styles/InvoiceManagement.scss";
 import invoiceServices from "../services/invoiceServices";
+import Moment from 'moment';
 export class InvoiceManagement extends Component{
     
     constructor(props) {
@@ -18,8 +20,10 @@ export class InvoiceManagement extends Component{
         checkbox : 'true',
         delete:'false',
         columns : [
-            { Header: 'Invoice Number', accessor: 'invoicename'},
+            { Header: 'Invoice Number', accessor: 'invoicenumber'},
             { Header: 'Generated Date', accessor: 'generateddate'},
+            { Header: 'From Date', accessor: 'fromdate'},
+            { Header: 'To Date', accessor: 'todate'},
             { Header: 'Due Date', accessor: 'duedate'},
             { Header: 'Client Name', accessor: 'clientname'},
             { Header: 'Project Name', accessor: 'projectname'},
@@ -45,12 +49,15 @@ export class InvoiceManagement extends Component{
                response.data.forEach(element => {
                             
                 let row = {}
-                row.invoicename = element.invId;
-                row.generateddate = element.generatedDate;
-                row.duedate = element.dueDate;
+                row.invoicenumber = element._id;
+                row.generateddate = Moment(element.generatedDate).format('YYYY-MM-DD');
+                row.fromdate = Moment(element.startDate).format('YYYY-MM-DD');
+                row.todate=Moment(element.taskendDate).format('YYYY-MM-DD');
+                row.duedate = Moment(element.dueDate).format('YYYY-MM-DD');
                 row.clientname = element.clientName;
                 row.projectname = element.projectName;
                 row.paymentstatus = element.paymentStatus;
+                row.startDate=Moment(element.startDate).format('YYYY-MM-DD');
                 
                 invoiceDetails.push(row)
     
@@ -73,15 +80,15 @@ export class InvoiceManagement extends Component{
     //Edit invoice
     editInvoice=(row)=>{
         this.props.history.push({ pathname:'/editinvoice' }, {
-            state: row.original.invoicename
+            state: row.original.invoicenumber
           })
     }
     //open InvoiceGeneration.js in read-only mode to view generated invoice details.
     viewInvoice=(row)=>{
-       
-        console.log("enterd");
+        console.log("enterd to view");
+        console.log(row.original)
         this.props.history.push({ pathname:'/invoice-generation' }, {
-            state: row.original.invoicename
+            state: row.original.invoicenumber
           })
     }
 

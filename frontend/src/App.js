@@ -23,6 +23,7 @@ import InvoiceManagement from "./pages/InvoiceManagement"
 import TodoList from "./pages/TodoList"
 import Calendar from "./pages/Calendar";
 import EditInvoice from "./pages/EditInvoice"
+import CreatePdf from "./pages/createPdf"
 export default function App() {
     return (
         <Router>
@@ -40,6 +41,11 @@ export default function App() {
                 <Route path="/register">
                     <AppLayout>
                         <Register />
+                    </AppLayout>
+                </Route>
+                <Route path="/createpdf">
+                    <AppLayout>
+                        <CreatePdf />
                     </AppLayout>
                 </Route>
                 <Route path="/dashboard">

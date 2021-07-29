@@ -23,6 +23,8 @@ export class EditInvoice extends Component {
             projectId: props && props.history && props.history.location&&props.history.location.state &&props.history.location.state.state?props.history.location.state.state:0,
             paymentstatus:"",
             invoiceNumber:"",
+            taskendDate:"",
+            taskstartDate:"",
             projects:"",
             clientName:"",
             generatedDate:"",
@@ -30,8 +32,8 @@ export class EditInvoice extends Component {
             hourlyRate:"",
             Total:"",
             paymentstatus:"",
-            paymentPreStatus:"",
-            taskendDate:""
+            paymentPreStatus:""
+            
             
         }}
         //Fetch invoice based on invoice is to update it.
@@ -44,10 +46,11 @@ export class EditInvoice extends Component {
                     this.setState({clientName:response.data.clientName})
                     this.setState({generatedDate: response.data.generatedDate})
                     this.setState({Total:response.data.totalCost})
-                    this.setState({invoiceNumber:response.data.invId})
+                    this.setState({invoiceNumber:response.data._id})
                     this.setState({hourlyRate:response.data.hourlyRate})
                     this.setState({paymentPreStatus:response.data.paymentStatus})
-                    this.setState({taskendDate:response.data.paymentStatus})
+                    this.setState({taskendDate:response.data.taskendDate})
+                    this.setState({taskstartDate:response.data.startDate})
                 } 
             }).catch((error) => {
                 console.log(error)
@@ -128,9 +131,11 @@ export class EditInvoice extends Component {
                                                 <Col>
                                                     <span>
                                                         <div>Invoice Number :{this.state.invoiceNumber}</div>
-                                                        <div>Project Name :  {this.state.projects}</div>
+                                                        <div>Project Name :  {this.state.project}</div>
                                                         <div>Client Name : {this.state.clientName}</div>
-                                                        <div>Invoice Genrated : {this.state.generatedDate} </div>
+                                                        <div>From date :  {this.state.taskstartDate}</div>
+                                                        <div>To Name :  {this.state.taskendDate}</div>
+                                                        <div>Generated Date: {this.state.generatedDate} </div>
                                                         <div>Hourly Rate :{this.state.hourlyRate} CAD </div>
                                                         <div>Total Amount :{this.state.Total} CAD </div>
                                                         
