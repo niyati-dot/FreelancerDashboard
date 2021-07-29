@@ -6,7 +6,7 @@
 
 import {useState, useEffect, React} from 'react';
 import PageHeader from "../../components/PageHeader";
-import { useParams, Redirect, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import projectsServices from '../../services/projectsServices';
 import clientsServices from '../../services/clientsServices';
 import {Col, Row} from "react-bootstrap";
@@ -41,9 +41,8 @@ const EditProjects = (prop) => {
     });
 
     useEffect(() => {
-        projectsServices.get(params[params.length-1]).then(res => setProject(res.data));
-        console.log(project);
         clientsServices.list().then(res => setClient(res.data));
+        projectsServices.get(params[params.length-1]).then(res => setProject(res.data));
     },[]);
 
     const [projectError, setProjectError] = useState({
@@ -102,16 +101,6 @@ const EditProjects = (prop) => {
             newProjectError.description = "";
             setProjectError(newProjectError);
         }
-
-        // if(!project.rate.value > 0){
-        //     newProjectError.rate = "Rate is required";
-        //     setProjectError(newProjectError);
-        //     valid = false;
-        // }
-        // else{
-        //     newProjectError.rate = "";
-        //     setProjectError(newProjectError);
-        // }
 
         if(!project.invoice.length > 0){
             newProjectError.invoice = "Invoice Duration is required";
