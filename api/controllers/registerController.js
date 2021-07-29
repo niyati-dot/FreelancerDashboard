@@ -8,8 +8,6 @@ const registerModel = require('../models/registerModel');
 
 
 const add = (req, res) => {
-   console.log(req.body);
-
    const addUser = new registerModel();
    if (req.body && req.body.name) {
       addUser.Name = req.body.name;
@@ -40,61 +38,13 @@ const add = (req, res) => {
 
 const fatchUser = (req, res) => {
    registerModel.findOne({ 'Email': req.body.email }, function (error, result) {
-      console.log(result)
-
       res.send(result);
-      // console.log(res)
-      // if (error) {
-      //     return response.status(400).json({
-      //         result: [],
-      //         message: error,
-      //         success: false
-      //     })
-      // } 
-      // else {
-      //     return response.status(200).json({
-      //         message: "Success",
-      //         success: true
-      //     })  
-      // }
    });
-
-
-
-   // if (err){
-   //     return res.status(404).json({
-   //         success: false,
-   //         message: 'Project not found!',
-   //         data: null
-   //     })
-   // }
-
-   // return res.status(200).json({
-   //     success: true,
-   //     message: 'Project found!',
-   //     data: doc
-   // }) 
 };
 
 const fatchUserById = (req, res) => {
    registerModel.findOne({ '_id': req.body.id }, function (error, result) {
-      console.log(result)
-
       res.send(result);
-      // console.log(res)
-      // if (error) {
-      //     return response.status(400).json({
-      //         result: [],
-      //         message: error,
-      //         success: false
-      //     })
-      // } 
-      // else {
-      //     return response.status(200).json({
-      //         message: "Success",
-      //         success: true
-      //     })  
-      // }
    });
 }
    module.exports = {

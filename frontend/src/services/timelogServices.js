@@ -19,7 +19,6 @@ export class timelogServices{
     // Update Timelog
     async update(data){
         data.projectId = data.project;
-        console.log(data);
         const result = await axios.put("/api/timelogs/update/"+data._id,data);
         return result.data;
     };

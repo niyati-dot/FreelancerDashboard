@@ -104,7 +104,7 @@ export class Invoices extends Component {
                 this.getAllInvoices()
             }
         }).catch((error) => {
-            console.log("Eroor")
+            console.log(error)
         })
     }
 

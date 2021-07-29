@@ -107,7 +107,6 @@ const update = (req, res) => {
  * If having error returns false with error status.
  */
 const remove = (req, res) => {
-    console.log("Iam HERE IN COntroller",req.body)
     if(req.body && req.body._id){
         testimonialModel.findOneAndRemove({'_id': req.body._id}, function(error, result)
         {
@@ -153,8 +152,6 @@ const add = async (req, res) => {
     if(req.body && req.body.userId){
         testimonials.userId = req.body.userId;
     }
-    
-    console.log(testimonials)
     testimonials.save(function(error, document) {
         if (error) {
             return res.status(400).json({

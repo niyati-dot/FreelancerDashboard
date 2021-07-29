@@ -304,7 +304,7 @@ export class EditClient extends Component
         if (this.validateForm()) {
             clientService.editClient(this.state).then((response) => {
             }).catch((error) => {
-                console.log("Error")
+                console.log(error)
             })
             alert('Successfully updated details!!');
             this.props.history.push({ pathname: '/clients' });
