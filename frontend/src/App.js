@@ -10,7 +10,7 @@ import Register from "./pages/Auth/Register";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
-import InvoiceGeneration from "./pages/Invoices/GenerateInvoice";
+import InvoiceGeneration from "./pages/Invoices/InvoiceGeneration";
 import Timelogs from "./pages/Timelogs";
 import Projects from "./pages/Projects";
 import AddProject from "./pages/Projects/AddProject";
