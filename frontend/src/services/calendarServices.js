@@ -11,8 +11,10 @@
     /**
     * Method to hit the API of getting list of calendar events
     */
-    async list(){
-        const result = await axios.get("/api/calendar");
+    async list(data){
+        let object = {}
+        object['userId'] = data.userId
+        const result = await axios.post("/api/calendar",object);
         return result.data;
     };
 

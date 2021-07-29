@@ -26,6 +26,9 @@
      viewStatus: {
          type: Boolean,
          default: false
+     },
+     userId: {
+         type: String
      }
  }
  
