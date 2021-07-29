@@ -36,7 +36,6 @@ module.exports.List = (req, response) => {
 module.exports.setStatus = (req, response) => {
 
     var data = req['body'];
-    console.log(data);
     let currentDate = data.currentDate;
     let eventName = data.eventName;
     let category = data.category;

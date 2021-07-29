@@ -248,6 +248,7 @@
   */
  module.exports.delete = (req, response) => {
  
+     console.log(req.body);
      if(req.body && req.body.ClientName && req.body.ContactNo){
          clientsModel.findOneAndRemove({'ClientName': req.body.ClientName, 'ContactNo': req.body.ContactNo}, function(error, result)
          {
