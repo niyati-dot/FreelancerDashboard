@@ -27,4 +27,4 @@ const testimonialSchema = new Mongoose.Schema({
     }
 });
 
-module.exports = Mongoose.model("testimonial", testimonialSchema);
+module.exports = Mongoose.model("testimonials", testimonialSchema);
