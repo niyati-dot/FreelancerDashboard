@@ -6,16 +6,19 @@ import {Container} from "react-bootstrap";
 
 // Page Wrapper for Application Pages
 const AppLayout =({children}) =>{
+
     return(
         <>
             <header>
                 <AppNavbar/>
             </header>
             <main>
-                <Container>
-                    {children}
-                </Container>
+                {children}
             </main>
+            <hr/>
+            <footer className="container">
+                <p>All rights reserved.</p>
+            </footer>
         </>
     )
 }

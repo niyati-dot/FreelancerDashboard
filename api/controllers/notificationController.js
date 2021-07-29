@@ -4,7 +4,7 @@
  * Controller for Notification Controller.
  */
 
- const notificationModel = require('../models/notificationModel');
+ const notificationModel = require('../models/calendarModel');
 
  /**
   * Method to get all the details of the clients.
