@@ -178,7 +178,7 @@ export class BusinessCard extends Component {
             }
         })
 
-        testimonialServices.list().then(response => {
+        testimonialServices.list({"userId": id}).then(response => {
             if (response.data && response.data.length) {
                 this.setState({testimonialData: response.data.splice(0,2)})
             }
