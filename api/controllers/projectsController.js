@@ -130,6 +130,9 @@ const add = async (req, res) => {
         if(req.body && req.body.status){
             projects.status = req.body.status;
         }
+        if(req.body && req.body.userId){
+            projects.userId = req.body.userId;
+        }
         projects.save();
 
         return res.status(200).json({

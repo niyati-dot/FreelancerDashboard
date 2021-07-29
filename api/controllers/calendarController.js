@@ -55,6 +55,9 @@ const list = (req, res) => {
          if(req.body && req.body.time){
             calendar.time = req.body.time;
         }
+        if(req.body && req.body.userId){
+            calendar.userId = req.body.userId;
+        }
          calendar.save();
  
          return res.status(200).json({

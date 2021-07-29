@@ -29,7 +29,8 @@ export default function AddProjects(){
         description: "",
         rate: "",
         invoice: "",
-        status: ""
+        status: "",
+        userId: localStorage.getItem("user_id")
     });
 
     const [clients, setClient] = useState({

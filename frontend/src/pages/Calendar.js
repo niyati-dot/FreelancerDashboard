@@ -27,7 +27,8 @@ export default function Calendar(){
         eventName: "",
         category: "",
         date: "",
-        time: ""
+        time: "",
+        userId: localStorage.getItem("user_id")
     });
 
     const [calendarEventError, setCalendarEventError] = useState({
