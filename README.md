@@ -203,18 +203,56 @@ export default App;
 - [DevTo](https://dev.to/abdulbasit313/how-to-develop-a-stopwatch-in-react-js-with-custom-hook-561b)'s Code was used to implement a timer module which display continuously the time since a task started
 - [DevTo](https://dev.to/abdulbasit313/how-to-develop-a-stopwatch-in-react-js-with-custom-hook-561b)'s Code was modified by @sancheti
 
+### frontend/src/pages/BusinessCard.js
 
+*Between Lines 198 - 212*
+
+```
+<React.Fragment>
+  <div>
+      {
+          this.state.exportSide === 'Front' ? (
+              <BusinessCardFront ref={this.componentRef} apiData={this.state.profileData} />
+
+          ) : (
+              <BusinessCardBack ref={this.componentRef} apiData={this.state.testimonialData} />
+          )
+      }
+  </div>
+  <div className="export-button">
+      <Button className="primary-button" onClick={() => exportComponentAsJPEG(this.componentRef)}>Export As JPEG</Button>
+  </div>
+</React.Fragment>
+
+```
+
+The above code was created using react-component-export-image adapted from [npmJS](https://www.npmjs.com/package/react-component-export-image). ReactJS library ['react-component-export-image'](https://www.npmjs.com/package/react-component-export-image) has been used.
+
+*Between Lines 124 - 131*
+
+```
+<Flippy flipOnHover={true} style={{ display: "flex", justifyContent: "center", width: '24rem', height: '12rem' }}>
+    <FrontSide>
+        <BusinessCardFront apiData={this.props && this.props.data && this.props.data.profileData} />
+    </FrontSide>
+    <BackSide>
+        <BusinessCardBack apiData={this.props && this.props.data &&  this.props.data.testimonialData} />
+    </BackSide>
+</Flippy>
+```
+
+The above code was created and adapted from [medium](https://kmarks2013.medium.com/flipping-components-in-react-cc7ca8a1d9f9). ReactJS library ['react-flippy'](https://www.npmjs.com/package/react-flippy) has been used.
 
 ## Contributions
 
 | Author  |  Feature 1 |  Status |  Feature 2 |  Status |
 |---|---|---|---|---|
-|  [Bansi Mehta(B00875640)](bn955101@dal.ca) |  ToDo List | Done  | V-Card  | Pending  |
-|  [Deep Patel(B00865413)](dp889845@dal.ca) |  Testimonials | Done  | Authentication/Profile |  Pending |
-|  [Janvi Patel (B00863421)](jn410076@dal.ca) |  Clients | Done  | Notification  | Pending  |
-| [Sanket Shah(B00862499)](sn488207@dal.ca) | Projects  | Done  | Calendar  | Pending  |
-| [Tejaswi Chaudhary(B00858613)](tj754396@dal.ca) |  Invoice Management  |   Done| Email Invoice   | Pending   |
-| [Vishal Sancheti (B00877378)](vs488310@dal.ca) |  Timelogs |  Done |  Dashboard Stats | Pending  |
+|  [Bansi Mehta(B00875640)](bn955101@dal.ca) |  ToDo List | Done  | Business Card  | Done  |
+|  [Deep Patel(B00865413)](dp889845@dal.ca) |  Testimonials | Done  | Authentication/Profile |  Done |
+|  [Janvi Patel (B00863421)](jn410076@dal.ca) |  Clients | Done  | Notification  | Done  |
+| [Sanket Shah(B00862499)](sn488207@dal.ca) | Projects  | Done  | Calendar  | Done  |
+| [Tejaswi Chaudhary(B00858613)](tj754396@dal.ca) |  Invoice Generation  |   Done| Invoice Management   | Done   |
+| [Vishal Sancheti (B00877378)](vs488310@dal.ca) |  Timelogs |  Done |  Dashboard Stats | Done  |
 
 ## Acknowledgments
 
