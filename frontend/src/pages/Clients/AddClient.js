@@ -22,7 +22,7 @@ export class AddClient extends Component {
     //constructor for props
     constructor(props) {
         super(props)
-
+        console.log(props);
         this.state = {
             clientName: "",
             clientNameError: "",
@@ -44,7 +44,8 @@ export class AddClient extends Component {
             meetingPlatform: "",
             meetingPlatformError: "",
             country: "",
-            region: ""
+            region: "",
+            userId: props.location.userId
         }
     }
 

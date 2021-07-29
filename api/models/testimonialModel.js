@@ -21,6 +21,9 @@ const testimonialSchema = new Mongoose.Schema({
     requestedOn: {
         type: Date,
         default: Date.now
+    },
+    userId:{
+        type: String
     }
 });
 

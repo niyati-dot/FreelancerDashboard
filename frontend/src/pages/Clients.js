@@ -48,6 +48,9 @@ export class Clients extends Component {
           </div>
         )
       }]; 
+
+      this.userId = localStorage.getItem("user_id")
+      console.log('Inconstructor',this.userId);
   }
 
   /**
@@ -56,7 +59,7 @@ export class Clients extends Component {
   */
   componentDidMount() {
     
-    clientService.getAllClients().then((response) => {
+    clientService.getAllClients(this.userId).then((response) => {
         if (response.status == 200) {
             this.setData(response.data);
             let newDetails = [];
@@ -146,7 +149,8 @@ export class Clients extends Component {
   */
   handleNewClient = (e) => {
     e.preventDefault();
-    this.props.history.push({ pathname: '/clients/add' });
+    this.props.history.push({ pathname: '/clients/add', 
+                              userId: this.userId});
   };
 
   render() {

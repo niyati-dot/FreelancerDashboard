@@ -11,8 +11,10 @@ export class projectsServices{
     /**
      * Method to hit the API of getting list of projects
      */
-    async list(){
-        const result = await axios.get("/api/projects");
+    async list(data){
+        let object = {}
+        object['userId'] = data.userId
+        const result = await axios.post("/api/projects",object);
         return result.data;
     };
 
