@@ -21,6 +21,12 @@ export class registerService {
       const result = await axios.post("/api/register/fetchUserById", { id: id });
       return result.data;
    }
+
+   async editUser(user){
+    console.log(user);
+    const result = await axios.put("/api/register/edit/"+user.id, user);
+    return result.data;
+    };
 }
 
 export default new registerService()
