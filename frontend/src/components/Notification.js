@@ -1,68 +1,101 @@
 import "../styles/DashboardNavbar.scss";
-import {Accordion, Container,  CustomToggle, Card, Dropdown, Modal, Nav, Navbar} from "react-bootstrap";
+import {Dropdown, Modal} from "react-bootstrap";
 import React,  {Component} from 'react';
 import NotificationService from "../services/notificationService"
-import moment from 'moment';
 import { withRouter } from "react-router";
+import moment from "moment";
 
-class Notification extends Component 
+class Notification extends Component
 {
     constructor(props) {
-        super(props)
+        super(props);
 
-   
         this.state = {
-            value: [],
-            lgshow: false
-        }
+            values: [],
+            value: {},
+            notificationShow: false
+        };
+
+        this.userId = localStorage.getItem("user_id");
+        this.currentDate = moment().format('YYYY-MM-DD')
 
     }
 
-    // Similar to componentDidMount and componentDidUpdate:
-    componentDidMount() {
-        console.log("always");
-        console.log("Here I am");
-        NotificationService.getAllNotifications().then((response) => {  
-            console.log('response',response.data);
-            let notification = [];
+    fetchNotifications(){
+        // var today = new Date();
+        // var dd = String(today.getDate()).padStart(2, '0');
+        // var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+        // var yyyy = today.getFullYear();
+        // today = yyyy + '-' + mm + '-' + dd;
+        NotificationService.fetchNotifications({"currentDate": this.currentDate, "userId": this.userId}).then((response) => {
+            let notifications = [];
             response.data.forEach(element => {
                 let item = {};
                 item.eventName = element.eventName;
                 item.category = element.category;
-                notification.push(item)
-              });
-              this.setState({
-                value: notification
-              })
+                item.viewStatus = element.viewStatus;
+                item.className = item.viewStatus ? "" : 'text-primary';
+                notifications.push(item)
+            });
+            this.setState({
+                values: notifications
+            });
+            console.log(this.state.values);
         }).catch((error) => {
             console.log("Error")
         })
     }
 
-    openNotification = (event) => {
-        event.preventDefault();
-        console.log('Here I am in viewInDetail function');
-
-        this.props.history.push({ pathname: '/openNotification',
-                                  notification: this.state.value  });
+    componentDidMount() {
+        this.fetchNotifications();
     }
 
+    handleNotificationClose(){
+        this.setState({notificationShow:false});
+    };
+    handleNotificationShow(){
+        this.setState({notificationShow:true});
+    };
+
+    openNotification = (value) => {
+        this.setState({value:value});
+        NotificationService.setStatus({"currentDate": this.currentDate, "value": value}).then((response) => {
+            console.log('stored');
+            this.fetchNotifications();
+            this.handleNotificationShow();
+        }).catch((error) => {
+            console.log("Error")
+        });
+        
+        
+
+    };
+
     render() {
-
         return (
-            <div >
+            <div>
                 <Dropdown>
-                        <Dropdown.Toggle title="Notification" className="nav-bar-link" id="dropdown-basic">
+                    <Dropdown.Toggle title="Notification" id="bellIcon">
                         <i className="fas fa-bell"/>
-                        </Dropdown.Toggle>
+                    </Dropdown.Toggle>
 
-                        <Dropdown.Menu>
-                            {this.state.value.map((value,index) => {
-                                return <Dropdown.Item onClick = { (e) => this.openNotification(e)} value={value.eventName}>{value.category} <hr></hr></Dropdown.Item>
-                            })}
-                        </Dropdown.Menu>
+                    <Dropdown.Menu id="notificationPanel" >
+                        {this.state.values.map((value,index) => {
+                            console.log(value)
+                            return <Dropdown.Item className="border-bottom" onClick = { () => this.openNotification(value)}>
+                                <span className={value.className} >{value.eventName}</span>
+                            </Dropdown.Item>
+                        })}
+                    </Dropdown.Menu>
                 </Dropdown>
-
+                <Modal show={this.state.notificationShow} onHide={() => this.handleNotificationClose()}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{this.state.value.category}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {this.state.value.eventName}
+                    </Modal.Body>
+                </Modal>
             </div>
         )
     }

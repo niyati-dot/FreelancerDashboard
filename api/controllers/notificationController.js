@@ -4,38 +4,59 @@
  * Controller for Notification Controller.
  */
 
- const notificationModel = require('../models/calendarModel');
+const notificationModel = require('../models/calendarModel');
 
- /**
-  * Method to get all the details of the clients.
-  * @param {*} request 
-  * @param {*} response 
-  * @returns 
-  * find the all clients details and returns result as response
-  */
- module.exports.getAll = (req, response) => {
+/**
+ * Method to get all the details of the clients.
+ * @param {*} request
+ * @param {*} response
+ * @returns
+ * find the all clients details and returns result as response
+ */
+module.exports.List = (req, response) => {
 
-     var today = new Date();
-     var dd = String(today.getDate()).padStart(2, '0');
-     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-     var yyyy = today.getFullYear();
-     today = yyyy + '-' + mm + '-' + dd;
-     console.log(today);
-     console.log('New data');
-
-    notificationModel.find({'date': today}, function(error, result)
+    var data = req['body'];
+    let currentDate = data.currentDate;
+    let userId = data.userId;
+    notificationModel.find({'date': currentDate, 'userId': userId }, function(error, result)
     {
-         if (error) {
-              return response.status(400).json({
-                  result: [],
-                  message: error,
-                  success: false
-              })
-         } 
-         else {
-              console.log(result)
-              response.send(result)
-
+        if (error) {
+            return response.status(400).json({
+                result: [],
+                message: error,
+                success: false
+            })
+        }
+        else {
+            response.send(result)
         }
     });
- }
+}
+
+module.exports.setStatus = (req, response) => {
+
+    var data = req['body'];
+    console.log(data);
+    let currentDate = data.currentDate;
+    let eventName = data.eventName;
+    let category = data.category;
+    notificationModel.find({'date': currentDate, 'eventName': eventName, 'category': category }, function(error, document) {
+
+        let update = document[0]
+        document[0].viewStatus = true;
+        console.log(update.viewStatus);
+        document[0].save(function(error){
+            if (error) {
+                return response.status(400).json({
+                    result: [],
+                    message: error,
+                    success: false
+                })
+            } else {
+                return response.status(200).json({
+                    success: true
+                })
+            }
+        })
+    })
+}

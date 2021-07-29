@@ -4,8 +4,8 @@ import axios from "axios";
 
 export class timelogServices{
     // Get all Timelogs
-    async list(){
-        const result = await axios.get("/api/timelogs");
+    async list(data){
+        const result = await axios.get("/api/timelogs",{ params: data });
         return result.data;
     };
 

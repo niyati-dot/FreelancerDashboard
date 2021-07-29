@@ -8,6 +8,7 @@
   
  const notificationRoutes = express.Router();
 
- notificationRoutes.get('/getAll', notificationController.getAll);
+ notificationRoutes.post('/List', notificationController.List);
+ notificationRoutes.post('/setStatus', notificationController.setStatus);
 
  module.exports = notificationRoutes;

@@ -21,7 +21,10 @@ const testimonialSchema = new Mongoose.Schema({
     requestedOn: {
         type: Date,
         default: Date.now
-    }
+    },
+    userId:{
+        type: Schema.Types.ObjectID,
+    },
 });
 
 module.exports = Mongoose.model("testimonial", testimonialSchema);

@@ -3,13 +3,13 @@
  * Created On: 2021-07-20.
  * Model for todo list.
  */
-const mongoose = require("mongoose");
-const schema = mongoose.Schema;
+const Mongoose = require("mongoose");
+const Schema = Mongoose.Schema;
 
 
-const todoListSchema = new schema({
+const todoListSchema = new Mongoose.Schema({
     id: {
-        type: schema.Types.ObjectID
+        type: Schema.Types.ObjectID
     },
     title: {
         type: String
@@ -21,10 +21,11 @@ const todoListSchema = new schema({
         type: Date,
         default: Date.now()
     },
-    userId: {
-        type: schema.Types.ObjectID
-    }
+    userId:{
+        type: Schema.Types.ObjectID,
+        ref: "users"
+    },
 });
 
 // Model according to collection: "to_do_list"
-module.exports = mongoose.model("to_do_list", todoListSchema, "to_do_list");
+module.exports = Mongoose.model("to_do_list", todoListSchema, "to_do_list");

@@ -14,7 +14,6 @@ import { Button, Col, Row } from "react-bootstrap";
 import "../styles/Clients.scss";
 import './Clients/AddClient'
 import { Component } from "react";
-import axios from 'axios';
 import clientService from "../services/clientService"
 
 
@@ -48,6 +47,8 @@ export class Clients extends Component {
           </div>
         )
       }]; 
+
+      this.userId = localStorage.getItem("user_id")
   }
 
   /**
@@ -56,7 +57,7 @@ export class Clients extends Component {
   */
   componentDidMount() {
     
-    clientService.getAllClients().then((response) => {
+    clientService.getAllClients(this.userId).then((response) => {
         if (response.status == 200) {
             this.setData(response.data);
             let newDetails = [];
@@ -73,7 +74,7 @@ export class Clients extends Component {
             })
         }
     }).catch((error) => {
-        console.log("Eroor")
+        console.log(error)
     })
 
   }
@@ -89,7 +90,7 @@ export class Clients extends Component {
           state: response.data
         })
     }).catch((error) => {
-        console.log("Error")
+        console.log(error)
     })
   }
 
@@ -103,7 +104,7 @@ export class Clients extends Component {
           state: response.data
         })
     }).catch((error) => {
-        console.log("Error")
+        console.log(error)
     })
   };
 
@@ -129,10 +130,10 @@ export class Clients extends Component {
                   this.setState({data: newdetails})
                 }
           }).catch((error) => {
-              console.log("Eroor")
+              console.log(error)
           })
       }).catch((error) => {
-          console.log("Eroor")
+          console.log(error)
       })
   }
 
@@ -146,7 +147,8 @@ export class Clients extends Component {
   */
   handleNewClient = (e) => {
     e.preventDefault();
-    this.props.history.push({ pathname: '/clients/add' });
+    this.props.history.push({ pathname: '/clients/add', 
+                              userId: this.userId});
   };
 
   render() {

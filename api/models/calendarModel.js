@@ -27,9 +27,9 @@
          type: Boolean,
          default: false
      },
-     userId: {
-         type: String
-     }
- }
+     userId:{
+         type: Schema.Types.ObjectID,
+     },
+ };
  
  module.exports = Mongoose.model("calendars", calendarSchema);
