@@ -23,7 +23,7 @@
      console.log(today);
      console.log('New data');
 
-    notificationModel.find({'date': today, 'viewStatus':false}, function(error, result)
+    notificationModel.find({'date': today, 'viewStatus':false, 'userId': req.body.userId }, function(error, result)
     {
          if (error) {
               return response.status(400).json({

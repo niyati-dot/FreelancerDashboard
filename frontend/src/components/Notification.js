@@ -10,19 +10,20 @@ class Notification extends Component
     constructor(props) {
         super(props)
 
-   
+    
         this.state = {
             value: [],
             lgshow: false
         }
 
+        this.userId = localStorage.getItem("user_id")
     }
 
     // Similar to componentDidMount and componentDidUpdate:
     componentDidMount() {
         console.log("always");
         console.log("Here I am");
-        NotificationService.getAllNotifications().then((response) => {  
+        NotificationService.getAllNotifications(this.userId).then((response) => {  
             console.log('response',response.data);
             let notification = [];
             response.data.forEach(element => {

@@ -6,8 +6,8 @@
  import axios from "axios"
 
  export class ClientService {
-     async getAllClients() {
-         const result = await axios.get("/api/clients/getAll");
+     async getAllClients(userId) {
+         const result = await axios.post("/api/clients/getAll", {userId: userId} );
          return result;
      }
  

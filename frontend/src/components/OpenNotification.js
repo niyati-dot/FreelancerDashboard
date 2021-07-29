@@ -69,14 +69,10 @@ class OpenNotification extends Component
                 </Modal.Header>
                 <Modal.Body>
                     <Form id="contact-form">
-
                         <Form.Group>
                             <Form.Label className="required form-label" >category: {this.state.category} </Form.Label>
                             <Form.Label className="required form-label" >Description: {this.state.eventName}</Form.Label>
-                        </Form.Group>
-
-                       
-                        
+                        </Form.Group>    
                     </Form>
                 </Modal.Body>
             </Modal>

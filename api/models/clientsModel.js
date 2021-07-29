@@ -47,6 +47,9 @@ const clientsSchema = new Mongoose.Schema({
     MeetingPlatform: {
         type: String,
     },
+    userId: {
+        type: Schema.Types.ObjectID
+    }
 });
 
 // Model according to collection: "clients"
