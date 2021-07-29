@@ -4,6 +4,7 @@
 const express = require('express');
 const router = express.Router();
 const testimonialRouter = require('./routes/testimonialRoutes');
+const registerRouter = require('./routes/registerRoutes');
 const clientsRouter = require('./routes/clientsRoutes');
 const projectsRouter = require('./routes/projectsRoutes');
 const timelogRouter = require('./routes/timelogRoutes');
@@ -22,6 +23,7 @@ router.get('/', (req,res) => {
 router.use('/clients',clientsRouter);
 router.use('/timelogs',timelogRouter);
 router.use('/testimonials',testimonialRouter);
+router.use('/register',registerRouter);
 router.use('/projects',projectsRouter);
 router.use('/todoLists', todoListRouter)
 router.use('/invoices',invoiceRouter);

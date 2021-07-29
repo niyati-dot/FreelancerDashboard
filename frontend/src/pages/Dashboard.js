@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PageHeader from "../components/PageHeader";
 
 export default function Dashboard(){
+
+    console.log(localStorage.getItem('user_id'));
 
     return (
         <div className="page-container">

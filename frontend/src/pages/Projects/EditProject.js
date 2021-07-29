@@ -6,7 +6,7 @@
 
 import {useState, useEffect, React} from 'react';
 import PageHeader from "../../components/PageHeader";
-import { useParams, Redirect, useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import projectsServices from '../../services/projectsServices';
 import clientsServices from '../../services/clientsServices';
 import {Col, Row} from "react-bootstrap";
