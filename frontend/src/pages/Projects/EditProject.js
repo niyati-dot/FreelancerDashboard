@@ -8,7 +8,7 @@ import {useState, useEffect, React} from 'react';
 import PageHeader from "../../components/PageHeader";
 import { useParams, useHistory } from 'react-router-dom';
 import projectsServices from '../../services/projectsServices';
-import clientsServices from '../../services/clientsServices';
+import clientService from '../../services/clientService';
 import {Col, Row} from "react-bootstrap";
 
 /**
@@ -41,7 +41,7 @@ const EditProjects = (prop) => {
     });
 
     useEffect(() => {
-        clientsServices.list().then(res => setClient(res.data));
+        clientService.getAllClients(localStorage.getItem("user_id")).then(res => setClient(res.data));
         projectsServices.get(params[params.length-1]).then(res => setProject(res.data));
     },[]);
 

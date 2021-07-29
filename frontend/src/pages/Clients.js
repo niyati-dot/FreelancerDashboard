@@ -14,7 +14,6 @@ import { Button, Col, Row } from "react-bootstrap";
 import "../styles/Clients.scss";
 import './Clients/AddClient'
 import { Component } from "react";
-import axios from 'axios';
 import clientService from "../services/clientService"
 
 
