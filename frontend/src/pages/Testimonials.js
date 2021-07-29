@@ -22,54 +22,52 @@ const Testimonials = () => {
 
     /**
      * creting a column for a datatable to display testimonials
-    */
+     */
     const columns = [
         { Header: 'Project', accessor: 'project' },
         { Header: 'Client', accessor: 'client' },
         { Header: 'Feedback', accessor: 'feedback' },
         // { Header: 'Requested on', accessor: row => dateFormat(row.requestedOn, "dd-mm-yyyy, HH:MM:ss") },
-        
+
         {
             // creating an action button containig entire row details
             Header: 'Actions', accessor: 'row',
             Cell: ({ row }) => (
                 <div className="action">
-                    <div className="button-container">
-                        <Button className="delete-button"  onClick= {() => deleteTestimonial(row)} >Delete</Button>
-                    </div>
+                    <Button className="delete-button"  onClick= {() => deleteTestimonial(row)} >Delete</Button>
                 </div>
             )
         }
     ];
 
     /**
-     * fatching list of project details through an api call 
-     * using project services's list functionality  
+     * fatching list of project details through an api call
+     * using project services's list functionality
      */
     const [project, setProjects] = useState([]);
     useEffect(() => {
         projectServices.list({"userId": localStorage.getItem("user_id")}).then(res => setProjects(res.data));
-    },[]); 
+    },[]);
 
     /**
-     * fatching list of clients details through api call 
-     * using clientServices's list functionality  
+     * fatching list of clients details through api call
+     * using clientServices's list functionality
      */
     const [client, setClient] = useState([]);
     useEffect(() => {
         clientServices.getAllClients(localStorage.getItem("user_id")).then(res => setClient(res.data));
-    },[]); 
+    },[]);
 
     /**
-     * fatching list of Testimonials details through api call 
-     * using testimonialService's list functionality  
+     * fatching list of Testimonials details through api call
+     * using testimonialService's list functionality
      */    const [testimonial, setTestimonial] = useState([]);
     useEffect(() => {
         testimonialServices.list({userId: localStorage.getItem('user_id')}).then(res => setTestimonial(res.data));
     },[]);
 
     /**
-     * Constant containing mailing information to send to 
+     * Constant containing mailing information to send to
      */
     const [mailInfo, setMailInfo] = useState({
         project: "",
@@ -81,7 +79,7 @@ const Testimonials = () => {
 
     /**
      * Storing the values into the database using testimonialService's add functionality
-     * @param {*} e 
+     * @param {*} e
      * the response containig automated genrated id is fatched and stored into mailInfo's id parameter
      */
     const storeData = (e) => {
@@ -95,8 +93,8 @@ const Testimonials = () => {
     }
 
     /**
-     * Method to send email on click event. 
-     * @param {*} data 
+     * Method to send email on click event.
+     * @param {*} data
      * The emails can be sent on specif id's using this functionalities.
      */
     function sendEmail() {
@@ -105,7 +103,7 @@ const Testimonials = () => {
 
         // Mailing details
         var mailParams = {
-            
+
             //Mail Sender Details
             freelancerName: 'Freelancer',
             freelancerMail: 'deepatel1607@gmail.com',
@@ -133,7 +131,7 @@ const Testimonials = () => {
 
     /**
      * Functionality to delete testimonials with a specific id of testimonial
-     * @param {*} row 
+     * @param {*} row
      */
     const deleteTestimonial = (row) => {
         if (window.confirm("Are you sure?")) {
@@ -144,7 +142,7 @@ const Testimonials = () => {
 
     /**
      * onChange of the values store the values into mailInfo Parameters
-     * @param {*} e 
+     * @param {*} e
      * parameter e containig the values is used to fatch form element on change
      */
     const handleChange = (e) => {
@@ -196,7 +194,7 @@ const Testimonials = () => {
                                                     <Form.Group>
                                                         <Form.Label className="required form-label">Client</Form.Label>
                                                         <Form.Control as="select" name="client"
-                                                            onChange={(e) => handleChange(e)} 
+                                                                      onChange={(e) => handleChange(e)}
                                                         >
                                                             <option>Select Client</option>
                                                             {client.length && client.map(function(cli,index){
@@ -208,23 +206,23 @@ const Testimonials = () => {
                                                     <Form.Group>
                                                         <Form.Label className="required form-label">Project</Form.Label>
                                                         <Form.Control as="select" name="project"
-                                                            onChange={(e) => handleChange(e)} 
+                                                                      onChange={(e) => handleChange(e)}
                                                         >
                                                             <option>Select Project</option>
                                                             {project.length && project.filter(proj => proj.client && proj.client.includes(mailInfo.client))
-                                                            .map(function(proj,index){
-                                                            return <option key={index} value={proj.title}>{proj.title}</option>
-                                                        })}
+                                                                .map(function(proj,index){
+                                                                    return <option key={index} value={proj.title}>{proj.title}</option>
+                                                                })}
                                                         </Form.Control>
                                                     </Form.Group>
 
                                                     <Form.Group>
-                                                            <Form.Label className="required form-label">Description Message</Form.Label>
-                                                            <Form.Control as="textarea" name="message" rows={3} id="message" 
-                                                                onChange={(e) => handleChange(e)} 
-                                                            />
+                                                        <Form.Label className="required form-label">Description Message</Form.Label>
+                                                        <Form.Control as="textarea" name="message" rows={3} id="message"
+                                                                      onChange={(e) => handleChange(e)}
+                                                        />
                                                     </Form.Group>
-                                                    <Button variant="primary" type="submit" id="button" value="Send" onClick={storeData} >   
+                                                    <Button variant="primary" type="submit" id="button" value="Send" onClick={storeData} >
                                                         Send
                                                     </Button>
                                                 </Form>
