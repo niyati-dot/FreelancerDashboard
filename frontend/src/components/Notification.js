@@ -5,12 +5,12 @@ import NotificationService from "../services/notificationService"
 import moment from 'moment';
 import { withRouter } from "react-router";
 
-class Notification extends Component 
+class Notification extends Component
 {
     constructor(props) {
         super(props)
 
-    
+
         this.state = {
             value: [],
             lgshow: false
@@ -23,7 +23,7 @@ class Notification extends Component
     componentDidMount() {
         console.log("always");
         console.log("Here I am");
-        NotificationService.getAllNotifications(this.userId).then((response) => {  
+        NotificationService.getAllNotifications(this.userId).then((response) => {
             console.log('response',response.data);
             let notification = [];
             response.data.forEach(element => {
@@ -31,10 +31,10 @@ class Notification extends Component
                 item.eventName = element.eventName;
                 item.category = element.category;
                 notification.push(item)
-              });
-              this.setState({
+            });
+            this.setState({
                 value: notification
-              })
+            })
         }).catch((error) => {
             console.log("Error")
         })
@@ -44,26 +44,26 @@ class Notification extends Component
         console.log('Here I am in viewInDetail function');
         console.log( 'value one',this.state.value  );
         this.props.history.push({ pathname: '/openNotification',
-                                  notification: value });
-    }
+            notification: value });
+    };
 
     render() {
 
         return (
-            <div >
+            <div>
                 <Dropdown>
-                        <Dropdown.Toggle title="Notification" className="nav-bar-link" id="dropdown-basic">
+                    <Dropdown.Toggle title="Notification" id="bellIcon">
                         <i className="fas fa-bell"/>
-                        </Dropdown.Toggle>
+                    </Dropdown.Toggle>
 
-                        <Dropdown.Menu>
-                            {this.state.value.map((value,index) => {
-                                return <Dropdown.Item onClick = { () => this.openNotification(value)} value={value.eventName}>{value.category} <hr></hr></Dropdown.Item>
-                            })}
-                        </Dropdown.Menu>
+                    <Dropdown.Menu id="notificationPanel">
+                        {this.state.value.map((value,index) => {
+                            return <Dropdown.Item className="border-bottom" onClick = { () => this.openNotification(value)} value={value.eventName}>{value.category}</Dropdown.Item>
+                        })}
+                    </Dropdown.Menu>
                 </Dropdown>
-
             </div>
+
         )
     }
 }

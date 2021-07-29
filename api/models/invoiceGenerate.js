@@ -3,7 +3,7 @@
  * Created On: 2021-06-07
  * model for invoice management, invoice generation and edit invoice.
  */
-const mongoose = require ('mongoose')
+const mongoose = require ('mongoose');
 
 const invoiceSchema = {
     invId : {type:Number, required:true},
@@ -20,7 +20,7 @@ const invoiceSchema = {
         hours:{type:Number, required:true},
         total:{type:Number, required:true},
     }]
-}
+};
 
 //create model accoridng to collection : "invoices"
 const invoices = mongoose.model('invoices', invoiceSchema);

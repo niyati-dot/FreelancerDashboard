@@ -23,8 +23,9 @@ const testimonialSchema = new Mongoose.Schema({
         default: Date.now
     },
     userId:{
-        type: String
-    }
+        type: Schema.Types.ObjectID,
+        ref: "users"
+    },
 });
 
 module.exports = Mongoose.model("testimonials", testimonialSchema);

@@ -29,9 +29,10 @@ const projectsSchema = {
     status: {
         type: String
     },
-    userId: {
-        type: String
-    }
-}
+    userId:{
+        type: Schema.Types.ObjectID,
+        ref: "users"
+    },
+};
 
 module.exports = Mongoose.model("projects", projectsSchema);

@@ -15,9 +15,7 @@ export default function DashboardNavbar(){
                 <Navbar.Brand className="nav-bar-text" href="/">Freelance Dashboard</Navbar.Brand>
                 <Nav className="ml-auto">
                     <Nav.Link title="Notification" className="nav-bar-link" >
-                    <div>
-                        <Notification></Notification>
-                    </div>
+                    <Notification/>
                     </Nav.Link>
                     <Nav.Link title="Profile" className="nav-bar-link" href="profile">
                         <i className="fas fa-user"/>
