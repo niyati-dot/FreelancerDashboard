@@ -24,7 +24,6 @@ const Testimonials = () => {
      * creting a column for a datatable to display testimonials
     */
     const columns = [
-        { Header: '#', accessor: row => 1 },
         { Header: 'Project', accessor: 'project' },
         { Header: 'Client', accessor: 'client' },
         { Header: 'Feedback', accessor: 'feedback' },
@@ -66,7 +65,7 @@ const Testimonials = () => {
      * using testimonialService's list functionality  
      */    const [testimonial, setTestimonial] = useState([]);
     useEffect(() => {
-        testimonialServices.list().then(res => setTestimonial(res.data));
+        testimonialServices.list({userId: localStorage.getItem('user_id')}).then(res => setTestimonial(res.data));
     },[]);
 
     /**
@@ -76,7 +75,8 @@ const Testimonials = () => {
         project: "",
         client: "",
         message: "",
-        id: ""
+        id: "",
+        userId: localStorage.getItem('user_id')
     });
 
     /**
@@ -101,10 +101,11 @@ const Testimonials = () => {
      */
     function sendEmail() {
 
-        const Form_Link = "https://csci5709-group5-s21.herokuapp.com/testimonials/requestTestimonials/" + mailInfo.id;
+        const Form_Link = "http://localhost:3001/testimonials/requestTestimonials/" + mailInfo.id;
 
         // Mailing details
         var mailParams = {
+            
             //Mail Sender Details
             freelancerName: 'Freelancer_Deep',
             freelancerMail: 'deepatel1607@gmail.com',
@@ -118,27 +119,26 @@ const Testimonials = () => {
             link: Form_Link
         };
 
-        // calling emailJS functionality with emailJS Credentials
-        emailjs.send('testimonial_request', 'template_fmwc5oo', mailParams, 'user_INB1ILGAt4GVje2eeyj2V')
-            .then(function (response) {
-                alert("Email Sent");
-                console.log('SUCCESS!', response.status, response.text);
+        // // calling emailJS functionality with emailJS Credentials
+        // emailjs.send('testimonial_request', 'template_fmwc5oo', mailParams, 'user_INB1ILGAt4GVje2eeyj2V')
+        //     .then(function (response) {
+        //         alert("Email Sent");
+        //         console.log('SUCCESS!', response.status, response.text);
 
-            }, function (error) {
-                alert("Error: " + error);
-                console.log('FAILED...', error);
-            });
+        //     }, function (error) {
+        //         alert("Error: " + error);
+        //         console.log('FAILED...', error);
+        //     });
     }
 
     /**
      * Functionality to delete testimonials with a specific id of testimonial
-     * @param {*} testID 
+     * @param {*} row 
      */
-    const deleteTestimonial = (testID) => {
+    const deleteTestimonial = (row) => {
         if (window.confirm("Are you sure?")) {
-            let newData = [...testimonial];
-            newData.splice(testimonial.index, 1);
-            setTestimonial(newData);
+            testimonialServices.delete(row.original).then(res => alert(res.message));
+            testimonialServices.list({userId: localStorage.getItem('user_id')}).then(res => setTestimonial(res.data));
         }
     };
 
@@ -194,28 +194,27 @@ const Testimonials = () => {
                                                     <input type="hidden" name="message" id="message" value="From hidden" />
 
                                                     <Form.Group>
-                                                        <Form.Label className="required form-label">Project</Form.Label>
-                                                        <Form.Control as="select" name="project"
-                                                            onChange={(e) => handleChange(e)} 
-                                                        >
-                                                            <option>Select Project</option>
-                                                            {project.map(onlineUsersRow => (
-                                                                <option value={onlineUsersRow.title} >
-                                                                    {onlineUsersRow.title}
-                                                                </option>
-                                                            ))}
-                                                        </Form.Control>
-                                                    </Form.Group>
-
-                                                    <Form.Group>
                                                         <Form.Label className="required form-label">Client</Form.Label>
                                                         <Form.Control as="select" name="client"
                                                             onChange={(e) => handleChange(e)} 
                                                         >
                                                             <option>Select Client</option>
-                                                            {client.map(onlineUsersRow => (
-                                                                <option value={onlineUsersRow.ClientName}>{onlineUsersRow.ClientName}</option>
-                                                            ))}
+                                                            {client.length && client.map(function(cli,index){
+                                                                return <option key={index} value={cli.ClientName}>{cli.ClientName}</option>
+                                                            })}
+                                                        </Form.Control>
+                                                    </Form.Group>
+
+                                                    <Form.Group>
+                                                        <Form.Label className="required form-label">Project</Form.Label>
+                                                        <Form.Control as="select" name="project"
+                                                            onChange={(e) => handleChange(e)} 
+                                                        >
+                                                            <option>Select Project</option>
+                                                            {project.length && project.filter(proj => proj.client && proj.client.includes(mailInfo.client))
+                                                            .map(function(proj,index){
+                                                            return <option key={index} value={proj.title}>{proj.title}</option>
+                                                        })}
                                                         </Form.Control>
                                                     </Form.Group>
 
