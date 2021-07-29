@@ -28,4 +28,4 @@ const todoListSchema = new Mongoose.Schema({
 });
 
 // Model according to collection: "to_do_list"
-module.exports = mongoose.model("to_do_list", todoListSchema, "to_do_list");
+module.exports = Mongoose.model("to_do_list", todoListSchema, "to_do_list");
