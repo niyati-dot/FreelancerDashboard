@@ -23,6 +23,7 @@ import InvoiceManagement from "./pages/Invoices"
 import TodoList from "./pages/TodoList"
 import Calendar from "./pages/Calendar";
 import EditInvoice from "./pages/Invoices/EditInvoice"
+import { BusinessCard } from "./pages/BusinessCard";
 export default function App() {
     return (
         <Router>
@@ -126,6 +127,11 @@ export default function App() {
                 <Route path="/calendar">
                     <DashboardLayout>
                         <Calendar />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/business-card">
+                    <DashboardLayout>
+                        <BusinessCard />
                     </DashboardLayout>
                 </Route>
                 <Route path="/">
