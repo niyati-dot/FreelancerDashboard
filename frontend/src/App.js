@@ -13,6 +13,7 @@ import Timelogs from "./pages/Timelogs";
 import Projects from "./pages/Projects";
 import AddProject from "./pages/Projects/AddProject";
 import EditProject from "./pages/Projects/EditProject";
+import ViewProject from "./pages/Projects/ViewProject";
 import Clients from "./pages/Clients";
 import AddClient from "./pages/Clients/AddClient";
 import EditClient from "./pages/Clients/EditClient";
@@ -88,6 +89,11 @@ export default function App() {
                 <Route path="/projects/edit/:id">
                     <DashboardLayout>
                         <EditProject />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/projects/view/:id">
+                    <DashboardLayout>
+                        <ViewProject />
                     </DashboardLayout>
                 </Route>
                 <Route path="/timelogs">
