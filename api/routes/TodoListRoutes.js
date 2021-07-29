@@ -4,7 +4,7 @@
  * Contains route information for todo list.
  */
 const express = require('express')
-const todoListController = require("../controllers/TodoListController")
+const todoListController = require("../controllers/todoListController")
 
 const router = express.Router();
 router.post("/getList", todoListController.getList)

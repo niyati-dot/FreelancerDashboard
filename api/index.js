@@ -7,7 +7,7 @@ const testimonialRouter = require('./routes/testimonialRoutes');
 const clientsRouter = require('./routes/clientsRoutes');
 const projectsRouter = require('./routes/projectsRoutes');
 const timelogRouter = require('./routes/timelogRoutes');
-const todoListRouter = require('./routes/TodoListRoutes')
+const todoListRouter = require('./routes/todoListRoutes')
 const invoiceRouter = require('./routes/invoices');
 
 //Main API Endpoint
