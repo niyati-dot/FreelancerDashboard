@@ -4,6 +4,9 @@ const Mongoose = require("mongoose");
 const Schema = Mongoose.Schema;
 
 const timelogSchema = new Mongoose.Schema({
+    userId:{
+        type: String
+    },
     project: {
         type: Schema.Types.ObjectID,
         ref: "projects",

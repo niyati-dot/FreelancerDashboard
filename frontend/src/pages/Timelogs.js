@@ -25,7 +25,7 @@ export default function Timelogs() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        timelogServices.list().then(res => setData(res.data));
+        timelogServices.list({"userId": localStorage.getItem("user_id")}).then(res => setData(res.data));
     },[]);
 
     useEffect(() => {
@@ -83,10 +83,10 @@ export default function Timelogs() {
     const [projects, setProjects] = useState([]);
     const [clients, setClients] = useState([]);
     useEffect(() => {
-        clientService.getAllClients().then(res => setClients(res.data));
+        clientService.getAllClients(localStorage.getItem("user_id")).then(res => setClients(res.data));
     },[]);
     useEffect(() => {
-        projectServices.list().then(res => setProjects(res.data));
+        projectServices.list({"userId": localStorage.getItem("user_id")}).then(res => setProjects(res.data));
     },[]);
     const [task, setTask] = useState({
         project: "",
@@ -148,6 +148,7 @@ export default function Timelogs() {
         if (isTaskValid()) {
             startTimer();
             task.startAt = Date.now();
+            task.userId = localStorage.getItem("user_id");
             timelogServices.add(task).then(res => {task._id = res.data._id; task.project = res.data.project});
             setData(data => [task, ...data]);
             handleModalClose();
