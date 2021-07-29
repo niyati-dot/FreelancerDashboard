@@ -15,7 +15,7 @@ export default function DashboardNavbar(){
                     <Nav.Link title="Profile" className="nav-bar-link" href="profile">
                         <i className="fas fa-user"/>
                     </Nav.Link>
-                    <Nav.Link title="Log Out" className="nav-bar-link" href="/">
+                    <Nav.Link title="Log Out" className="nav-bar-link"  onClick={ () => {localStorage.removeItem('user_id')} } href="/">
                         <i className="fas fa-sign-out-alt"/>
                     </Nav.Link>
                 </Nav>

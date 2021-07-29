@@ -1,21 +1,76 @@
 import React from 'react';
 import { useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
+import registerServices from '../../services/registerServices';
 
 export default function Login(){
 
     let history = useHistory();
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [user, setUser] = useState();
+    const [loginData, setLoginData] = useState({
+        email: "",
+        password: "",
+    });
 
-    const handleSubmit = async e => {
+    const [loginErrors, setLoginErrors] = useState({
+        emailError: "",
+        passwordError: ""
+    });
+
+    const handleChange = (e) => {
+        let newLogin = {...loginData, [e.target.name]: e.target.value};
+        setLoginData(newLogin);
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if(email === "admin@gmail.com" && password === "admin@123"){
-            history.push("/dashboard",email);
+        let valid = true;
+
+        setLoginErrors({
+            emailError: "",
+            passwordError: ""
+        })
+
+        let newLoginError = {...loginErrors};
+
+        if(loginData.email === ""){
+            newLoginError.emailError = "Please enter email!!";
+            setLoginErrors(newLoginError);
+            valid = false;
+        }
+        else{
+            newLoginError.emailError = "";
+            setLoginErrors(newLoginError);
+        }
+
+        if(loginData.password === ""){
+            newLoginError.passwordError = "Please enter Password!!";
+            setLoginErrors(newLoginError);
+            valid = false;
+        }
+        else{
+            newLoginError.passwordError = "";
+            setLoginErrors(newLoginError);
+        }
+        console.log(loginErrors);
+
+        if(valid === true){
+            registerServices.fatchUser(loginData).then((response) => {
+                if(response){
+                    if(loginData.email === response.Email && loginData.password === response.Password){
+                        localStorage.setItem('user_id', response._id);
+                        alert("Login Successful!!");
+                        history.push("/dashboard");
+                    }else{
+                        alert("Invalid Password!!"); 
+                    }
+                }
+            }).catch((error) => {
+                alert("Login Failed!!");
+                console.log("Eroor:",error)
+            })
         }
       };
 
@@ -32,30 +87,30 @@ export default function Login(){
                         <h3>Log in</h3>
 
                         <div className="form-group">
-                            <label>Email</label>
+                        <Form.Label className="required">Email</Form.Label>
                             <input 
                                 type="email" 
                                 className="form-control" 
-                                placeholder="Enter email. Eg:'admin@gmail.com' "
+                                placeholder="Please enter email "
                                 id = "email"
                                 name = "email"
-                                value={email}
-                                onChange={({ target }) => setEmail(target.value)} 
+                                onChange={(e) => handleChange(e)} 
                             />
                         </div>
+                        <p className="text-danger">{loginErrors.emailError}</p>
 
                         <div className="form-group">
-                            <label>Password</label>
+                        <Form.Label className="required">Password</Form.Label>
                             <input 
                                 type="password" 
                                 className="form-control" 
-                                placeholder="Enter password Eg:'admin@123"
+                                placeholder="Please enter password"
                                 id = "password"
                                 name = "password"
-                                value={password}
-                                onChange={({ target }) => setPassword(target.value)}
+                                onChange={(e) => handleChange(e)}
                             />
                         </div>
+                        <p className="text-danger">{loginErrors.passwordError}</p>
 
                         <div className="form-group">
                             <div>

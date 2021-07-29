@@ -38,11 +38,17 @@ export default function App() {
                         <Login />
                     </AppLayout>
                 </Route>
-                <Route path="/register">
+                <Route exact path="/register">
                     <AppLayout>
                         <Register />
                     </AppLayout>
                 </Route>
+                <Route path="/register/add">
+                    <DashboardLayout>
+                        <Register />
+                    </DashboardLayout>
+                </Route>
+
                 <Route path="/dashboard">
                     <DashboardLayout>
                         <Dashboard />
