@@ -6,15 +6,16 @@
 const express = require('express')
 const router= express.Router();
 
-const projectController = require("../controllers/invoiceContreller")
+const projectController = require("../controllers/invoiceController")
 
 //Invoice Routes
-router.get("/getproject",projectController.getAllProject)
+router.post("/getproject",projectController.getAllProject)
 router.post("/tags",projectController.getTags)
 router.post("/save",projectController.addInvoice)
-router.get("/fetchinvoices",projectController.getAllInvoices)
+router.post("/fetchinvoices",projectController.getAllInvoices)
 router.post("/deleteinvoice",projectController.deleteinvoice)
 router.post("/findinvoice",projectController.findInvoice)
 router.post("/updateinvoice",projectController.updateInvoice)
-
+router.post("/getEmail", projectController.getEmail)
+router.post("/getClientEmail", projectController.getClientEmail)
 module.exports = router;

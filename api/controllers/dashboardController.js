@@ -3,7 +3,7 @@
 const clientsModel = require('../models/clientsModel');
 const timelogModel = require('../models/timelogModel');
 const projectsModel = require('../models/projectsModel');
-const invoicesModel = require('../models/invoiceGenerate.js');
+const invoicesModel = require('../models/invoiceModel.js');
 const testimonialModel = require('../models/testimonialModel.js');
 
 const getStats = async (req, res) => {

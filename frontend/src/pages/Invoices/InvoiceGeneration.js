@@ -4,7 +4,7 @@
  * Created On: 2021-06-07
  * Invoice Generation component.
  */
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PageHeader from "../../components/PageHeader";
 import Datatable from "../../components/Datatable";
 import { withRouter } from 'react-router-dom';
@@ -15,25 +15,28 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios'
 import invoiceServices from "../../services/invoiceServices";
+import jsPDF from 'jspdf'
+import Moment from 'moment';
+import emailjs from 'emailjs-com';
 
-
-export class GenerateInvoice extends Component {
+export class InvoiceGeneration extends PureComponent {
 
     constructor(props) {
         super(props)
-        console.log(props)
         this.state = {
-            
-     
             projectId: props && props.history && props.history.location&&props.history.location.state &&props.history.location.state.state?props.history.location.state.state:0,
             readonly: props && props.history && props.history.location&&props.history.location.state &&props.history.location.state.state? true:false,
+            user: localStorage.getItem("user_id"),
             dueDateError: "",
+            startAt:"",
+            startAtError:"",
             endDate: "",
             endDateError: "",
             hourlyRate: "",
             hourlyRateError: "",
             project: "",
             projectError: "",
+            client:"",
             totalcost:0,
             projects: [],
             tags:[],
@@ -44,7 +47,9 @@ export class GenerateInvoice extends Component {
             invoiceNumber:"",
             Total:"",
             generatedDate:"",
-            invoiceDetails:[]
+            invoiceDetails:[],
+            generate :false,
+            save :false
 
         }
 
@@ -63,32 +68,37 @@ export class GenerateInvoice extends Component {
      * 
      * If this component is called from dahsboard, it will allow a user to generate invoice.
      */
-    componentDidMount() {
+
+    pageContent(){
         //executed when called in read-only mode
         if(this.state.readonly){
+            
             invoiceServices.findInvoice(this.state).then((response) =>{
-                console.log(response)
+                
                 if (response.status == 200){
-                    this.setState({ project: response.data.projectName})
-                    this.setState({clientName:response.data.clientName})
-                    this.setState({dueDate: response.data.dueDate})
-                    this.setState({generatedDate: response.data.generatedDate})
-                    this.setState({hourlyRate:response.data.hourlyRate})
-                    this.setState({Total:response.data.totalCost})
-                    this.setState({invoiceNumber:response.data.invId})
-                    this.setState({paymentStatus:response.data.paymentStatus})
+                    this.setState({ project: response.data.result.projectName})
+                    this.setState({clientName:response.data.result.clientName})
+                    this.setState({dueDate: response.data.result.dueDate})
+                    this.setState({generatedDate: response.data.result.generatedDate})
+                    this.setState({hourlyRate:response.data.result.hourlyRate})
+                    this.setState({Total:response.data.result.totalCost})
+                    this.setState({invoiceNumber:response.data.result._id})
+                    this.setState({paymentStatus:response.data.result.paymentStatus})
+                    this.setState({startAt:response.data.result.startDate})
+                    this.setState({endAt:response.data.result.taskendDate})
                     let invoiceDetails=[]
-                    response.data.tags.forEach(row => {
+                    response.data.result.tags.forEach(row => {
                                           
-                        let data = {}                       
-                        data.description = row.description;
+                        let data = {} 
+                        data.id = row.tagId;                      
+                        data.description = row.description
                         data.hours = row.hours
                         data.total = row.total
                         invoiceDetails.push(data)                        
                     })
                     if(invoiceDetails.length !=0 ){
                         this.setState({invoiceDetails: this.state.invoiceDetails.concat(invoiceDetails)})
-                        console.log(this.state.invoiceDetails)   
+                         
                     }
                 
                 } 
@@ -97,15 +107,19 @@ export class GenerateInvoice extends Component {
             })
         }else{
             //Executed when called from dashbord page
-            invoiceServices.getAllProject().then((response) => {
+            invoiceServices.getAllProject(this.state).then((response) => {
             if (response.status == 200) {
-                this.setState({ projects: response.data })
+               
+                this.setState({ projects: response.data.result})          
             }
         }).catch((error) => {
-            console.log("Eroor")
+            console.log(error)
         })
         }
         
+    }
+    componentDidMount() {
+        this.pageContent()
     }
 
     
@@ -128,10 +142,14 @@ export class GenerateInvoice extends Component {
     //validate due date and project duration date
     validateDate = (event) => {
         let isValid = true;
-        if (!this.validateDueDate()) {
+        
+        if (!this.validatestartDate()) {
             isValid = false;
         }
         if (!this.validateEndDate()) {
+            isValid = false;
+        }
+        if (!this.validateDueDate()) {
             isValid = false;
         }
         return isValid;
@@ -140,11 +158,12 @@ export class GenerateInvoice extends Component {
     validateDueDate = (event) => {
         let isValid = true;
         if (this.state.dueDate) {
-            const today = new Date()
+           
             const selectedDate = new Date(this.state.dueDate)
             const endDate = new Date(this.state.endDate)
-            if (selectedDate < today) {
-                this.setState({ dueDateError: "Due Date cannot be past date" })
+            const today = new Date()
+            if (selectedDate <today) {
+                this.setState({ dueDateError: "Due Date cannot be past date or Generated Date" })
                 isValid = false;
             }else if(endDate > selectedDate) {
                 this.setState({ dueDateError: "Due Date must be greater than project duration date" })
@@ -155,6 +174,29 @@ export class GenerateInvoice extends Component {
             }
         } else {
             this.setState({ dueDateError: "Due Date is required" })
+            isValid = false;
+        }
+        return isValid;
+    }
+    validatestartDate = (event) => {
+        let isValid = true;
+        if (this.state.startAt) {
+           
+            const selectedDate = new Date(this.state.startAt)
+            const endDate = new Date(this.state.endDate)
+            const today = new Date()
+            if (selectedDate > today) {
+                this.setState({ startAtError: "Start Date cannot be furture datee" })
+                isValid = false;
+            }else if(endDate < selectedDate) {
+                this.setState({ startAtError: "Start Date must be less than End date" })
+                isValid = false;
+            }
+            else {
+                this.setState({ startAtError: "" })
+            }
+        } else {
+            this.setState({ startAtError: "Start Date is required" })
             isValid = false;
         }
         return isValid;
@@ -216,35 +258,39 @@ export class GenerateInvoice extends Component {
         if(this.validateForm()){
             invoiceServices.getTags(this.state).then((response) => {
                 if (response.status == 200) {
-                    console.log(response.data)
-                    this.setState({ tags: response.data })
+                    
+                    this.setState({ tags: response.data.result })
                     let invoiceDetails = []
                     let totalCost = 0
-                    response.data.forEach(row => {
+                    response.data.result.forEach(row => {
                                                 
                         let data = {}
                         var startdate = new Date(row.startAt);
                         
                         var enddate = new Date(row.endAt);
                       
-                        var seconds = Math.floor(((enddate) - (startdate))/1000)
+                        var seconds = Math.round(((enddate) - (startdate))/1000).toFixed(3);
                         
-                        var minutes = Math.floor(seconds/60)
-                        var hour = Math.floor(minutes/60)
-                       
-                        data.description = row.task;
-                        data.hours = hour
-                        data.total = this.state.hourlyRate * hour
-                        totalCost = totalCost + data.total
-                        invoiceDetails.push(data)
-                        
-                        
+                        var minutes = Math.round(seconds/60).toFixed(3);
+                        var hour = Math.round(minutes/60).toFixed(3);
+                        if(hour != "NaN" && hour) {
+                            data.id = row._id;
+                            data.description = row.task
+                            data.hours = hour
+                            data.total = this.state.hourlyRate * hour
+                            totalCost = totalCost + data.total
+                            invoiceDetails.push(data)
+                        }
+                  
                     })
                     //store tags, hours worked on that tags and total cost for performing that task
                     if(invoiceDetails.length !=0 ){
-                        this.setState({invoiceDetails: this.state.invoiceDetails.concat(invoiceDetails)})
+                        this.setState({invoiceDetails: this.state.invoiceDetails.concat(invoiceDetails),generate:true})
                         this.setState({totalcost:totalCost})
                           
+                    }
+                    if(this.state.invoiceDetails.length == 0){
+                        alert("No task are pending to generate invoice. Please select again.")                   
                     }
                 
                 }
@@ -259,24 +305,138 @@ export class GenerateInvoice extends Component {
     
     //this function store generated invoices in database
     saveInvoice =(event)=>{
-        if(this.state.invoiceDetails.length == 0){
-            this.generateInvoice()
-        }
-        if(this.validateForm()){
-           
-            invoiceServices.addInvoice(this.state).then((response) =>{
-                if (response.status == 200){
-                    console.log(response)
-                    alert("Ïnvoice Added")
-                } 
-            }).catch((error) => {
-                console.log(error)
-            })
+        if(this.state.generate){
+            if(this.validateForm()){
+            
+                invoiceServices.addInvoice(this.state).then((response) =>{
+                   
+                    if (response.status == 200){
+                        
+                        this.setState({save:true})
+                        alert("Ïnvoice Added")
+                    }else {
+                        alert("Invoice is already generated")
+                    }
+                }).catch((error) => {
+                    alert("Invoice is already generated")
+                })
+            }
+        }else{
+            alert("Invoice is not generated. Please generate Invoice first.")
         }
     }
+
+    //this function store data in pdf file
+    downloadInvoice =(event)=>{
+        if(this.state.save){
+            var client =""
+            var project = ""
+            var doc = new jsPDF('p','pt');
+            this.state.projects.forEach(result =>{
+                if(result._id == this.state.project){
+                    client = result.client
+                    project=result.title
+                }
+                
+            })
+            const date = Moment(Date.now()).format('YYYY-MM-DD')
+            doc.text(250,20,"Invoice")
+            doc.text(20,50,"Project Name :"+project)
+            doc.text(20,70,"Client Name :"+client)
+            doc.text(20,90,"From Date :"+this.state.startAt)
+            doc.text(200,90,"To date :"+this.state.endDate)
+            doc.text(20,110,"Invoice Genrated :"+date)
+            doc.text(20,130,"Payment Due Date :"+this.state.dueDate)
+            doc.text(20,150,"Hourly Rate :"+this.state.hourlyRate+ "CAD")
+            doc.text(20,170,"Total Amount :"+this.state.totalcost+ "CAD")
+            doc.text(20,190,"  ")
+            doc.text(20,210,"Task details")
+            var i = 230
+            this.state.invoiceDetails.forEach(result =>{
+                
+                doc.text(20,i,"Task :"+result.description)
+                i = i+20
+                doc.text(20,i,"Hours :"+result.hours)
+                i = i+20
+                doc.text(20,i,"Total :"+result.total)
+                i = i+20
+                doc.text(20,i,"  ")
+                i = i+20
+
+            })
+            doc.setFont('normal')
+            doc.save("generated.pdf")
+       
+        }else{
+            alert("Please save Invoice before downloading")
+        }
+        
+    }
+
+    Emailsender = (freelancerName,fromEmail,projectNAme,toEmail,clientName) =>{
+       
+        const date = Moment(Date.now()).format('YYYY-MM-DD')
+        const message = "Hello \nPlease find attached below invoice \nProject Name  :"+projectNAme+"\nFrom Date  :"+this.state.startAt+
+            "\nTo Date  :"+this.state.endDate+"\nDue Date  :"+this.state.dueDate+"\nGenerated Date  :"+date+"\nHourly Rate  :"+this.state.hourlyRate+"\nTotal :"+this.state.totalcost
+           
+        var mailParams = {
+            //Mail Sender Details
+            freelancerName: freelancerName,
+            freelancerMail: fromEmail,
+         
+            //Mail Reciver DetailstoEmail
+            clientName: clientName,
+            clientMail: toEmail,
+
+            //Attachment Messages
+            message: message
+        };
+
+        emailjs.send('testimonial_request', 'template_fmwc5oo', mailParams, 'user_INB1ILGAt4GVje2eeyj2V')
+            .then(function (response) {
+                alert("Email Sent");
+                console.log('SUCCESS!', response.status, response.text);
+
+            }, function (error) {
+                alert("Error: " + error);
+                console.log('FAILED...', error);
+            });
+
+    }
+    //this function sends invoice details to client through email using emailjs
+    sendemail =(e) =>{
+        var fromEmail = ""
+        var freelancerName = ""
+        var clientName=""
+        var toEmail = ""
+        var projectNAme= ""
+        
+        this.state.projects.forEach(result =>{
+            if(result._id == this.state.project){
+                projectNAme=result.title
+            }
+            
+        })
+        
+        invoiceServices.getUserEmail(this.state).then((response) =>{
+            var freelancerdata = response.data.result[0]
+            fromEmail = freelancerdata.Email
+            freelancerName = freelancerdata.Name
+            invoiceServices.getClentEmail(this.state).then(response =>{
+                var clientdata = response.data.result[0]
+                toEmail = clientdata.Email
+                clientName=clientdata.ClientName
+                this.Emailsender(freelancerName,fromEmail,projectNAme,toEmail,clientName)
+                
+            })
+            
+        })
+        
+    }
+
     //called when component is called in read-only mode. This function redirect to invoicemanagement page
     closeInvoice = (e) =>{
-        this.props.history.push('/invoicemanagement')
+        this.props.history.push('/invoices')
     }
     render() {
         return (
@@ -298,8 +458,10 @@ export class GenerateInvoice extends Component {
                                                             <div> Invoice Number :{this.state.invoiceNumber}</div>
                                                             <div>Project Name :  {this.state.project}</div>
                                                             <div>Client Name : {this.state.clientName}</div>
-                                                            <div>Invoice Genrated : {this.state.generatedDate} </div>
-                                                            <div>Payment Due Date : {this.state.dueDate} </div>
+                                                            <div>From date:{Moment(this.state.startAt).format('YYYY-MM-DD HH:MM:SS')}</div>
+                                                            <div>To date:{Moment(this.state.endAt).format('YYYY-MM-DD HH:MM:SS')}</div>
+                                                            <div>Invoice Genrated : {Moment(this.state.generatedDate).format('YYYY-MM-DD HH:MM:SS')}</div>
+                                                            <div>Payment Due Date :{Moment(this.state.dueDate).format('YYYY-MM-DD HH:MM:SS')}</div>
                                                             <div>Hourly Rate :{this.state.hourlyRate} CAD </div>
                                                             <div>Total Amount :{this.state.Total} CAD </div>
                                                             <div>Payment Status :{this.state.paymentStatus} </div>
@@ -326,25 +488,26 @@ export class GenerateInvoice extends Component {
                                         <Row>
                                             <Col>
                                                 
-                                                    {this.state.readonly?(<div></div>):
-                                                    (
-                                                    <Form.Group>
+                                                {this.state.readonly?(<div></div>):
+                                                (
+                                                <Form.Group>
+                                                
+                                                <div className="inline-date-control">
                                                     
-                                                    <div className="inline-date-control">
                                                         <div className="due-date-control">
                                                             <div>
-                                                                <Form.Label className="required">Invoice Duedate</Form.Label>
+                                                                <Form.Label className="required">Start Date</Form.Label>
                                                             </div>
-                                                            <Form.Control type="date" className="start-date" name="dueDate" placeholder="Due Date" value={this.state.dueDate} onChange={this.onValueChange}
+                                                            <Form.Control type="date" className="start-date" name="startAt" placeholder="start Date" value={this.state.startAt} onChange={this.onValueChange}
                                                                 onBlur={this.validateDate}
-                                                                isInvalid={this.state.dueDateError} />
+                                                                isInvalid={this.state.startAtError} />
                                                             <Form.Control.Feedback type="invalid">
-                                                                {this.state.dueDateError}
+                                                                {this.state.startAtError}
                                                             </Form.Control.Feedback>
                                                         </div>
                                                         <div className="end-date-control">
                                                             <div>
-                                                                <Form.Label className="required">Project Duration</Form.Label>
+                                                                <Form.Label className="required">End Date</Form.Label>
                                                             </div>
                                                             <Form.Control type="date" name="endDate" placeholder="End Date" value={this.state.endDate} onChange={this.onValueChange}
                                                                 onBlur={this.validateDate}
@@ -353,8 +516,19 @@ export class GenerateInvoice extends Component {
                                                                 {this.state.endDateError}
                                                             </Form.Control.Feedback>
                                                         </div>
-                                                    </div>
-                                                    </Form.Group>)}
+                                                        <div className="due-date-control">
+                                                        <div>
+                                                            <Form.Label className="required">Invoice Duedate</Form.Label>
+                                                        </div>
+                                                        <Form.Control type="date" className="start-date" name="dueDate" placeholder="Due Date" value={this.state.dueDate} onChange={this.onValueChange}
+                                                            onBlur={this.validateDate}
+                                                            isInvalid={this.state.dueDateError} />
+                                                        <Form.Control.Feedback type="invalid">
+                                                            {this.state.dueDateError}
+                                                        </Form.Control.Feedback>
+                                                    </div>                                                        
+                                                </div>
+                                                </Form.Group>)}
                                             </Col>
                                             <Col>
                                             {this.state.readonly?(<div></div>):(
@@ -372,25 +546,36 @@ export class GenerateInvoice extends Component {
                                         </Row>
                                     </div>
                                     <div className="generate-buttons">
-                                        
                                         {this.state.readonly?
                                         (<Button className="secondary-button" onClick={this.closeInvoice}>
                                         Close
                                         </Button>):
-                                        (<Row className="generate-button-container">
+                                        (
+                                        <div>
+                                        {!this.state.save?(
+                                            <Row className="generate-button-container">
                                             <Button className="primary-button" onClick={this.generateInvoice}>
                                                 Generate Invoice
                                             </Button>
                                             <Button className="secondary-button" onClick={this.saveInvoice}>
                                                 Save
                                             </Button>
-                                            <Button className="secondary-button">
+                                            </Row>
+                                        
+                                        ):(
+                                            <div>
+                                            <Row className="generate-button-container">
+                                            <Button className="secondary-button" onClick={this.downloadInvoice}>
                                                 Download
                                             </Button>
-                                            <Button className="secondary-button">
+                                            <Button className="secondary-button" onClick={this.sendemail}>
                                                 Send
                                             </Button>
-                                        </Row>)}
+                                            </Row>
+                                            </div>
+                                        )}
+                                        </div>
+                                        )}
                                         
                                     </div>
                                 </Form>
@@ -408,4 +593,4 @@ export class GenerateInvoice extends Component {
     }
 }
 
-export default withRouter(GenerateInvoice);
+export default withRouter(InvoiceGeneration);
