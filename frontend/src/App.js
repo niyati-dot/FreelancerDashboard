@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Dashboard from "./pages/Dashboard";
-import InvoiceGeneration from "./pages/Invoices/GenerateInvoice";
+import InvoiceGeneration from "./pages/Invoices/InvoiceGeneration";
 import Timelogs from "./pages/Timelogs";
 import Projects from "./pages/Projects";
 import AddProject from "./pages/Projects/AddProject";
@@ -23,6 +23,7 @@ import InvoiceManagement from "./pages/Invoices"
 import TodoList from "./pages/TodoList"
 import Calendar from "./pages/Calendar";
 import EditInvoice from "./pages/Invoices/EditInvoice"
+
 import { BusinessCard } from "./pages/BusinessCard";
 export default function App() {
     return (

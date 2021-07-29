@@ -29,7 +29,6 @@
      },
      userId:{
          type: Schema.Types.ObjectID,
-         ref: "users"
      },
  };
  

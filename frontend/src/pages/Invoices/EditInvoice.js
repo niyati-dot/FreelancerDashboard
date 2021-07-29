@@ -22,6 +22,8 @@ export class EditInvoice extends Component {
         this.state={
             projectId: props && props.history && props.history.location&&props.history.location.state &&props.history.location.state.state?props.history.location.state.state:0,
             invoiceNumber:"",
+            taskendDate:"",
+            taskstartDate:"",
             projects:"",
             clientName:"",
             generatedDate:"",
@@ -29,24 +31,25 @@ export class EditInvoice extends Component {
             hourlyRate:"",
             Total:"",
             paymentstatus:"",
-            paymentPreStatus:"",
-            taskendDate:""
+            paymentPreStatus:""
+            
             
         }}
         //Fetch invoice based on invoice is to update it.
         componentDidMount() {
           
             invoiceServices.findInvoice(this.state).then((response) =>{
-               
+              
                 if (response.status == 200){
-                    this.setState({project: response.data.projectName})
-                    this.setState({clientName:response.data.clientName})
-                    this.setState({generatedDate: response.data.generatedDate})
-                    this.setState({Total:response.data.totalCost})
-                    this.setState({invoiceNumber:response.data.invId})
-                    this.setState({hourlyRate:response.data.hourlyRate})
-                    this.setState({paymentPreStatus:response.data.paymentStatus})
-                    this.setState({taskendDate:response.data.paymentStatus})
+                    this.setState({project: response.data.result.projectName})
+                    this.setState({clientName:response.data.result.clientName})
+                    this.setState({generatedDate: response.data.result.generatedDate})
+                    this.setState({Total:response.data.result.totalCost})
+                    this.setState({invoiceNumber:response.data.result._id})
+                    this.setState({hourlyRate:response.data.result.hourlyRate})
+                    this.setState({paymentPreStatus:response.data.result.paymentStatus})
+                    this.setState({taskendDate:response.data.result.taskendDate})
+                    this.setState({taskstartDate:response.data.result.startDate})
                 } 
             }).catch((error) => {
                 console.log(error)
@@ -107,7 +110,7 @@ export class EditInvoice extends Component {
         }
         //redirect to invoice management screen
         cancel = (e) =>{
-            this.props.history.push('/invoicemanagement')
+            this.props.history.push('/invoices')
         }
        
         render() {
@@ -127,9 +130,11 @@ export class EditInvoice extends Component {
                                                 <Col>
                                                     <span>
                                                         <div>Invoice Number :{this.state.invoiceNumber}</div>
-                                                        <div>Project Name :  {this.state.projects}</div>
+                                                        <div>Project Name :  {this.state.project}</div>
                                                         <div>Client Name : {this.state.clientName}</div>
-                                                        <div>Invoice Genrated : {this.state.generatedDate} </div>
+                                                        <div>From date :  {this.state.taskstartDate}</div>
+                                                        <div>To Name :  {this.state.taskendDate}</div>
+                                                        <div>Generated Date: {this.state.generatedDate} </div>
                                                         <div>Hourly Rate :{this.state.hourlyRate} CAD </div>
                                                         <div>Total Amount :{this.state.Total} CAD </div>
                                                         

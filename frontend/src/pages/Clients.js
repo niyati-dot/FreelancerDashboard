@@ -49,7 +49,6 @@ export class Clients extends Component {
       }]; 
 
       this.userId = localStorage.getItem("user_id")
-      console.log('Inconstructor',this.userId);
   }
 
   /**
@@ -75,7 +74,7 @@ export class Clients extends Component {
             })
         }
     }).catch((error) => {
-        console.log("Eroor")
+        console.log(error)
     })
 
   }
@@ -91,7 +90,7 @@ export class Clients extends Component {
           state: response.data
         })
     }).catch((error) => {
-        console.log("Error")
+        console.log(error)
     })
   }
 
@@ -105,7 +104,7 @@ export class Clients extends Component {
           state: response.data
         })
     }).catch((error) => {
-        console.log("Error")
+        console.log(error)
     })
   };
 
@@ -131,10 +130,10 @@ export class Clients extends Component {
                   this.setState({data: newdetails})
                 }
           }).catch((error) => {
-              console.log("Eroor")
+              console.log(error)
           })
       }).catch((error) => {
-          console.log("Eroor")
+          console.log(error)
       })
   }
 
