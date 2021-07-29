@@ -22,7 +22,7 @@
      today = yyyy + '-' + mm + '-' + dd;
      console.log(today);
      console.log('New data');
-
+     console.log(req.body.userId);
     notificationModel.find({'date': today, 'viewStatus':false, 'userId': req.body.userId }, function(error, result)
     {
          if (error) {
