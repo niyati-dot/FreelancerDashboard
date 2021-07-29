@@ -22,7 +22,6 @@ export class AddClient extends Component {
     //constructor for props
     constructor(props) {
         super(props)
-        console.log(props);
         this.state = {
             clientName: "",
             clientNameError: "",
@@ -310,7 +309,7 @@ export class AddClient extends Component {
             this.props.history.push({ pathname: '/clients' });
         }).catch((error) => {
             alert("Duplicate details found!!");
-            console.log("Eroor")
+            console.log(error)
         })
     }
 

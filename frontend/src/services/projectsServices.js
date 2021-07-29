@@ -40,7 +40,6 @@ export class projectsServices{
      */
     async update(data){
         //data.projectId = data.project;
-        console.log(data);
         const result = await axios.put("/api/projects/update/"+data._id,data);
         return result.data;
     };

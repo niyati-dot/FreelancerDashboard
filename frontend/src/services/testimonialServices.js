@@ -24,14 +24,12 @@ export class testimonialServices{
 
     // update data by id
     async update(data){
-        console.log(data);
         const result = await axios.put("/api/testimonials/update/"+data.id,data);
         return result.data;
     };
 
     // remove data by id
     async delete(deleteData) {
-        console.log("delete data:",deleteData)
         const result = await axios.post("/api/testimonials/remove", deleteData);
         return result.data;
      }

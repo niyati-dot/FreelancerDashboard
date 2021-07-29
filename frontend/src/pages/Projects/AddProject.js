@@ -39,7 +39,6 @@ export default function AddProjects(){
 
     useEffect(() => {
         clientService.getAllClients(localStorage.getItem("user_id")).then(res => setClient(res.data));
-        console.log(clients);
     },[]);
 
     const [projectError, setProjectError] = useState({

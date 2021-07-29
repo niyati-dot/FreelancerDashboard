@@ -123,11 +123,9 @@ const Testimonials = () => {
         emailjs.send('testimonial_request', 'template_fmwc5oo', mailParams, 'user_INB1ILGAt4GVje2eeyj2V')
             .then(function (response) {
                 alert("Email Sent");
-                console.log('SUCCESS!', response.status, response.text);
-
             }, function (error) {
                 alert("Error: " + error);
-                console.log('FAILED...', error);
+                console.log(error);
             });
     }
 

@@ -144,13 +144,12 @@ export default function Register(){
         if(valid === true){
 
             registerServices.addNewUser(registrationInfo).then((response) => {
-                console.log(response)
                 if(response){
                     alert("Registration Successful!!");
                     history.push("/login");
                 }
             }).catch((error) => {
-                console.log("Eroor:",error)
+                console.log("Error:",error)
             })
         }
     }

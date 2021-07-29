@@ -54,7 +54,6 @@ export default function Login(){
             newLoginError.passwordError = "";
             setLoginErrors(newLoginError);
         }
-        console.log(loginErrors);
 
         if(valid === true){
             registerServices.fatchUser(loginData).then((response) => {
@@ -69,7 +68,7 @@ export default function Login(){
                 }
             }).catch((error) => {
                 alert("Login Failed!!");
-                console.log("Eroor:",error)
+                console.log("Error:",error)
             })
         }
       };
