@@ -31,7 +31,6 @@ const projectsSchema =  new Mongoose.Schema({
     },
     userId:{
         type: Schema.Types.ObjectID,
-        ref: "users"
     },
 });
 
