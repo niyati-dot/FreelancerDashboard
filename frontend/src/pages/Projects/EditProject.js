@@ -41,9 +41,8 @@ const EditProjects = (prop) => {
     });
 
     useEffect(() => {
-        projectsServices.get(params[params.length-1]).then(res => setProject(res.data));
-        console.log(project);
         clientsServices.list().then(res => setClient(res.data));
+        projectsServices.get(params[params.length-1]).then(res => setProject(res.data));
     },[]);
 
     const [projectError, setProjectError] = useState({
@@ -102,16 +101,6 @@ const EditProjects = (prop) => {
             newProjectError.description = "";
             setProjectError(newProjectError);
         }
-
-        // if(!project.rate.value > 0){
-        //     newProjectError.rate = "Rate is required";
-        //     setProjectError(newProjectError);
-        //     valid = false;
-        // }
-        // else{
-        //     newProjectError.rate = "";
-        //     setProjectError(newProjectError);
-        // }
 
         if(!project.invoice.length > 0){
             newProjectError.invoice = "Invoice Duration is required";

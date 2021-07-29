@@ -10,6 +10,7 @@ const projectsRouter = require('./routes/projectsRoutes');
 const timelogRouter = require('./routes/timelogRoutes');
 const todoListRouter = require('./routes/todoListRoutes');
 const invoiceRouter = require('./routes/invoices');
+const notificationRouter = require('./routes/notificationRoutes');
 const calendarRouter = require('./routes/calendarRoutes');
 const dashboardRouter = require('./routes/dashboardRoutes');
 
@@ -29,6 +30,7 @@ router.use('/register',registerRouter);
 router.use('/projects',projectsRouter);
 router.use('/todoLists', todoListRouter);
 router.use('/invoices',invoiceRouter);
+router.use('/notification',notificationRouter);
 router.use('/calendar',calendarRouter);
 router.use('/dashboard',dashboardRouter);
 

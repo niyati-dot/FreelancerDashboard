@@ -22,6 +22,10 @@
      },
      time: {
         type: String
+     },
+     viewStatus: {
+         type: Boolean,
+         default: false
      }
  }
  

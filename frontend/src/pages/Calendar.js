@@ -6,6 +6,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { Button, Container, Form, Modal, Row } from "react-bootstrap";
 import calendarServices from "../services/calendarServices";
 import moment from 'moment';
+import "../styles/Calendar.scss";
 
 export default function Calendar(){
     const [events, setEvents] = useState([]);
@@ -105,63 +106,68 @@ export default function Calendar(){
     }
 
     return (
-        <div className="page-container timelogs-container">
+        <div className="page-container calendar-container">
             <div className="page-header-container">
                 <PageHeader title="Calendar"/>
             </div>
-                <FullCalendar
-                    defaultView="dayGridMonth"
-                    plugins={[dayGridPlugin, interactionPlugin]}
-                    events={events}
-                    dateClick={handleModalShow}
-                />
-                <Modal show={showModal} onHide={handleModalClose}>
-                        <Form onSubmit={(e) => isEventValid(e)}>
-                            <Modal.Header closeButton>
-                                <Modal.Title>New Calendar Event</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body className="show-grid">
-                                <Container>
-                                    <Row>
-                                        <Form.Group className="mb-3">
-                                            <Form.Label>Event Name</Form.Label>
-                                            <Form.Control type="text" name="eventName" placeholder="Event Name..."
-                                                            onChange={(e) => handleChange(e)}
-                                                            className={calendarEventError.eventName.length > 0 ? "is-invalid" : ""} />
-                                            <Form.Text className="text-danger">{calendarEventError.eventName}</Form.Text>
-                                        </Form.Group>
-                                    </Row>
-                                    <Row>
-                                        <Form.Group className="mb-3">
-                                            <Form.Label>Event Category</Form.Label>
-                                            <Form.Control type="text" name="category" placeholder="Event Category..."
-                                                            onChange={(e) => handleChange(e)}
-                                                            className={calendarEventError.category.length > 0 ? "is-invalid" : ""} />
-                                            <Form.Text className="text-danger">{calendarEventError.category}</Form.Text>
-                                        </Form.Group>
-                                    </Row>
-                                    <Row>
-                                        <Form.Group className="mb-3">
-                                            <Form.Label>Event Time</Form.Label>
-                                            <Form.Control type="time" name="time" placeholder="Event Time..."
-                                                            onChange={(e) => handleChange(e)}
-                                                            className={calendarEventError.time.length > 0 ? "is-invalid" : ""} />
-                                            <Form.Text className="text-danger">{calendarEventError.time}</Form.Text>
-                                        </Form.Group>
-                                    </Row>
-                                </Container>
-                            </Modal.Body>
-                            <Modal.Footer>
-                                <Button className="secondary-button" type="reset" onClick={handleModalClose}>
-                                    Close
-                                </Button>
-                                <Button className="primary-button" type="submit">
-                                    Add
-                                </Button>
-                            </Modal.Footer>
-                        </Form>
+            <div className="page-content-container">
+                <div className="page-content">
+                    <Container className="to-do-list-content"></Container>
+                    <FullCalendar
+                        defaultView="dayGridMonth"
+                        plugins={[dayGridPlugin, interactionPlugin]}
+                        events={events}
+                        dateClick={handleModalShow}
+                    />
+                    <Modal show={showModal} onHide={handleModalClose}>
+                            <Form onSubmit={(e) => isEventValid(e)}>
+                                <Modal.Header closeButton>
+                                    <Modal.Title>New Calendar Event</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body className="show-grid">
+                                    <Container>
+                                        <Row>
+                                            <Form.Group className="mb-3">
+                                                <Form.Label>Event Name</Form.Label>
+                                                <Form.Control type="text" name="eventName" placeholder="Event Name..."
+                                                                onChange={(e) => handleChange(e)}
+                                                                className={calendarEventError.eventName.length > 0 ? "is-invalid" : ""} />
+                                                <Form.Text className="text-danger">{calendarEventError.eventName}</Form.Text>
+                                            </Form.Group>
+                                        </Row>
+                                        <Row>
+                                            <Form.Group className="mb-3">
+                                                <Form.Label>Event Category</Form.Label>
+                                                <Form.Control type="text" name="category" placeholder="Event Category..."
+                                                                onChange={(e) => handleChange(e)}
+                                                                className={calendarEventError.category.length > 0 ? "is-invalid" : ""} />
+                                                <Form.Text className="text-danger">{calendarEventError.category}</Form.Text>
+                                            </Form.Group>
+                                        </Row>
+                                        <Row>
+                                            <Form.Group className="mb-3">
+                                                <Form.Label>Event Time</Form.Label>
+                                                <Form.Control type="time" name="time" placeholder="Event Time..."
+                                                                onChange={(e) => handleChange(e)}
+                                                                className={calendarEventError.time.length > 0 ? "is-invalid" : ""} />
+                                                <Form.Text className="text-danger">{calendarEventError.time}</Form.Text>
+                                            </Form.Group>
+                                        </Row>
+                                    </Container>
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <Button className="secondary-button" type="reset" onClick={handleModalClose}>
+                                        Close
+                                    </Button>
+                                    <Button className="primary-button" type="submit">
+                                        Add
+                                    </Button>
+                                </Modal.Footer>
+                            </Form>
 
-                    </Modal>
+                        </Modal>
+                    </div>
+                </div>
         </div>
     )
 }
