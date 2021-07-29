@@ -12,7 +12,9 @@ export default function DashboardNavbar(){
     return (
         <Navbar className="nav-bar-container">
             <Container>
-                <Navbar.Brand className="nav-bar-text" href="/">Freelance Dashboard</Navbar.Brand>
+                <Navbar.Brand className="nav-bar-text" href="/">
+                    <i className="fab fa-angellist"></i> Freelance Dashboard
+                </Navbar.Brand>
                 <Nav className="ml-auto">
                     <Nav.Link title="Notification" className="nav-bar-link" >
                     <Notification/>
