@@ -33,7 +33,7 @@ export default function Projects() {
 
     const [data, setData] = useState([]);
     useEffect(() => {
-        projectsServices.list().then(res => setData(res.data));
+        projectsServices.list({"userId": localStorage.getItem("user_id")}).then(res => setData(res.data));
     },[]);
 
     const deleteTask = (project) => {
