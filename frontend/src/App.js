@@ -22,7 +22,10 @@ import RequestTestimonials from "./pages/RequestTestimonial";
 import InvoiceManagement from "./pages/InvoiceManagement"
 import TodoList from "./pages/TodoList"
 import Calendar from "./pages/Calendar";
-import EditInvoice from "./pages/EditInvoice"
+import EditInvoice from "./pages/EditInvoice";
+import Notification from "./components/Notification";
+import OpenNotification from "./components/OpenNotification";
+
 export default function App() {
     return (
         <Router>
@@ -95,6 +98,16 @@ export default function App() {
                         <ViewClient />
                     </DashboardLayout>
                 </Route>
+                <Route exact path="/notification">
+                    <DashboardLayout>
+                        <Notification />
+                    </DashboardLayout>
+                </Route>
+                <Route exact path="/openNotification">
+                    <DashboardLayout>
+                        <OpenNotification />
+                    </DashboardLayout>
+                </Route>  
                 <Route exact path="/testimonials">
                     <DashboardLayout>
                         <Testimonials />

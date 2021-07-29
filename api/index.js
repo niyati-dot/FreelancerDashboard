@@ -9,6 +9,7 @@ const projectsRouter = require('./routes/projectsRoutes');
 const timelogRouter = require('./routes/timelogRoutes');
 const todoListRouter = require('./routes/TodoListRoutes')
 const invoiceRouter = require('./routes/invoices');
+const notificationRouter = require('./routes/notificationRoutes');
 
 //Main API Endpoint
 router.get('/', (req,res) => {
@@ -25,6 +26,7 @@ router.use('/testimonials',testimonialRouter);
 router.use('/projects',projectsRouter);
 router.use('/todoLists', todoListRouter)
 router.use('/invoices',invoiceRouter);
+router.use('/notification',notificationRouter);
 
 //404 Error Handling
 router.use(function(req, res, next) {
