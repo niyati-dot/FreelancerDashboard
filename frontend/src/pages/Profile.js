@@ -16,8 +16,12 @@
  import projectServices from '../services/projectsServices.js';
  import clientServices from '../services/clientService.js';
  import registerServices from '../services/registerServices';
+ import {Table} from "react-bootstrap";
+ import { useHistory } from 'react-router-dom';
 
 const Profile = () => {
+
+    let history = useHistory();
 
     const [userInfo, setUserInfo] = useState({
         name: '',
@@ -32,32 +36,38 @@ const Profile = () => {
         registerServices.fatchUserById(localStorage.getItem('user_id')).then((response) => {
             console.log(response)
             if(response){
-                userInfo.name = response.Name;
-                userInfo.email = response.Email;
-                userInfo.mobile = response.ContactNo;
-                userInfo.linkedin = response.LinkedInProfile;
-                userInfo.website = response.Website;
-                userInfo.password = response.Password;
+                setUserInfo({                
+                    name : response.Name,
+                    email : response.Email,
+                    mobile : response.ContactNo,
+                    linkedin : response.LinkedInProfile,
+                    website : response.Website,
+                    password : response.Password
+                })
             }
+            console.log(userInfo)
         }).catch((error) => {
             alert("Login Failed!!");
             console.log("Eroor:",error)
         })
     },[]);
 
-
+    const onClickBack = (e) => {
+        e.preventDefault();
+        history.push({ pathname: '/editProfile' });
+    }
 
     return (
         <div>
             <div className="page-header-container">
                 <PageHeader title="Profile" />
             </div>
-            {/* <div className="page-content-container">
+            <div className="page-content-container">
                     <div className="page-content">
                         <Row>
                             <Col className="text-right">
-                                <Button className="btn primary-button" onClick={this.onClickBack}>
-                                    <i className="fas fa-times"></i> Close
+                                <Button className="btn primary-button" onClick={onClickBack}>
+                                 Edit
                                 </Button>
                             </Col>
                         </Row>
@@ -67,59 +77,31 @@ const Profile = () => {
                                 <Table bordered hover>
                                     <tbody>
                                     <tr>
-                                        <td>Client Name:</td>
-                                        <td>{this.state.clientName}</td>
+                                        <td>Name:</td>
+                                        <td>{userInfo.name}</td>
                                     </tr>
                                     <tr>
                                         <td>Contact No:</td>
-                                        <td>{this.state.contactNo}</td>
+                                        <td>{userInfo.mobile}</td>
                                     </tr>
                                     <tr>
                                         <td>Email:</td>
-                                        <td>{this.state.emailId}</td>
+                                        <td>{userInfo.email}</td>
                                     </tr>
                                     <tr>
-                                        <td>Street:</td>
-                                        <td>{this.state.street}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Postal Code:</td>
-                                        <td>{this.state.postalCode}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Region:</td>
-                                        <td>{this.state.region}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Country:</td>
-                                        <td>{this.state.country}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Organization:</td>
-                                        <td>{this.state.organizationName}</td>
+                                        <td>LinkedIn:</td>
+                                        <td>{userInfo.linkedin}</td>
                                     </tr>
                                     <tr>
                                         <td>Website:</td>
-                                        <td>{this.state.websiteName}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>LinkedIn Profile:</td>
-                                        <td>{this.state.linkedInProfile}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Business Description:</td>
-                                        <td>{this.state.businessDescription}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Meeting Platform:</td>
-                                        <td>{this.state.meetingPlatform}</td>
+                                        <td>{userInfo.website}</td>
                                     </tr>
                                     </tbody>
                                 </Table>
                             </Col>
                         </Row>
                     </div>
-                </div> */}
+                </div>
         </div>
     )
 }
