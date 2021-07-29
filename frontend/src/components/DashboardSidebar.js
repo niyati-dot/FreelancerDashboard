@@ -52,7 +52,7 @@ export default function Sidebar(props) {
                                 </span>
                             </Drawer.Item>
 
-                            <hr className="horizontal-break" />
+                            <hr/>
 
                             <Drawer.Item href="/todolist">
                                 <span className={location.pathname === "/todolist" ? 'nav-item-active' : ''}>
