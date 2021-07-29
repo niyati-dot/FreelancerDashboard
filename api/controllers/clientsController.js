@@ -70,8 +70,7 @@
      {
          addclient.userId = req.body.userId;
      }
-     console.log('User ID:',req.body.userId);
-     console.log('User ID:',addclient.userId);
+     
      clientsModel.count({}, function(error, numOfDocs){
          if(error) return callback(error);
          const ClientId = numOfDocs + 1;
@@ -190,21 +189,16 @@
      {
          clientsModel.findOne({'ClientName': req.body.ClientName, 'ContactNo': req.body.ContactNo}, function(error, result)
          {
-             response.send(result);
-             // console.log(res)
-             // if (error) {
-             //     return response.status(400).json({
-             //         result: [],
-             //         message: error,
-             //         success: false
-             //     })
-             // } 
-             // else {
-             //     return response.status(200).json({
-             //         message: "Success",
-             //         success: true
-             //     })  
-             // }
+             if (error) {
+                 return response.status(400).json({
+                     result: [],
+                     message: error,
+                     success: false
+                 })
+             } 
+             else {
+                response.send(result);
+             }
          });
      }
  }
@@ -218,7 +212,6 @@
   */
  module.exports.getAll = (req, response) => {
 
-    console.log('userId from getALL', req.body.userId); 
     clientsModel.find({'userId': req.body.userId }, function(error, result)
     {
          if (error) {
@@ -229,12 +222,8 @@
               })
          } 
          else {
-              response.send(result)
-              /*return response.status(200).json({
-                  message: "Success",
-                  success: true
-              })*/  
-        }
+              response.send(result) 
+         }
      });
  }
  
@@ -248,7 +237,6 @@
   */
  module.exports.delete = (req, response) => {
  
-     console.log(req.body);
      if(req.body && req.body.ClientName && req.body.ContactNo){
          clientsModel.findOneAndRemove({'ClientName': req.body.ClientName, 'ContactNo': req.body.ContactNo}, function(error, result)
          {
