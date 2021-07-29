@@ -27,7 +27,7 @@ export default function Projects() {
         { Header: 'Status', accessor: 'status' },
         {
             Header: 'Actions', accessor: 'row',
-            Cell: ({ row }) => (<div className="data-table-button"><a title="Edit Project" onClick={() => editProject(row.original._id)} className="secondary-button">Edit</a><a title="Delete Project" onClick={() => { deleteTask(row.original) }} className="delete-button">Delete</a></div>)
+            Cell: ({ row }) => (<div className="data-table-button"><a className="secondary-button" align="right" onClick={() => viewDetails(row.original._id)} >View</a><a title="Edit Project" onClick={() => editProject(row.original._id)} className="secondary-button">Edit</a><a title="Delete Project" onClick={() => { deleteProject(row.original) }} className="delete-button">Delete</a></div>)
         }
     ];
 
@@ -36,7 +36,7 @@ export default function Projects() {
         projectsServices.list({"userId": localStorage.getItem("user_id")}).then(res => setData(res.data));
     },[]);
 
-    const deleteTask = (project) => {
+    const deleteProject = (project) => {
         if (window.confirm("Are you sure?")) {
             let newData = [...data];
             projectsServices.remove(project).then(res => alert(res.message));
@@ -54,6 +54,11 @@ export default function Projects() {
 
     async function editProject(id) {
         let url = "/projects/edit/" + id;
+        history.push(url);
+    }
+
+    async function viewDetails(id) {
+        let url = "/projects/view/" + id;
         history.push(url);
     }
 

@@ -51,7 +51,6 @@ module.exports.setStatus = (req, response) => {
 
         let update = document[0]
         document[0].viewStatus = true;
-        console.log(update.viewStatus);
         document[0].save(function(error){
             if (error) {
                 return response.status(400).json({

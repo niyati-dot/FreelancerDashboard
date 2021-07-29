@@ -5,7 +5,7 @@
  */
 import React, { Component } from 'react';
 import PageHeader from "../components/PageHeader";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import Datatable from "../components/Datatable";
 import { withRouter } from 'react-router-dom';
 import "../styles/InvoiceManagement.scss";
@@ -89,7 +89,7 @@ export class Invoices extends Component {
     }
     //open InvoiceGeneration.js in read-only mode to view generated invoice details.
     viewInvoice = (row) => {
-        
+
         this.props.history.push({ pathname: '/invoices/generate' }, {
             state: row.original.invoicenumber
         })
@@ -104,27 +104,28 @@ export class Invoices extends Component {
                 this.getAllInvoices()
             }
         }).catch((error) => {
-            console.log("Eroor")
+            console.log(error)
         })
     }
 
     render() {
         return (
 
-            <div className="page-container-container">
+            <div className="page-container">
                 <div className="page-header-container">
                     <PageHeader title="Invoice Management" subtitle="" />
                 </div>
                 <div className="page-content-container">
-                    <div className="page-content"></div>
-                    <Row className="button-container">
-                        <Col>
-                            <a href="/invoices/generate" title="Add Project" className="primary-button">
+                    <div className="page-content">
+                        <Row>
+                        <Col className="text-right mb-3">
+                            <a href="/invoices/generate" title="Add Project" className="btn primary-button">
                                 Generate Invoice
                             </a>
                         </Col>
-                    </Row>
-                    <Datatable columns={this.state.columns} data={this.state.data} allowCSV="false" />
+                        </Row>
+                        <Datatable columns={this.state.columns} data={this.state.data} allowCSV="false" />
+                    </div>
                 </div>
             </div>
         )

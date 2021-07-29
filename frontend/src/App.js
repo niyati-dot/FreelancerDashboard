@@ -8,11 +8,14 @@ import Home from "./pages/Home";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
+import EditProfile from "./pages/EditProfile";
 import InvoiceGeneration from "./pages/Invoices/InvoiceGeneration";
 import Timelogs from "./pages/Timelogs";
 import Projects from "./pages/Projects";
 import AddProject from "./pages/Projects/AddProject";
 import EditProject from "./pages/Projects/EditProject";
+import ViewProject from "./pages/Projects/ViewProject";
 import Clients from "./pages/Clients";
 import AddClient from "./pages/Clients/AddClient";
 import EditClient from "./pages/Clients/EditClient";
@@ -55,6 +58,21 @@ export default function App() {
                         <Dashboard />
                     </DashboardLayout>
                 </Route>
+                <Route path="/profile">
+                    <DashboardLayout>
+                        <Profile />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/register/edit/:id">
+                    <DashboardLayout>
+                        <EditProfile />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/editProfile">
+                    <DashboardLayout>
+                        <EditProfile />
+                    </DashboardLayout>
+                </Route>
                 <Route exact path="/clients">
                     <DashboardLayout>
                         <Clients />
@@ -88,6 +106,11 @@ export default function App() {
                 <Route path="/projects/edit/:id">
                     <DashboardLayout>
                         <EditProject />
+                    </DashboardLayout>
+                </Route>
+                <Route path="/projects/view/:id">
+                    <DashboardLayout>
+                        <ViewProject />
                     </DashboardLayout>
                 </Route>
                 <Route path="/timelogs">

@@ -46,7 +46,6 @@ class Notification extends Component
             this.setState({
                 values: notifications
             });
-            console.log(this.state.values);
         }).catch((error) => {
             console.log("Error")
         })
@@ -83,7 +82,6 @@ class Notification extends Component
     openNotification = (value) => {
         this.setState({value:value});
         NotificationService.setStatus({"currentDate": this.currentDate, "value": value}).then((response) => {
-            console.log('stored');
             this.fetchNotifications();
             this.handleNotificationShow();
         }).catch((error) => {
@@ -101,7 +99,6 @@ class Notification extends Component
 
                     <Dropdown.Menu id="notificationPanel" >
                         {this.state.values.map((value,index) => {
-                            console.log(value)
                             return <Dropdown.Item className="border-bottom" onClick = { () => this.openNotification(value)}>
                                 <span className={value.className} >{value.eventName}</span>
                             </Dropdown.Item>

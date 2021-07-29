@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 import registerServices from '../../services/registerServices';
+import emailjs from 'emailjs-com';
+
 
 export default function Login(){
 
@@ -54,7 +56,6 @@ export default function Login(){
             newLoginError.passwordError = "";
             setLoginErrors(newLoginError);
         }
-        console.log(loginErrors);
 
         if(valid === true){
             registerServices.fatchUser(loginData).then((response) => {
@@ -69,10 +70,50 @@ export default function Login(){
                 }
             }).catch((error) => {
                 alert("Login Failed!!");
-                console.log("Eroor:",error)
+                console.log("Error:",error)
             })
         }
       };
+
+      const handleMail = async (e) =>{
+        var email = prompt("Enter Your Email:");
+        loginData.email = email;
+        registerServices.fatchUser(loginData).then((res) => {
+            console.log(res)
+
+            if(res){
+
+            // Mailing details
+            var mailParams = {
+                                
+                //Mail Sender Details
+                freelancerName: 'Freelancer',
+                freelancerMail: 'deepatel1607@gmail.com',
+
+                //Mail Reciver Details
+                clientName: 'Client',
+                clientMail: email,
+
+                //Attachment Messages
+                message: "Here is Your Password: "+res.Password,
+            };
+
+            // calling emailJS functionality with emailJS Credentials
+            emailjs.send('testimonial_request', 'template_fmwc5oo', mailParams, 'user_INB1ILGAt4GVje2eeyj2V')
+                .then(function (response) {
+                    alert("Email Sent");
+                    console.log('SUCCESS!', response.status, response.text);
+
+                }, function (error) {
+                    alert("Error: " + error);
+                    console.log('FAILED...', error);
+                });
+            }
+        }).catch((error) => {
+            alert("Login Failed!!");
+            console.log("Eroor:",error)
+        })
+      }
 
     return (
         <div>
@@ -114,14 +155,12 @@ export default function Login(){
 
                         <div className="form-group">
                             <div>
-                                <input type="checkbox" id="customCheck1" />
-                                <label>Remember me</label>
                             </div>
                         </div>
 
-                        <Button variant="primary" type="submit" className="btn-block">Sign in</Button>
+                        <Button type="submit" className="btn-block">Sign in</Button>
                         <p className="forgot-password text-right">
-                            Forgot <a href="#">password?</a>
+                             <div><a href="#"> <p onClick={handleMail}>Forgot password?</p></a></div>
                         </p>
                     </form>
                 </div>    

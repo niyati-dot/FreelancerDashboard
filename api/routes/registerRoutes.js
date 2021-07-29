@@ -12,4 +12,5 @@ const registerRoute = express.Router();
 registerRoute.post('/add', registerController.add);
 registerRoute.post('/fatchUser', registerController.fatchUser);
 registerRoute.post('/fetchUserById', registerController.fatchUserById);
+registerRoute.put('/edit/:id', registerController.edit);
 module.exports = registerRoute;

@@ -12,12 +12,14 @@ export default function DashboardNavbar(){
     return (
         <Navbar className="nav-bar-container">
             <Container>
-                <Navbar.Brand className="nav-bar-text" href="/">Freelance Dashboard</Navbar.Brand>
+                <Navbar.Brand className="nav-bar-text" href="/">
+                    <i className="fab fa-angellist"></i> Freelance Dashboard
+                </Navbar.Brand>
                 <Nav className="ml-auto">
                     <Nav.Link title="Notification" className="nav-bar-link" >
                     <Notification/>
                     </Nav.Link>
-                    <Nav.Link title="Profile" className="nav-bar-link" href="#profile">
+                    <Nav.Link title="Profile" className="nav-bar-link" href="profile">
                         <i className="fas fa-user"/>
                     </Nav.Link>
                     <Nav.Link title="Log Out" className="nav-bar-link"  onClick={ () => {localStorage.removeItem('user_id')} } href="/">
