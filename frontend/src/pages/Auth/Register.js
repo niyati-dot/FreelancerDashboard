@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
+import registerServices from '../../services/registerServices';
 
 export default function Register(){
 
@@ -9,10 +10,13 @@ export default function Register(){
 
     const checkEmail = /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const checkPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
-
+    const checkMobile = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
     const [registrationInfo, setRegistrationInfo] = useState({
         name: '',
         email: '',
+        mobile:'',
+        linkedin:'',
+        website:'',
         password: '',
         confirmPassword: ''
     });
@@ -20,6 +24,9 @@ export default function Register(){
     const [registrationErrors, setRegistrationErrors] = useState({
         nameError: '',
         emailError: '',
+        mobileError:'',
+        linkedinError:'',
+        websiteError:'',
         passwordError: '',
         confirmPasswordError: ''
     });
@@ -36,6 +43,9 @@ export default function Register(){
         setRegistrationErrors({
             nameError: '',
             emailError: '',
+            mobileError:'',
+            linkedinError:'',
+            websiteError:'',
             passwordError: '',
             confirmPasswordError: ''
         })
@@ -69,6 +79,32 @@ export default function Register(){
             }
         }
         
+        if(registrationInfo.mobile === ""){
+            newRegError.mobileError = "Please enter Contact Number!!";
+            setRegistrationErrors(newRegError);
+            valid = false;
+        }
+        else{
+            if(!checkMobile.test(registrationInfo.mobile)){
+                newRegError.mobileError = "Contact number Invalid!!";
+                setRegistrationErrors(newRegError);
+                valid = false;
+            }
+            else{
+                newRegError.mobileError = "";
+                setRegistrationErrors(newRegError);
+            }
+        }
+
+        if(registrationInfo.linkedin === ""){
+            newRegError.linkedinError = "Please enter linkedin!!";
+            setRegistrationErrors(newRegError);
+            valid = false;
+        }
+        else{
+            newRegError.linkedinError = "";
+            setRegistrationErrors(newRegError);
+        }
 
         if(registrationInfo.password === ""){
             newRegError.passwordError = "Please enter password!!";
@@ -106,8 +142,16 @@ export default function Register(){
 
 
         if(valid === true){
-            alert("Registration Successful!!");
-            history.push("/login");
+
+            registerServices.addNewUser(registrationInfo).then((response) => {
+                console.log(response)
+                if(response){
+                    alert("Registration Successful!!");
+                    history.push("/login");
+                }
+            }).catch((error) => {
+                console.log("Eroor:",error)
+            })
         }
     }
 
@@ -130,7 +174,6 @@ export default function Register(){
                                 placeholder="Enter Name"
                                 id = "name"
                                 name = "name"
-                                required="required"
                                 onChange={(e) => handleChange(e)} 
                             />
                             <p className="text-danger">{registrationErrors.nameError}</p>
@@ -147,6 +190,46 @@ export default function Register(){
                                 onChange={(e) => handleChange(e)}
                             />
                             <p className="text-danger">{registrationErrors.emailError}</p>
+                        </div>
+
+                        <div className="form-group">
+                        <Form.Label className="required">Contact Number</Form.Label>
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                placeholder="Enter mobile number"
+                                id = "mobile"
+                                name = "mobile"
+                                onChange={(e) => handleChange(e)}
+                            />
+                            <p className="text-danger">{registrationErrors.mobileError}</p>
+                        </div>
+
+                        <div className="form-group">
+                        <Form.Label className="required"> LinkedIn Profile</Form.Label>
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                placeholder="Enter linkedIn profile link"
+                                id = "linkedin"
+                                name = "linkedin"
+                                onChange={(e) => handleChange(e)}
+                            />
+                            <p className="text-danger">{registrationErrors.linkedinError}</p>
+                        </div>
+
+
+                        <div className="form-group">
+                        <Form.Label> Website</Form.Label>
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                placeholder="Enter website link"
+                                id = "website"
+                                name = "website"
+                                onChange={(e) => handleChange(e)}
+                            />
+                            <p className="text-danger">{registrationErrors.websiteError}</p>
                         </div>
 
                         <div className="form-group">
@@ -173,7 +256,6 @@ export default function Register(){
                                 onChange={(e) => handleChange(e)}
                             />
                             <p className="text-danger">{registrationErrors.confirmPasswordError}</p>
-
                         </div>
 
                         <Button variant="primary" type="submit" className= "btn-block" > Register </Button>

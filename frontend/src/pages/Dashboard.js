@@ -64,6 +64,8 @@ export default function Dashboard(){
 
     },[]);
 
+    console.log(localStorage.getItem('user_id'));
+
     return (
         <div className="page-container">
             <div className="page-header-container">
