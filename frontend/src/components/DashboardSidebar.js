@@ -2,7 +2,7 @@
 
 import '../styles/style.scss';
 import React, { useState } from 'react';
-import {Collapse} from 'react-bootstrap';
+import { Collapse } from 'react-bootstrap';
 import { Drawer } from 'react-bootstrap-drawer';
 import '../styles/DashboardSidebar.scss';
 import { useLocation } from 'react-router-dom'
@@ -13,10 +13,10 @@ export default function Sidebar(props) {
     const handleToggle = () => setOpen(!open);
 
     return (
-        <Drawer { ...props }>
-            <Drawer.Toggle onClick={ handleToggle } />
+        <Drawer {...props}>
+            <Drawer.Toggle onClick={handleToggle} />
 
-            <Collapse in={ open }>
+            <Collapse in={open}>
                 <Drawer.Overflow>
                     <Drawer.ToC>
                         <Drawer.Item href="/dashboard">
@@ -31,7 +31,7 @@ export default function Sidebar(props) {
                                     <i className="fas fa-users"></i> Clients
                                 </span>
                             </Drawer.Item>
-                            <Drawer.Item  href="/projects">
+                            <Drawer.Item href="/projects">
                                 <span className={location.pathname === "/projects" ? "nav-item-active" : ''}>
                                     <i className="fas fa-briefcase"></i> Projects
                                 </span>
@@ -52,7 +52,7 @@ export default function Sidebar(props) {
                                 </span>
                             </Drawer.Item>
 
-                            <hr className="horizontal-break"/>
+                            <hr className="horizontal-break" />
 
                             <Drawer.Item href="/todolist">
                                 <span className={location.pathname === "/todolist" ? 'nav-item-active' : ''}>
@@ -62,6 +62,11 @@ export default function Sidebar(props) {
                             <Drawer.Item href="/calendar">
                                 <span className={location.pathname === "/calendar" ? 'nav-item-active' : ''}>
                                     <i className="fas fa-calendar"></i> Calendar
+                                </span>
+                            </Drawer.Item>
+                            <Drawer.Item href="/business-card">
+                                <span className={location.pathname === "/business-card" ? 'nav-item-active' : ''}>
+                                    <i class="fas fa-address-card"></i> Business Card
                                 </span>
                             </Drawer.Item>
                         </Drawer.Nav>

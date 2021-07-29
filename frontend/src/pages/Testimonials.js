@@ -16,7 +16,7 @@ import "../styles/Testimonials.scss";
 import projectServices from '../services/projectsServices.js';
 import clientServices from '../services/clientService.js';
 import testimonialServices from '../services/testimonialServices.js';
-var dateFormat = require("dateformat");
+// var dateFormat = require("dateformat");
 
 const Testimonials = () => {
 
@@ -28,7 +28,7 @@ const Testimonials = () => {
         { Header: 'Project', accessor: 'project' },
         { Header: 'Client', accessor: 'client' },
         { Header: 'Feedback', accessor: 'feedback' },
-        { Header: 'Requested on', accessor: row => dateFormat(row.requestedOn, "dd-mm-yyyy, HH:MM:ss") },
+        // { Header: 'Requested on', accessor: row => dateFormat(row.requestedOn, "dd-mm-yyyy, HH:MM:ss") },
         
         {
             // creating an action button containig entire row details
