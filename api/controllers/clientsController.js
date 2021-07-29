@@ -208,7 +208,7 @@
   * @param {*} request 
   * @param {*} response 
   * @returns 
-  * find the all clients details and returns result as response
+  * find the all clients details and returns result as response for a particular sessioned user
   */
  module.exports.getAll = (req, response) => {
 
@@ -257,6 +257,13 @@
      }
  }
 
+  /**
+  * Method to list one client detail.
+  * @param {*} request 
+  * @param {*} response 
+  * @returns 
+  * find all client list
+  */
  module.exports.list = (req, res) => {
     clientsModel.find({}, function (err, docs) {
         if (err){

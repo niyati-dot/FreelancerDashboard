@@ -491,7 +491,7 @@ export class EditClient extends Component
                                         <Button className="primary-button" onClick={this.onClickBack}>
                                               Back
                                         </Button>
-                                        <Button className="primary-button" onClick={this.onUpdate}>
+                                        <Button className="secondary-button" onClick={this.onUpdate}>
                                             Update
                                         </Button>
                                     </Row>

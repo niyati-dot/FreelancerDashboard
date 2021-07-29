@@ -1,17 +1,17 @@
 /**
  * Author: Janvi Patel.
- * Created On: 2021-07-20
+ * Created On: 2021-07-29
  * Controller for Notification Controller.
  */
 
 const notificationModel = require('../models/calendarModel');
 
 /**
- * Method to get all the details of the clients.
+ * Method to get all the details of the notification for today.
  * @param {*} request
  * @param {*} response
  * @returns
- * find the all clients details and returns result as response
+ * method finds the notification based on userId and date parameter
  */
 module.exports.List = (req, response) => {
 
@@ -33,6 +33,14 @@ module.exports.List = (req, response) => {
     });
 }
 
+/**
+ * Method to set Status .
+ * @param {*} request
+ * @param {*} response
+ * @returns
+ * method performs to update status of notification
+ * Once user opens the notification the view status will be updated to table for the further use
+ */
 module.exports.setStatus = (req, response) => {
 
     var data = req['body'];
