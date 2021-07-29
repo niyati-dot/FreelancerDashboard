@@ -115,7 +115,7 @@ export class Clients extends Component {
   deleteDetails = (row) => {
     clientService.deleteClient(row.original).then((response) => {
           alert("Successfully deleted entry!!");
-          clientService.getAllClients().then((response) => {
+          clientService.getAllClients(this.userId).then((response) => {
               if (response.status == 200) {
                   this.setData(response.data);
                   let newdetails = [];
