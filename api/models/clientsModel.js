@@ -49,7 +49,6 @@ const clientsSchema = new Mongoose.Schema({
     },
     userId:{
         type: Schema.Types.ObjectID,
-        ref: "users"
     },
 });
 

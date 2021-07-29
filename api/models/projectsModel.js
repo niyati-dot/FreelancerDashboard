@@ -31,7 +31,6 @@ const projectsSchema = {
     },
     userId:{
         type: Schema.Types.ObjectID,
-        ref: "users"
     },
 };
 
