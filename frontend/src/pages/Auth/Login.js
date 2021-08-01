@@ -1,7 +1,6 @@
-import React from 'react';
-import { useState } from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
-import { Button, Form } from 'react-bootstrap';
+import React, {useState} from 'react';
+import {useHistory} from 'react-router-dom';
+import {Button, Form} from 'react-bootstrap';
 import registerServices from '../../services/registerServices';
 import emailjs from 'emailjs-com';
 
@@ -33,7 +32,7 @@ export default function Login(){
         setLoginErrors({
             emailError: "",
             passwordError: ""
-        })
+        });
 
         let newLoginError = {...loginErrors};
 
@@ -58,69 +57,58 @@ export default function Login(){
         }
 
         if(valid === true){
-            registerServices.fatchUser(loginData).then((response) => {
-                if(response){
-                    if(loginData.email === response.Email && loginData.password === response.Password){
-                        localStorage.setItem('user_id', response._id);
+            registerServices.validateUser(loginData)
+                .then((response) => {
+                    if(response.success) {
+                        localStorage.setItem('user_id', response.data._id);
                         alert("Login Successful!!");
                         history.push("/dashboard");
                     }else{
-                        alert("Invalid Password!!"); 
+                        alert("Invalid Password!!");
                     }
-                }
-            }).catch((error) => {
-                alert("Login Failed!!");
-                console.log("Error:",error)
-            })
+                })
+                .catch((error) => {
+                    console.log(error);
+                    alert("Some error occurred");
+                })
         }
-      };
+    };
 
-      const handleMail = async (e) =>{
-        var email = prompt("Enter Your Email:");
-        loginData.email = email;
-        registerServices.fatchUser(loginData).then((res) => {
-            console.log(res)
+    const handleMail = async (e) =>{
+        loginData.email = prompt("Enter Your Email:");
 
-            if(res){
+        registerServices.resetPassword(loginData).then((response) => {
+            if(response.success) {
+                let mailParams = response.data;
 
-            // Mailing details
-            var mailParams = {
-                                
-                //Mail Sender Details
-                freelancerName: 'Freelancer',
-                freelancerMail: 'deepatel1607@gmail.com',
-
-                //Mail Reciver Details
-                clientName: 'Client',
-                clientMail: email,
-
-                //Attachment Messages
-                message: "Here is Your Password: "+res.Password,
-            };
-
-            // calling emailJS functionality with emailJS Credentials
-            emailjs.send('testimonial_request', 'template_fmwc5oo', mailParams, 'user_INB1ILGAt4GVje2eeyj2V')
-                .then(function (response) {
-                    alert("Email Sent");
-                    console.log('SUCCESS!', response.status, response.text);
-
-                }, function (error) {
-                    alert("Error: " + error);
-                    console.log('FAILED...', error);
-                });
+                // calling emailJS functionality with emailJS Credentials
+                emailjs.send(
+                    'testimonial_request',
+                    'template_fmwc5oo',
+                    mailParams,
+                    'user_INB1ILGAt4GVje2eeyj2V')
+                    .then(function (response) {
+                        alert("Email Sent");
+                        console.log('SUCCESS!', response.status, response.text);
+                    }, function (error) {
+                        alert("Error: " + error);
+                        console.log('FAILED...', error);
+                    });
+            }else{
+                alert("User not found!");
             }
         }).catch((error) => {
-            alert("Login Failed!!");
-            console.log("Eroor:",error)
-        })
-      }
+            alert("Some error occurred!!");
+            console.log("Error:",error)
+        });
+    };
 
     return (
         <div>
             <div className="row" > <br /> </div>
 
-            <div className="row" > 
-                <div className="col-md-3"></div>
+            <div className="row" >
+                <div className="col-md-3"/>
                 <div className="col-md-6">
                     <form onSubmit={handleSubmit}>
                         <br />
@@ -128,23 +116,23 @@ export default function Login(){
                         <h3>Log in</h3>
 
                         <div className="form-group">
-                        <Form.Label className="required">Email</Form.Label>
-                            <input 
-                                type="email" 
-                                className="form-control" 
+                            <Form.Label className="required">Email</Form.Label>
+                            <input
+                                type="email"
+                                className="form-control"
                                 placeholder="Please enter email "
                                 id = "email"
                                 name = "email"
-                                onChange={(e) => handleChange(e)} 
+                                onChange={(e) => handleChange(e)}
                             />
                         </div>
                         <p className="text-danger">{loginErrors.emailError}</p>
 
                         <div className="form-group">
-                        <Form.Label className="required">Password</Form.Label>
-                            <input 
-                                type="password" 
-                                className="form-control" 
+                            <Form.Label className="required">Password</Form.Label>
+                            <input
+                                type="password"
+                                className="form-control"
                                 placeholder="Please enter password"
                                 id = "password"
                                 name = "password"
@@ -160,11 +148,11 @@ export default function Login(){
 
                         <Button type="submit" className="btn-block">Sign in</Button>
                         <p className="forgot-password text-right">
-                             <div><a href="#"> <p onClick={handleMail}>Forgot password?</p></a></div>
+                            <div><a href="#"> <p onClick={handleMail}>Forgot password?</p></a></div>
                         </p>
                     </form>
-                </div>    
-                <div className="col-md-3"></div>
+                </div>
+                <div className="col-md-3"/>
             </div>
         </div>
     )

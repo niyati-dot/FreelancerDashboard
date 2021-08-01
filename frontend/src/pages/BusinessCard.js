@@ -172,7 +172,7 @@ export class BusinessCard extends Component {
 
     componentDidMount() {
         let id = localStorage.getItem('user_id')
-        registerServices.fatchUserById(id).then(response => {
+        registerServices.fetchUserById(id).then(response => {
             if (response) {
                 this.setState({profileData: response})
             }

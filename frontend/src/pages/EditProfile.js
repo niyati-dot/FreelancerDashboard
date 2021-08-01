@@ -18,8 +18,7 @@ const EditProfile = () => {
     });
 
     useEffect(() => {
-        registerServices.fatchUserById(localStorage.getItem('user_id')).then((response) => {
-            console.log(response)
+        registerServices.fetchUserById(localStorage.getItem('user_id')).then((response) => {
             if(response){
                 setUserInfo({                
                     name : response.Name,
@@ -27,12 +26,11 @@ const EditProfile = () => {
                     mobile : response.ContactNo,
                     linkedin : response.LinkedInProfile,
                     website : response.Website,
-                    password : response.Password
+                    password : ""
                 })
             }
-            console.log(userInfo)
         }).catch((error) => {
-            alert("Login Failed!!");
+            alert("Some error occurred");
             console.log("Eroor:",error)
         })
     },[]);
@@ -142,16 +140,15 @@ const EditProfile = () => {
 
         if(valid === true){
             registerServices.editUser(registrationInfo).then((response) => {
-                console.log(response)
                 if(response){
                     alert("Profile Updated!!");
                     history.push("/profile");
                 }
             }).catch((error) => {
-                console.log("Eroor:",error)
+                console.log("Error:",error)
             })
         }
-    }
+    };
 
     return (
         <div>

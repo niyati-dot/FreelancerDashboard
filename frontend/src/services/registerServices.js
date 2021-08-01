@@ -12,21 +12,30 @@ export class registerService {
       return result.data;
    }
 
-   async fatchUser(user) {
-      const result = await axios.post("/api/register/fatchUser", user);
+   async validateUser(user){
+      const result = await axios.post("/api/register/validateUser", user);
       return result.data;
    }
 
-   async fatchUserById(id) {
+   async resetPassword(user){
+      const result = await axios.post("/api/register/resetPassword", user);
+      return result.data;
+   }
+
+   async fetchUser(user) {
+      const result = await axios.post("/api/register/fetchUser", user);
+      return result.data;
+   }
+
+   async fetchUserById(id) {
       const result = await axios.post("/api/register/fetchUserById", { id: id });
       return result.data;
    }
 
    async editUser(user){
-    console.log(user);
     const result = await axios.put("/api/register/edit/"+user.id, user);
     return result.data;
-    };
+    }
 }
 
 export default new registerService()

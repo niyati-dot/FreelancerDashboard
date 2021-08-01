@@ -41,7 +41,7 @@ const Testimonials = () => {
     ];
 
     /**
-     * fatching list of project details through an api call
+     * fetching list of project details through an api call
      * using project services's list functionality
      */
     const [project, setProjects] = useState([]);
@@ -50,7 +50,7 @@ const Testimonials = () => {
     },[]);
 
     /**
-     * fatching list of clients details through api call
+     * fetching list of clients details through api call
      * using clientServices's list functionality
      */
     const [client, setClient] = useState([]);
@@ -59,7 +59,7 @@ const Testimonials = () => {
     },[]);
 
     /**
-     * fatching list of Testimonials details through api call
+     * fetching list of Testimonials details through api call
      * using testimonialService's list functionality
      */    const [testimonial, setTestimonial] = useState([]);
     useEffect(() => {
@@ -80,7 +80,7 @@ const Testimonials = () => {
     /**
      * Storing the values into the database using testimonialService's add functionality
      * @param {*} e
-     * the response containig automated genrated id is fatched and stored into mailInfo's id parameter
+     * the response containig automated genrated id is fetched and stored into mailInfo's id parameter
      */
     const storeData = (e) => {
         e.preventDefault();
@@ -141,7 +141,7 @@ const Testimonials = () => {
     /**
      * onChange of the values store the values into mailInfo Parameters
      * @param {*} e
-     * parameter e containig the values is used to fatch form element on change
+     * parameter e containig the values is used to fetch form element on change
      */
     const handleChange = (e) => {
         let newRequest = {...mailInfo, [e.target.name]: e.target.value};

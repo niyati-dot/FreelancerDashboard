@@ -11,12 +11,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dateformat": "^4.5.1",
-    "txt": "^1.0.0",
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
+    "dateformat": "^4.5.1",
+    "emailjs-com": "^3.2.0",
     "express": "^4.17.1",
+    "moment": "^2.29.1",
     "mongoose": "^5.13.3",
     "nodemon": "^2.0.12",
-    "moment": "^2.29.1"
+    "txt": "^1.0.0"
   }
 }
