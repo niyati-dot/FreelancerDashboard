@@ -85,6 +85,12 @@ yarn start
 * [Heroku DevCenter](https://devcenter.heroku.com/articles/git) - Official Heroku Documentation
 * [Dev.To](https://dev.to/abdulbasit313/how-to-develop-a-stopwatch-in-react-js-with-custom-hook-561b) - Developers Community Article
 * [Mongoose](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/mongoose) - MDN documentation for MongoDB ORM
+
+* [XML Sitemaps](www.xml-sitemaps.com) - Online - XML Sitemaps Generator
+* [TermsAndConditionsGenerator](https://www.termsandconditionsgenerator.com/) - Online - Terms and Conditions Generator
+* [PrivacyPolicyGenerator](https://www.termsfeed.com/privacy-policy-generator/) - Online - Privacy Policy Generator
+
+
 ### frontend/src/pages/Timelogs.js
 
 *Between Lines 40 - 74*

@@ -5,6 +5,9 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AppLayout from "./layouts/AppLayout";
 import DashboardLayout from "./layouts/DashboardLayout";
 import Home from "./pages/Home";
+import About from "./pages/About";
+import Tnc from "./pages/Tnc";
+import Privacy from "./pages/Privacy";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Dashboard from "./pages/Dashboard";
@@ -35,6 +38,21 @@ export default function App() {
                 <Route exact path="/">
                     <AppLayout>
                         <Home />
+                    </AppLayout>
+                </Route>
+                <Route exact path="/about">
+                    <AppLayout>
+                        <About />
+                    </AppLayout>
+                </Route>
+                <Route exact path="/tnc">
+                    <AppLayout>
+                        <Tnc />
+                    </AppLayout>
+                </Route>
+                <Route exact path="/privacy">
+                    <AppLayout>
+                        <Privacy />
                     </AppLayout>
                 </Route>
                 <Route path="/login">
