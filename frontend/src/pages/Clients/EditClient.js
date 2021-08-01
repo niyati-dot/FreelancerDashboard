@@ -494,12 +494,13 @@ export class EditClient extends Component
                                     </Row>
 
                                     <Row className="generate-button-container">
-                                        <Button className="btn primary-button" onClick={this.onUpdate}>
+                                        <Button className="primary-button" onClick={this.onClickBack}>
+                                              Back
+                                        </Button>
+                                        <Button className="secondary-button" onClick={this.onUpdate}>
                                             Update
                                         </Button>
-                                        <Button className="btn secondary-button" onClick={this.onClickBack}>
-                                            Back
-                                        </Button>
+                                        
                                     </Row>
                                 </Form>
                             </Col>

@@ -1,3 +1,9 @@
+/**
+ * Author: Janvi Patel.
+ * Created On: 2021-06-07
+ * Notification details.
+ */
+
 import "../styles/DashboardNavbar.scss";
 import {Dropdown, Modal} from "react-bootstrap";
 import React,  {Component} from 'react';
@@ -7,6 +13,7 @@ import moment from "moment";
 
 class Notification extends Component
 {
+    //constructor for props
     constructor(props) {
         super(props);
 
@@ -18,15 +25,14 @@ class Notification extends Component
 
         this.userId = localStorage.getItem("user_id");
         this.currentDate = moment().format('YYYY-MM-DD')
-
     }
 
+    /**
+     * On call of fetch notification the API call has beeen made and all notification setup in calendar will be fetched
+     * @param {*} event 
+    */
     fetchNotifications(){
-        // var today = new Date();
-        // var dd = String(today.getDate()).padStart(2, '0');
-        // var mm = String(today.getMonth() + 1).padStart(2, '0'); 
-        // var yyyy = today.getFullYear();
-        // today = yyyy + '-' + mm + '-' + dd;
+       
         NotificationService.fetchNotifications({"currentDate": this.currentDate, "userId": this.userId}).then((response) => {
             let notifications = [];
             response.data.forEach(element => {
@@ -45,17 +51,34 @@ class Notification extends Component
         })
     }
 
+    /**
+     * On mount, fetch the details of notification.
+     * @param {*} event 
+    */
     componentDidMount() {
         this.fetchNotifications();
     }
 
+    /**
+     * On handlenotification close the modal status will be set false
+     * @param {*} event 
+    */
     handleNotificationClose(){
         this.setState({notificationShow:false});
     };
+
+    /**
+     * On handlenotification show the modal status will be set true
+     * @param {*} event 
+    */
     handleNotificationShow(){
         this.setState({notificationShow:true});
     };
 
+    /**
+     * Open notification will be called once the notification is opened by user
+     * @param {*} event 
+    */
     openNotification = (value) => {
         this.setState({value:value});
         NotificationService.setStatus({"currentDate": this.currentDate, "value": value}).then((response) => {
@@ -64,9 +87,6 @@ class Notification extends Component
         }).catch((error) => {
             console.log("Error")
         });
-        
-        
-
     };
 
     render() {

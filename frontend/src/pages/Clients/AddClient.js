@@ -501,8 +501,7 @@ export class AddClient extends Component {
                                         <Button className="btn primary-button" onClick={this.onSubmit}>
                                             Submit
                                         </Button>
-                                        <Button className="btn secondary-button" onClick={this.onClickBack}>
-                                            Back
+                                        <Button className="secondary-button" onClick={this.onClickBack}>
                                         </Button>
                                     </Row>
                                 </Form>

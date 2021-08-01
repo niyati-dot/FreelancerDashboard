@@ -1,7 +1,7 @@
 /** 
  * Author: Janvi Patel.
  * Created On: 2021-07-20.
- * Contains route information for clients.
+ * Contains route information for notification.
  */
  const express = require('express');
  const notificationController = require('../controllers/notificationController');
