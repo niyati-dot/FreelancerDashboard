@@ -40,7 +40,7 @@ const add = (req, res) => {
 const validateUser = async (req, res) => {
    let user = await registerModel.findOne({ 'Email': req.body.email }).exec(async function (err, user) {
       if(err){
-         return res.status(404).json({
+         return res.status(200).json({
             success: false,
             message: 'User not found!',
             data: null
@@ -56,7 +56,7 @@ const validateUser = async (req, res) => {
       }else{
          return res.status(200).json({
             success: false,
-            message: 'Login details invalid'
+            message: 'Login details invalid!'
          })
       }
    });
@@ -65,7 +65,7 @@ const validateUser = async (req, res) => {
 const resetPassword = (req, res) => {
    registerModel.findOne({ 'Email': req.body.email }).exec(async function (err, user) {
       if (err){
-         return res.status(404).json({
+         return res.status(200).json({
             success: false,
             message: 'User not found!',
             data: null

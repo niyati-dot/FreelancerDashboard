@@ -61,10 +61,10 @@ export default function Login(){
                 .then((response) => {
                     if(response.success) {
                         localStorage.setItem('user_id', response.data._id);
-                        alert("Login Successful!!");
+                        alert(response.message);
                         history.push("/dashboard");
                     }else{
-                        alert("Invalid Password!!");
+                        alert(response.message);
                     }
                 })
                 .catch((error) => {
