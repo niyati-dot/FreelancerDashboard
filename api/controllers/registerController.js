@@ -38,8 +38,16 @@ const add = (req, res) => {
 };
 
 const validateUser = async (req, res) => {
-   let user = await registerModel.findOne({ 'Email': req.body.email }).exec(async function (err, user) {
+   registerModel.findOne({ 'Email': req.body.email }).exec(async function (err, user) {
       if(err){
+         console.log(err);
+         return res.status(500).json({
+            success: false,
+            message: 'Some error occurred!',
+            data: null
+         })
+      }
+      if(!user){
          return res.status(200).json({
             success: false,
             message: 'User not found!',
@@ -56,7 +64,7 @@ const validateUser = async (req, res) => {
       }else{
          return res.status(200).json({
             success: false,
-            message: 'Login details invalid!'
+            message: 'Login details invalid'
          })
       }
    });
@@ -64,7 +72,15 @@ const validateUser = async (req, res) => {
 
 const resetPassword = (req, res) => {
    registerModel.findOne({ 'Email': req.body.email }).exec(async function (err, user) {
-      if (err){
+      if(err){
+         console.log(err);
+         return res.status(500).json({
+            success: false,
+            message: 'Some error occurred!',
+            data: null
+         })
+      }
+      if(!user){
          return res.status(200).json({
             success: false,
             message: 'User not found!',
@@ -76,32 +92,24 @@ const resetPassword = (req, res) => {
       user.Password = encryptionHelper.encryptPassword(password);
       user.save();
 
-      try{
-         let mailParams = {
-            //Mail Sender Details
-            freelancerName: 'Freelancer',
-            freelancerMail: 'deepatel1607@gmail.com',
+      let mailParams = {
+         //Mail Sender Details
+         freelancerName: 'Freelancer',
+         freelancerMail: 'deepatel1607@gmail.com',
 
-            //Mail Reciver Details
-            clientName: user.Name,
-            clientMail: user.Email,
+         //Mail Reciver Details
+         clientName: user.Name,
+         clientMail: user.Email,
 
-            //Attachment Messages
-            message: "Here is your new Password: "+ password,
-         };
-         return res.status(200).json({
-            success: true,
-            message: 'Email reset!',
-            data: mailParams
-         });
-      }
-      catch(e){
-         console.log('FAILED...', e);
-         return res.status(500).json({
-            success: false,
-            message: "Some error occurred"
-         });
-      }
+         //Attachment Messages
+         message: "Here is your new Password: "+ password,
+      };
+
+      return res.status(200).json({
+         success: true,
+         message: 'Password reset requested!',
+         data: mailParams
+      });
    });
 };
 
