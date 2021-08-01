@@ -38,20 +38,28 @@ const add = (req, res) => {
 };
 
 const validateUser = async (req, res) => {
-   let user = await registerModel.findOne({ 'Email': req.body.email }).exec();
-   let valid = encryptionHelper.comparePassword(req.body.password, user.Password);
-   if(valid){
-      return res.status(200).json({
-         success: true,
-         message: 'Login Successful!',
-         data: user
-      })
-   }else{
-      return res.status(200).json({
-         success: false,
-         message: 'Login details invalid'
-      })
-   }
+   let user = await registerModel.findOne({ 'Email': req.body.email }).exec(async function (err, user) {
+      if(err){
+         return res.status(404).json({
+            success: false,
+            message: 'User not found!',
+            data: null
+         })
+      }
+      let valid = encryptionHelper.comparePassword(req.body.password, user.Password);
+      if(valid){
+         return res.status(200).json({
+            success: true,
+            message: 'Login Successful!',
+            data: user
+         })
+      }else{
+         return res.status(200).json({
+            success: false,
+            message: 'Login details invalid'
+         })
+      }
+   });
 };
 
 const resetPassword = (req, res) => {
