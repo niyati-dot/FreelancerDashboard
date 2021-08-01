@@ -7,8 +7,6 @@ const encryptPassword = (password) => {
 
 const comparePassword = (password,encryptedPasswordToCompareTo) => {
     let encryptedPassword = encryptPassword(password, salt);
-    console.log(encryptedPassword);
-    console.log(encryptedPasswordToCompareTo);
     return encryptedPassword === encryptedPasswordToCompareTo
 };
 
