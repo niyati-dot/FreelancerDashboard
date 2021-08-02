@@ -3,8 +3,9 @@
 As more opportunities shift towards work from home, there is an increase in number of freelancers as well. To help all these new freelancers we are building a one stop solution called "Freelancer Dashboard" to manage clients, projects, work hours, inovices, and testimonials.  
 
 * Date Created: 24 05 2021
-* Last Modification Date: 21 07 2021
+* Last Modification Date: 01 08 2021
 * URL: https://csci5709-group5-s21.herokuapp.com/
+* Demo credentials: test@test.com | Test123**
 
 ## Authors
 
