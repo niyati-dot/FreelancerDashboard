@@ -9,12 +9,12 @@ As more opportunities shift towards work from home, there is an increase in numb
 
 ## Authors
 
-* [Bansi Mehta(B00875640)](bn955101@dal.ca) - (Developer)
-* [Deep Patel(B00865413)](dp889845@dal.ca) - (Developer)
-* [Janvi Patel (B00863421)](jn410076@dal.ca) - (Developer)
-* [Sanket Shah(B00862499)](sn488207@dal.ca) - (Developer)
-* [Tejaswi Chaudhary(B00858613)](tj754396@dal.ca) - (Developer)
-* [Vishal Sancheti (B00877378)](vs488310@dal.ca) - (Developer)
+* [Bansi Mehta - (Developer)
+* [Deep Patel - (Developer)
+* [Janvi Patel- (Developer)
+* [Niyati Vyas - (Developer)
+* [Sanket Shah - (Developer)
+
 
 ## Getting Started
 
@@ -250,16 +250,6 @@ The above code was created using react-component-export-image adapted from [npmJ
 
 The above code was created and adapted from [medium](https://kmarks2013.medium.com/flipping-components-in-react-cc7ca8a1d9f9). ReactJS library ['react-flippy'](https://www.npmjs.com/package/react-flippy) has been used.
 
-## Contributions
-
-| Author  |  Feature 1 |  Status |  Feature 2 |  Status |
-|---|---|---|---|---|
-|  [Bansi Mehta(B00875640)](bn955101@dal.ca) |  ToDo List | Done  | Business Card  | Done  |
-|  [Deep Patel(B00865413)](dp889845@dal.ca) |  Testimonials | Done  | Authentication/Profile |  Done |
-|  [Janvi Patel (B00863421)](jn410076@dal.ca) |  Clients | Done  | Notification  | Done  |
-| [Sanket Shah(B00862499)](sn488207@dal.ca) | Projects  | Done  | Calendar  | Done  |
-| [Tejaswi Chaudhary(B00858613)](tj754396@dal.ca) |  Invoice Generation  |   Done| Invoice Management   | Done   |
-| [Vishal Sancheti (B00877378)](vs488310@dal.ca) |  Timelogs |  Done |  Dashboard Stats | Done  |
 
 ## Acknowledgments
 
